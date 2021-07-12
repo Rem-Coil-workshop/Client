@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slot_service_app/constants.dart';
 import 'package:slot_service_app/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/screens/employees_screen/employees_screen.dart';
 import 'package:slot_service_app/screens/logs_screen/logs_screen.dart';
@@ -12,10 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Rem&Coil Slots Admin Panel',
       theme: ThemeData(
-        canvasColor: Colors.white,
-        primarySwatch: Colors.blue,
+        canvasColor: bgColor,
+        scaffoldBackgroundColor: bgColor,
+        primaryColor: primaryColor,
       ),
       routes: {
         BoxesScreen.route: (context) => BoxesScreen(),

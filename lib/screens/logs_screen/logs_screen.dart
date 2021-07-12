@@ -4,7 +4,7 @@ import 'package:slot_service_app/base/base_main_screen.dart';
 class LogsScreen extends BaseMainScreen {
   static const String route = '/logs';
 
-  LogsScreen({Key? key}) : super(key: key, screenIndex: 4);
+  LogsScreen({Key? key}) : super(key: key, screenIndex: 4, title: 'Логи');
 
   @override
   String getRoute() {
