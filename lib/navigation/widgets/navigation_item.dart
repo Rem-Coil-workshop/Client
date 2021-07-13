@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:slot_service_app/navigation/models/navigetion_item_info.dart';
+import 'package:slot_service_app/navigation/models/navigation_item_info.dart';
 import 'package:slot_service_app/navigation/route_builder.dart';
 
 class NavigationItem extends StatelessWidget {

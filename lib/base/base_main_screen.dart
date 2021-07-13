@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slot_service_app/base/widgets/header.dart';
 import 'package:slot_service_app/constants.dart';
-import 'package:slot_service_app/navigation/navigetion_widget.dart';
+import 'package:slot_service_app/navigation/navigation_widget.dart';
 
 abstract class BaseMainScreen extends StatelessWidget {
   final int screenIndex;
@@ -20,44 +20,43 @@ abstract class BaseMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigetionWidget(
+      drawer: NavigationWidget(
         selectedItem: screenIndex,
       ),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            child: NavigetionWidget(
+            child: NavigationWidget(
               selectedItem: screenIndex,
             ),
           ),
           Expanded(
             flex: 5,
-            child: SafeArea(
-              child: Container(
-                padding: EdgeInsets.all(defaultPadding),
-                child: Column(
-                  children: [
-                    Header(title: title),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(color: Colors.white10),
-                      ),
-                      margin: EdgeInsets.only(left: defaultPadding),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: defaultPadding,
-                        vertical: defaultPadding / 2,
-                      ),
-                      child: getMainWidget(context),
-                    ),
-                  ],
-                ),
+            child: Container(
+              padding: EdgeInsets.all(defaultPadding),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Header(title: title),
+                  ),
+                  Expanded(
+                    flex: 19,
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          border: Border.all(color: Colors.white10),
+                        ),
+                        margin: EdgeInsets.only(left: defaultPadding, top: 30),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: defaultPadding,
+                          vertical: defaultPadding / 2,
+                        ),
+                        child: getMainWidget(context)),
+                  ),
+                ],
               ),
             ),
           ),

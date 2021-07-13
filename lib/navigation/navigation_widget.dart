@@ -6,11 +6,11 @@ import 'package:slot_service_app/screens/employees_screen/employees_screen.dart'
 import 'package:slot_service_app/screens/logs_screen/logs_screen.dart';
 import 'package:slot_service_app/screens/tasks_screen/tasks_screen.dart';
 
-import 'models/navigetion_item_info.dart';
+import 'models/navigation_item_info.dart';
 
-class NavigetionWidget extends StatelessWidget {
+class NavigationWidget extends StatelessWidget {
   final int selectedItem;
-  static List<NavigationItemInfo> navigetionItems = [
+  static List<NavigationItemInfo> navigationItems = [
     NavigationItemInfo(
       icon: Icons.all_inbox,
       title: 'Ячейки',
@@ -23,7 +23,7 @@ class NavigetionWidget extends StatelessWidget {
     ),
     NavigationItemInfo(
       icon: Icons.account_box_rounded,
-      title: 'Рабочие',
+      title: 'Сотрудники',
       widget: EmployeesScreen(),
     ),
     NavigationItemInfo(
@@ -33,7 +33,7 @@ class NavigetionWidget extends StatelessWidget {
     ),
   ];
 
-  const NavigetionWidget({
+  const NavigationWidget({
     Key? key,
     required this.selectedItem,
   }) : super(key: key);
@@ -42,13 +42,13 @@ class NavigetionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView.builder(
-        itemCount: navigetionItems.length + 1,
+        itemCount: navigationItems.length + 1,
         itemBuilder: (context, index) {
           if (index == 0)
             return NavigationLogoItem();
           else
             return NavigationItem(
-              item: navigetionItems[index - 1],
+              item: navigationItems[index - 1],
               isSelected: index == selectedItem,
             );
         },
