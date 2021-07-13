@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:slot_service_app/base/base_main_screen.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_item_widget.dart';
 
-import 'model/boxes.dart';
+import 'model/box.dart';
 
 class BoxesScreen extends BaseMainScreen {
   static const String route = '/boxes';

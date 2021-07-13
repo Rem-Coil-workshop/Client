@@ -14,15 +14,30 @@ class ProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ElevatedButton(
-        onPressed: () {},
-        style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsets>(
-            EdgeInsets.symmetric(
-              horizontal: defaultPadding,
-              vertical: defaultPadding / 2,
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: Text('Выйти из системы?'),
+              content: Text('Далее понадобится повторная авторизация.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Да'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Нет'),
+                ),
+              ],
             ),
-          ),
-          backgroundColor: MaterialStateProperty.all<Color>(secondaryColor),
+          );
+        },
+        style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),

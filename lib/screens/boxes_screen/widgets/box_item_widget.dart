@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slot_service_app/screens/boxes_screen/model/boxes.dart';
+import 'package:slot_service_app/screens/boxes_screen/model/box.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_button_widget.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_number_widget.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_select_task_widget.dart';
@@ -43,12 +43,12 @@ class _BoxItemWidgetState extends State<BoxItemWidget> {
             SizedBox(width: 50),
             BoxSelectTaskWidget(
               tasks: tasks,
-              onChanged: (String? task) {
+              onChanged: (Task? task) {
                 setState(() {
-                  widget._box.task = task!;
+                  widget._box.taskId = task!.id;
                 });
               },
-              currentTask: widget._box.task,
+              currentTask: tasks.where((element) => element.id == widget._box.taskId).single,
             ),
             Spacer(),
             BoxButtonWidget(

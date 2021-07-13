@@ -1,11 +1,11 @@
 class Box {
   final int id;
-  final String number;
-  String task;
+  final int number;
+  int taskId;
 
   Box({
     required this.id,
     required this.number,
-    required this.task,
+    required this.taskId,
   });
 }

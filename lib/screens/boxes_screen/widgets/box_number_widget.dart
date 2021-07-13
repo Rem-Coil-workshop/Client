@@ -6,7 +6,7 @@ class BoxNumberWidget extends StatelessWidget {
     required this.number,
   }) : super(key: key);
 
-  final String number;
+  final int number;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +18,9 @@ class BoxNumberWidget extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Text(
-        number,
+        number.toString(),
         style: const TextStyle(
           color: Colors.white,
-          // fontSize: 16,
         ),
       ),
     );
