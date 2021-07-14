@@ -13,6 +13,7 @@ void main() {
     Task(id: 1, name: '12-1/12'),
     Task(id: 2, name: '12-2/12'),
     Task(id: 3, name: '12-3/12'),
+    Task(id: 4, name: '12-3/12'),
   ];
 
   final boxes = [
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         EmployeesScreen.route: (context) => EmployeesScreen(),
         LogsScreen.route: (context) => LogsScreen(),
       },
-      initialRoute: BoxesScreen.route,
+      initialRoute: TasksScreen.route,
     );
   }
 }

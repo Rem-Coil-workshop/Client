@@ -43,18 +43,19 @@ abstract class BaseMainScreen extends StatelessWidget {
                   Expanded(
                     flex: 19,
                     child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(color: Colors.white10),
-                        ),
-                        margin: EdgeInsets.only(left: defaultPadding, top: 30),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: defaultPadding,
-                          vertical: defaultPadding / 2,
-                        ),
-                        child: getMainWidget(context)),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(color: Colors.white10),
+                      ),
+                      margin: EdgeInsets.only(left: defaultPadding, top: 30),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: defaultPadding,
+                        vertical: defaultPadding,
+                      ),
+                      child: getMainWidget(context),
+                    ),
                   ),
                 ],
               ),

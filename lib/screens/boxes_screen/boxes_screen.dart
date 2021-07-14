@@ -29,9 +29,7 @@ class BoxesScreen extends BaseMainScreen {
         child: ListView.builder(
           controller: _scrollController,
           itemCount: _boxes.length,
-          itemBuilder: (context, index) {
-            return BoxItemWidget(box: _boxes[index]);
-          },
+          itemBuilder: (context, index) => BoxItemWidget(box: _boxes[index]),
         ),
       ),
     );
