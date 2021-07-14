@@ -20,43 +20,19 @@ abstract class BaseMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationWidget(
-        selectedItem: screenIndex,
-      ),
+      drawer: NavigationWidget(selectedItem: screenIndex),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            child: NavigationWidget(
-              selectedItem: screenIndex,
-            ),
-          ),
+          Expanded(child: NavigationWidget(selectedItem: screenIndex)),
           Expanded(
             flex: 5,
             child: Container(
               padding: EdgeInsets.all(defaultPadding),
               child: Column(
                 children: [
-                  Expanded(
-                    child: Header(title: title),
-                  ),
-                  Expanded(
-                    flex: 19,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(color: Colors.white10),
-                      ),
-                      margin: EdgeInsets.only(left: defaultPadding, top: 30),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: defaultPadding,
-                        vertical: defaultPadding,
-                      ),
-                      child: getMainWidget(context),
-                    ),
-                  ),
+                  _getHeader(),
+                  _getMainWidgetDecoration(context),
                 ],
               ),
             ),
@@ -65,4 +41,25 @@ abstract class BaseMainScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _getHeader() => Expanded(child: Header(title: title));
+
+  Widget _getMainWidgetDecoration(BuildContext context) => Expanded(
+        flex: 19,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
+            border: Border.all(color: Colors.white10),
+          ),
+          margin: EdgeInsets.only(left: defaultPadding, top: 30),
+          padding: EdgeInsets.symmetric(
+            horizontal: defaultPadding,
+            vertical: defaultPadding,
+          ),
+          child: getMainWidget(context),
+        ),
+      );
 }

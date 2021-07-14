@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:slot_service_app/screens/boxes_screen/model/box.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:slot_service_app/core/models/box.dart';
+import 'package:slot_service_app/core/models/task.dart';
+import 'package:slot_service_app/redux/boxes/thunk.dart';
+import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_button_widget.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_number_widget.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_select_task_widget.dart';
-import 'package:slot_service_app/screens/tasks_screen/models/task.dart';
 
 import '../../../constants.dart';
 
-class BoxItemWidget extends StatefulWidget {
+class BoxItemWidget extends StatelessWidget {
   final Box _box;
 
   const BoxItemWidget({
@@ -19,13 +21,9 @@ class BoxItemWidget extends StatefulWidget {
         super(key: key);
 
   @override
-  _BoxItemWidgetState createState() => _BoxItemWidgetState();
-}
-
-class _BoxItemWidgetState extends State<BoxItemWidget> {
-  @override
   Widget build(BuildContext context) {
-    final tasks = Provider.of<List<Task>>(context);
+    final store = StoreProvider.of<AppState>(context);
+    final tasks = store.state.tasksState.tasks;
 
     return Container(
       padding: EdgeInsets.all(defaultPadding),
@@ -36,7 +34,7 @@ class _BoxItemWidgetState extends State<BoxItemWidget> {
         border: Border.all(color: Colors.white10),
       ),
       child: ListTile(
-        leading: BoxNumberWidget(number: widget._box.number),
+        leading: BoxNumberWidget(number: _box.number),
         mouseCursor: SystemMouseCursors.basic,
         title: Row(
           children: [
@@ -44,11 +42,13 @@ class _BoxItemWidgetState extends State<BoxItemWidget> {
             BoxSelectTaskWidget(
               tasks: tasks,
               onChanged: (Task? task) {
-                setState(() {
-                  widget._box.taskId = task!.id;
-                });
+                store.dispatch(OnTaskChange(
+                  box: _box,
+                  task: task!,
+                ));
               },
-              currentTask: tasks.where((element) => element.id == widget._box.taskId).single,
+              currentTask:
+                  tasks.where((element) => element.id == _box.taskId).single,
             ),
             Spacer(),
             BoxButtonWidget(

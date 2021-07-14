@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/redux/tasks/thunk.dart';
 
 import '../../../constants.dart';
 
 class AddTaskWidget extends StatelessWidget {
+  final _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     return Container(
       padding: const EdgeInsets.only(left: 20),
       margin: const EdgeInsets.only(bottom: 10),
@@ -24,6 +30,7 @@ class AddTaskWidget extends StatelessWidget {
           Expanded(
             flex: 15,
             child: TextField(
+              controller: _controller,
               decoration: InputDecoration(
                 hintText: "Qr код задачи",
                 fillColor: Colors.white,
@@ -34,7 +41,10 @@ class AddTaskWidget extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 suffixIcon: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    store.dispatch(OnCreateTask(_controller.value.text));
+                    _controller.clear();
+                  },
                   child: Container(
                     padding: EdgeInsets.all(defaultPadding * 0.5),
                     margin:
