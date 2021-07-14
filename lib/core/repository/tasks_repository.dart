@@ -7,7 +7,7 @@ class TasksRepository extends BaseRepository {
     Task(id: 1, name: '12-1/12'),
     Task(id: 2, name: '12-2/12'),
     Task(id: 3, name: '12-3/12'),
-    Task(id: 4, name: '12-3/12'),
+    Task(id: 4, name: '12-4/12'),
   ];
 
   List<Task> get tasks => _tasks;

@@ -39,10 +39,9 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
       _appStateHolder ??= Store<AppState>(
         appReducer,
         initialState: AppState.initState,
-        middleware: [taskThunkMiddleware, boxThunkMiddleware],
+        middleware: [thunkMiddleware, taskThunkMiddleware, boxThunkMiddleware],
       );
     }
-
     return _appStateHolder!;
   }
 

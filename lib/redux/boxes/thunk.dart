@@ -5,8 +5,9 @@ import 'package:slot_service_app/core/repository/boxes_repository.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/boxes/actions.dart';
 import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/redux/status/thunk.dart';
 
-class OnTaskChange extends BaseThunk<BoxesRepository> {
+class OnTaskChange extends BaseThunkWithExtra<BoxesRepository> {
   final Box box;
   final Task task;
 
@@ -14,17 +15,21 @@ class OnTaskChange extends BaseThunk<BoxesRepository> {
 
   @override
   Future<void> execute(
-      Store<AppState> store, BoxesRepository repository) async {
-    store.dispatch(SetBoxesAction([]));
+    Store<AppState> store,
+    BoxesRepository repository,
+  ) async {
+    store.dispatch(OnBeginLoad('Изменяем значение задачи'));
+    await Future.delayed(Duration(seconds: 1));
     repository.changeBoxTask(box, task);
     store.dispatch(OnFetchBoxes());
   }
 }
 
-class OnFetchBoxes extends BaseThunk<BoxesRepository> {
+class OnFetchBoxes extends BaseThunkWithExtra<BoxesRepository> {
   @override
   Future<void> execute(
       Store<AppState> store, BoxesRepository repository) async {
     store.dispatch(SetBoxesAction(repository.boxes));
+    store.dispatch(OnSuccess('Список ящиков обновлён'));
   }
 }

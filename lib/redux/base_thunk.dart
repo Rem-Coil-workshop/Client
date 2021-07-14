@@ -3,14 +3,24 @@ import 'package:slot_service_app/core/repository/base_repository.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:redux/redux.dart';
 
-abstract class BaseThunk<T extends BaseRepository>
+abstract class BaseThunkWithExtra<T extends BaseRepository>
     implements
         CallableThunkActionWithExtraArgument<AppState, T> {
-  const BaseThunk();
+  const BaseThunkWithExtra();
 
   @override
   dynamic call(Store<AppState> store, T repository) =>
       execute(store, repository);
 
   Future<void> execute(Store<AppState> store, T repository);
+}
+
+
+abstract class BaseThunk implements CallableThunkAction<AppState> {
+  const BaseThunk();
+
+  @override
+  dynamic call(Store<AppState> store) => execute(store);
+
+  Future<void> execute(Store<AppState> store);
 }

@@ -1,9 +1,13 @@
 import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/redux/status/reducer.dart';
 
+import 'auth/reducer.dart';
 import 'boxes/reducer.dart';
 import 'tasks/reducer.dart';
 
 AppState appReducer(AppState state, dynamic action) => AppState(
+  authState: authReducer(state.authState, action),
   tasksState: tasksReducer(state.tasksState, action),
   boxesState: boxesReducer(state.boxesState, action),
+  statusState: statusReducer(state.statusState, action),
 );

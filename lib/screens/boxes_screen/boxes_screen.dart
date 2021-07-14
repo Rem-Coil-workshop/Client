@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:slot_service_app/base/base_main_screen.dart';
 import 'package:slot_service_app/redux/boxes/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/screens/base/base_main_screen.dart';
 import 'package:slot_service_app/screens/boxes_screen/view_models/boxes.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_item_widget.dart';
 

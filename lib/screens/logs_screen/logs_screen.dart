@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:slot_service_app/base/base_main_screen.dart';
+import 'package:slot_service_app/screens/base/base_main_screen.dart';
 
 class LogsScreen extends BaseMainScreen {
   static const String route = '/logs';

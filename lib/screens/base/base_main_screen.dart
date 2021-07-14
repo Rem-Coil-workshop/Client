@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:slot_service_app/base/widgets/header.dart';
 import 'package:slot_service_app/constants.dart';
 import 'package:slot_service_app/navigation/navigation_widget.dart';
+import 'package:slot_service_app/screens/base/widgets/header.dart';
 
 abstract class BaseMainScreen extends StatelessWidget {
   final int screenIndex;

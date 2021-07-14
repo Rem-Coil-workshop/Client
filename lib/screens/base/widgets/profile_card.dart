@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/screens/base/view_models/auth.dart';
 
-import '../../constants.dart';
+import '../../../constants.dart';
 
 class ProfileCard extends StatelessWidget {
-  final String name;
-
-  const ProfileCard({
-    Key? key,
-    required this.name,
-  }) : super(key: key);
+  const ProfileCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,20 +46,33 @@ class ProfileCard extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding / 2,
+              padding: const EdgeInsets.only(
+                left: defaultPadding / 2,
               ),
-              child: Text(
-                name,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(color: Colors.white),
+              child: StoreConnector<AppState, AuthViewModel>(
+                converter: (store) => AuthViewModel.success(
+                  employee: store.state.authState.employee,
+                ),
+                builder: (context, vm) => vm.when(
+                  success: (employee) => Text(
+                    "${employee.firstname} ${employee.lastname}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(color: Colors.white),
+                  ),
+                ),
               ),
             ),
-            Icon(
-              Icons.keyboard_arrow_down,
-              color: Colors.white,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: defaultPadding / 4,
+              ),
+              child: Icon(
+                Icons.exit_to_app_rounded,
+                color: Colors.white,
+                size: 16,
+              ),
             ),
           ],
         ),
