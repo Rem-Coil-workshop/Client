@@ -40,15 +40,14 @@ class BoxItemWidget extends StatelessWidget {
           children: [
             SizedBox(width: 50),
             BoxSelectTaskWidget(
-              tasks: tasks,
+              tasks: [...tasks, Task.nullValue],
               onChanged: (Task? task) {
                 store.dispatch(OnTaskChange(
                   box: _box,
                   task: task!,
                 ));
               },
-              currentTask:
-                  tasks.where((element) => element.id == _box.taskId).single,
+              currentTask: _getTask(tasks),
             ),
             Spacer(),
             BoxButtonWidget(
@@ -58,5 +57,14 @@ class BoxItemWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Task _getTask(List<Task> tasks) {
+    final searchResult = tasks.where((element) => element.id == _box.taskId);
+    if (searchResult.length == 0) {
+      return Task.nullValue;
+    } else{
+      return searchResult.single;
+    }
   }
 }

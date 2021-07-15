@@ -4,6 +4,8 @@ part 'task.freezed.dart';
 
 @freezed
 abstract class Task with _$Task {
+  static const Task nullValue = Task(id: 0, name: 'Пусто');
+
   const factory Task({
     required int id,
     required String name,
