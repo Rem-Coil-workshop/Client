@@ -63,7 +63,7 @@ class BoxItemWidget extends StatelessWidget {
     final searchResult = tasks.where((element) => element.id == _box.taskId);
     if (searchResult.length == 0) {
       return Task.nullValue;
-    } else{
+    } else {
       return searchResult.single;
     }
   }

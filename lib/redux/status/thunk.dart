@@ -25,8 +25,7 @@ class OnSuccess extends BaseThunk {
   Future<void> execute(Store<AppState> store) async {
     store.dispatch(SetMessageAction(message));
     store.dispatch(SetLoadStatusAction(false));
-    await Future.delayed(Duration(seconds: 5));
-    store.dispatch(DisableStatusAction());
+    store.dispatch(SetErrorStatusAction(false));
   }
 }
 
@@ -40,7 +39,5 @@ class OnError extends BaseThunk {
     store.dispatch(SetMessageAction(message));
     store.dispatch(SetLoadStatusAction(false));
     store.dispatch(SetErrorStatusAction(true));
-    await Future.delayed(Duration(seconds: 5));
-    store.dispatch(DisableStatusAction());
   }
 }

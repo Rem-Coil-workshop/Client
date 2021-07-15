@@ -63,7 +63,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
           EmployeesScreen.route: (context) => EmployeesScreen(),
           LogsScreen.route: (context) => LogsScreen(),
         },
-        initialRoute: TasksScreen.route,
+        initialRoute: BoxesScreen.route,
       ),
     );
   }

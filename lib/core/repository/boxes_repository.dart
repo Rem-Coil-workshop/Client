@@ -1,19 +1,61 @@
+import 'dart:convert';
+
+import 'package:http/http.dart';
+import 'package:slot_service_app/core/json_models/box.dart';
 import 'package:slot_service_app/core/models/box.dart';
 import 'package:slot_service_app/core/models/task.dart';
+import 'package:slot_service_app/core/network/http_adapter.dart';
+import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/base_repository.dart';
 
 class BoxesRepository extends BaseRepository {
-  final _boxes = <Box>[
-    Box(number: 1, id: 1, taskId: 1),
-    Box(number: 2, id: 2, taskId: 1),
-    Box(number: 3, id: 3, taskId: 1),
-    Box(number: 4, id: 4, taskId: 1),
-  ];
+  List<Box> _boxes = [];
 
-  List<Box> get boxes => _boxes;
+  Future<List<Box>> get boxes async {
+    final jsons = await _fetchBoxes();
+    _boxes = jsons.map((json) => json.toBox()).toList();
+    return _boxes;
+  }
 
-  void changeBoxTask(Box box, Task task) {
-    final boxIndex = _boxes.indexOf(box);
-    _boxes[boxIndex] = box.copyWith(taskId: task.id);
+  Future<Iterable<JsonBox>> _fetchBoxes() async {
+    final response = await HttpAdapter.get('/v1/boxes');
+
+    if (response.statusCode == 200) {
+      return _parseBody(response);
+    } else {
+      print(jsonDecode(response.body));
+      throw NetworkException(
+        message: 'Ошибка обновления данных',
+        code: response.statusCode,
+      );
+    }
+  }
+
+  // TODO - случай добавления пустого ящика
+  Future<List<Box>> changeBoxTask(Box box, Task task) async {
+    if (box.taskId == task.id) return _boxes;
+
+    final jsonBox = JsonBox.fromBox(box.copyWith(taskId: task.id));
+    final response = await HttpAdapter.put('/v1/boxes', jsonBox.toJson());
+
+    if (response.statusCode == 200) {
+      final newBox = JsonBox.fromJson(jsonDecode(response.body)).toBox();
+      final index = _boxes.indexWhere((box) => box.id == newBox.id);
+      _boxes[index] = newBox;
+      return _boxes;
+    } else {
+      print(jsonDecode(response.body));
+      throw NetworkException(
+        message: 'Данная задача уже используется в какой либо ячейке',
+        code: response.statusCode,
+      );
+    }
+  }
+
+  Iterable<JsonBox> _parseBody(Response response) {
+    final body = jsonDecode(response.body) as Iterable;
+    return body.map((json) {
+      return JsonBox.fromJson(json);
+    });
   }
 }

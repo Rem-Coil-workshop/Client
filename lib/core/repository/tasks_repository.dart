@@ -1,24 +1,72 @@
+import 'dart:convert';
+
+import 'package:http/http.dart';
+import 'package:slot_service_app/core/json_models/task.dart';
 import 'package:slot_service_app/core/models/task.dart';
+import 'package:slot_service_app/core/network/http_adapter.dart';
+import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/base_repository.dart';
 
 class TasksRepository extends BaseRepository {
-  int nextId = 4;
-  final List<Task> _tasks = [
-    Task(id: 1, name: '12-1/12'),
-    Task(id: 2, name: '12-2/12'),
-    Task(id: 3, name: '12-3/12'),
-    Task(id: 4, name: '12-4/12'),
-  ];
+  late List<Task> _tasks;
 
-  List<Task> get tasks => _tasks;
-
-  void addTask(String taskName) {
-    Task task = Task(id: nextId, name: taskName);
-    _tasks.add(task);
-    nextId++;
+  Future<List<Task>> fetchTasks() async {
+    final jsons = await _fetchTasks();
+    _tasks = jsons.map((json) => json.toTask()).toList();
+    return _tasks;
   }
 
-  void removeTask(Task task) {
-    _tasks.remove(task);
+  Future<List<Task>> addTask(String taskName) async {
+    final Response response = await HttpAdapter.post(
+      '/v1/tasks',
+      {'qrCode': taskName},
+    );
+
+    if (response.statusCode == 200) {
+      final responseBody = JsonTask.fromJson(jsonDecode(response.body)).toTask();
+      _tasks.add(responseBody);
+      return _tasks;
+    } else {
+      print(jsonDecode(response.body));
+      throw NetworkException(
+        message: 'Данная задача уже существует',
+        code: response.statusCode,
+      );
+    }
+  }
+
+  Future<List<Task>> removeTask(Task task) async {
+    final Response response = await HttpAdapter.delete(
+      '/v1/tasks',
+      {'qrCode': task.name},
+    );
+
+    if (response.statusCode == 200) {
+      _tasks.remove(task);
+      return _tasks;
+    } else {
+      print(jsonDecode(response.body));
+      throw NetworkException(
+        message: 'Данная задача находится в ячейке',
+        code: response.statusCode,
+      );
+    }
+  }
+
+  Future<List<JsonTask>> _fetchTasks() async {
+    final Response response = await HttpAdapter.get('/v1/tasks');
+
+    if (response.statusCode == 200) {
+      final responseBody = jsonDecode(response.body) as List;
+      return responseBody.map((element) {
+        return JsonTask.fromJson(element);
+      }).toList();
+    } else {
+      print(jsonDecode(response.body));
+      throw NetworkException(
+        message: 'Ошибка обновления данных',
+        code: response.statusCode,
+      );
+    }
   }
 }
