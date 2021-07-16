@@ -5,8 +5,45 @@ import 'package:slot_service_app/redux/tasks/thunk.dart';
 
 import '../../../constants.dart';
 
-class AddTaskWidget extends StatelessWidget {
+class AddTaskWidget extends StatefulWidget {
+  static const CORRECT_CODES = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '0',
+    '-',
+    '/'
+  ];
+
+  @override
+  _AddTaskWidgetState createState() => _AddTaskWidgetState();
+}
+
+class _AddTaskWidgetState extends State<AddTaskWidget> {
   final _controller = TextEditingController();
+  var _isInputValid = true;
+
+  bool _validateQrCode(String qrCode) {
+    for (var rune in qrCode.runes) {
+      var character = String.fromCharCode(rune);
+      if (!AddTaskWidget.CORRECT_CODES.contains(character)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +68,11 @@ class AddTaskWidget extends StatelessWidget {
             flex: 15,
             child: TextField(
               controller: _controller,
+              onChanged: (value) => setState(() {
+                this._isInputValid = _validateQrCode(value);
+              }),
               decoration: InputDecoration(
+                errorText: _isInputValid ? null : 'Неверный формат кода',
                 hintText: "Qr код задачи",
                 fillColor: Colors.white,
                 hoverColor: Colors.white,
@@ -42,7 +83,7 @@ class AddTaskWidget extends StatelessWidget {
                 ),
                 suffixIcon: InkWell(
                   onTap: () {
-                    store.dispatch(OnCreateTask(_controller.value.text));
+                    store.dispatch(OnCreateTask(_controller.text));
                     _controller.clear();
                   },
                   child: Container(
