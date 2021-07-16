@@ -21,6 +21,8 @@ class OnCreateTask extends BaseThunkWithExtra<TasksRepository> {
       store.dispatch(OnUpdateTasks(tasks));
     } on NetworkException catch (e) {
       store.dispatch(OnTasksNetworkError(e.message));
+    } catch(e) {
+      store.dispatch(OnTasksNetworkError('Ошибка подключения к сети'));
     }
   }
 }
@@ -39,6 +41,8 @@ class OnRemoveTask extends BaseThunkWithExtra<TasksRepository> {
       store.dispatch(OnUpdateTasks(tasks));
     } on NetworkException catch(e) {
       store.dispatch(OnTasksNetworkError(e.message));
+    } catch(e) {
+      store.dispatch(OnTasksNetworkError('Ошибка подключения к сети'));
     }
   }
 }
@@ -53,6 +57,8 @@ class OnFetchTasks extends BaseThunkWithExtra<TasksRepository> {
       store.dispatch(OnUpdateTasks(tasks));
     } on NetworkException catch(e) {
       store.dispatch(OnTasksNetworkError(e.message));
+    } catch(e) {
+      store.dispatch(OnTasksNetworkError('Ошибка подключения к сети'));
     }
   }
 }

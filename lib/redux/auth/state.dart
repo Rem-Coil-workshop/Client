@@ -6,7 +6,7 @@ part 'state.freezed.dart';
 @freezed
 abstract class AuthState with _$AuthState {
   static const initState = AuthState(
-    employee: Employee(firstname: 'Дмитрий', lastname: 'Жарков'),
+    employee: Employee(firstname: 'Илья', lastname: 'Родионов'),
   );
 
   const factory AuthState({

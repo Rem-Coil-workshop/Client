@@ -1,4 +1,5 @@
 import 'package:slot_service_app/core/models/box.dart';
+import 'package:slot_service_app/core/models/task.dart';
 
 class JsonBox {
   final int id;
@@ -12,7 +13,8 @@ class JsonBox {
   });
 
   factory JsonBox.fromBox(Box box) {
-    return JsonBox(id: box.id, number: box.number, taskId: box.taskId);
+    final taskId = box.taskId == Task.nullValue.id ? null : box.taskId;
+    return JsonBox(id: box.id, number: box.number, taskId: taskId);
   }
 
   factory JsonBox.fromJson(Map<String, dynamic> json) {

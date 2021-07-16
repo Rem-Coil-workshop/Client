@@ -31,7 +31,6 @@ class BoxesRepository extends BaseRepository {
     }
   }
 
-  // TODO - случай добавления пустого ящика
   Future<List<Box>> changeBoxTask(Box box, Task task) async {
     if (box.taskId == task.id) return _boxes;
 

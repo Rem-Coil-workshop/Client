@@ -1,6 +1,7 @@
 import 'package:redux/redux.dart';
 import 'package:slot_service_app/core/models/box.dart';
 import 'package:slot_service_app/core/models/task.dart';
+import 'package:slot_service_app/core/network/http_adapter.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/boxes_repository.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
@@ -24,8 +25,10 @@ class OnTaskChange extends BaseThunkWithExtra<BoxesRepository> {
     try {
       final boxes = await repository.changeBoxTask(box, task);
       store.dispatch(OnUpdateBoxes(boxes));
-    } on NetworkException catch(e) {
+    } on NetworkException catch (e) {
       store.dispatch(OnBoxesNetworkError(e.message));
+    } catch(e) {
+      store.dispatch(OnBoxesNetworkError('Ошибка подключения к сети'));
     }
   }
 }
@@ -43,6 +46,8 @@ class OnFetchBoxes extends BaseThunkWithExtra<BoxesRepository> {
       store.dispatch(OnUpdateBoxes(boxes));
     } on NetworkException catch (e) {
       store.dispatch(OnBoxesNetworkError(e.message));
+    } catch(e) {
+      store.dispatch(OnBoxesNetworkError('Ошибка подключения к сети'));
     }
   }
 }
@@ -67,5 +72,29 @@ class OnBoxesNetworkError extends BaseThunk {
   @override
   Future<void> execute(Store<AppState> store) async {
     store.dispatch(OnError(message));
+  }
+}
+
+class OnOpenBox extends BaseThunk {
+  final Box box;
+
+  OnOpenBox(this.box);
+
+  @override
+  Future<void> execute(Store<AppState> store) async {
+    try {
+      final url = '/v1/slots/open/' + box.id.toString();
+      final response = await HttpAdapter.get(url);
+
+      if (response.statusCode == 204) {
+        store.dispatch(OnSuccess('Ячейка открыта'));
+      } else {
+        store.dispatch(OnError('Данной ячейки не существует'));
+      }
+    } on NetworkException catch (e) {
+      store.dispatch(OnBoxesNetworkError(e.message));
+    } catch(e) {
+      store.dispatch(OnBoxesNetworkError('Ошибка подключения к сети'));
+    }
   }
 }

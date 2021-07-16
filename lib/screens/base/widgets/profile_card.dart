@@ -55,7 +55,7 @@ class ProfileCard extends StatelessWidget {
                 ),
                 builder: (context, vm) => vm.when(
                   success: (employee) => Text(
-                    "${employee.firstname} ${employee.lastname}",
+                    "${employee.lastname} ${employee.firstname}",
                     style: Theme.of(context)
                         .textTheme
                         .bodyText2!

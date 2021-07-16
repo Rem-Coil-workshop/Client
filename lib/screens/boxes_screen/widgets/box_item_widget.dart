@@ -51,7 +51,7 @@ class BoxItemWidget extends StatelessWidget {
             ),
             Spacer(),
             BoxButtonWidget(
-              onPressed: () {},
+              onPressed: () => store.dispatch(OnOpenBox(_box)),
             ),
           ],
         ),
