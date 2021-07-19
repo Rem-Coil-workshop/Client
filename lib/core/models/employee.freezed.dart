@@ -17,10 +17,12 @@ class _$EmployeeTearOff {
   const _$EmployeeTearOff();
 
   _Employee call(
-      {required String firstname,
+      {int? id,
+      required String firstname,
       required String lastname,
       required int number}) {
     return _Employee(
+      id: id,
       firstname: firstname,
       lastname: lastname,
       number: number,
@@ -33,6 +35,7 @@ const $Employee = _$EmployeeTearOff();
 
 /// @nodoc
 mixin _$Employee {
+  int? get id => throw _privateConstructorUsedError;
   String get firstname => throw _privateConstructorUsedError;
   String get lastname => throw _privateConstructorUsedError;
   int get number => throw _privateConstructorUsedError;
@@ -46,7 +49,7 @@ mixin _$Employee {
 abstract class $EmployeeCopyWith<$Res> {
   factory $EmployeeCopyWith(Employee value, $Res Function(Employee) then) =
       _$EmployeeCopyWithImpl<$Res>;
-  $Res call({String firstname, String lastname, int number});
+  $Res call({int? id, String firstname, String lastname, int number});
 }
 
 /// @nodoc
@@ -59,11 +62,16 @@ class _$EmployeeCopyWithImpl<$Res> implements $EmployeeCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? number = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       firstname: firstname == freezed
           ? _value.firstname
           : firstname // ignore: cast_nullable_to_non_nullable
@@ -85,7 +93,7 @@ abstract class _$EmployeeCopyWith<$Res> implements $EmployeeCopyWith<$Res> {
   factory _$EmployeeCopyWith(_Employee value, $Res Function(_Employee) then) =
       __$EmployeeCopyWithImpl<$Res>;
   @override
-  $Res call({String firstname, String lastname, int number});
+  $Res call({int? id, String firstname, String lastname, int number});
 }
 
 /// @nodoc
@@ -99,11 +107,16 @@ class __$EmployeeCopyWithImpl<$Res> extends _$EmployeeCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? number = freezed,
   }) {
     return _then(_Employee(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       firstname: firstname == freezed
           ? _value.firstname
           : firstname // ignore: cast_nullable_to_non_nullable
@@ -124,8 +137,13 @@ class __$EmployeeCopyWithImpl<$Res> extends _$EmployeeCopyWithImpl<$Res>
 
 class _$_Employee implements _Employee {
   const _$_Employee(
-      {required this.firstname, required this.lastname, required this.number});
+      {this.id,
+      required this.firstname,
+      required this.lastname,
+      required this.number});
 
+  @override
+  final int? id;
   @override
   final String firstname;
   @override
@@ -135,13 +153,15 @@ class _$_Employee implements _Employee {
 
   @override
   String toString() {
-    return 'Employee(firstname: $firstname, lastname: $lastname, number: $number)';
+    return 'Employee(id: $id, firstname: $firstname, lastname: $lastname, number: $number)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Employee &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.firstname, firstname) ||
                 const DeepCollectionEquality()
                     .equals(other.firstname, firstname)) &&
@@ -155,6 +175,7 @@ class _$_Employee implements _Employee {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(firstname) ^
       const DeepCollectionEquality().hash(lastname) ^
       const DeepCollectionEquality().hash(number);
@@ -167,10 +188,13 @@ class _$_Employee implements _Employee {
 
 abstract class _Employee implements Employee {
   const factory _Employee(
-      {required String firstname,
+      {int? id,
+      required String firstname,
       required String lastname,
       required int number}) = _$_Employee;
 
+  @override
+  int? get id => throw _privateConstructorUsedError;
   @override
   String get firstname => throw _privateConstructorUsedError;
   @override

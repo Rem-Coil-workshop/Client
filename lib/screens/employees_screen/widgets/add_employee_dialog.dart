@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:slot_service_app/constants.dart';
+import 'package:slot_service_app/core/models/employee.dart';
 import 'package:slot_service_app/core/utils/validation.dart';
+import 'package:slot_service_app/redux/employees/thunk.dart';
+import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/screens/employees_screen/widgets/simple_text_field.dart';
 
 import 'dialog_title.dart';
@@ -66,12 +70,24 @@ class AddEmployeeDialog extends StatelessWidget {
   }
 
   Widget _getActions(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         TextButton(
           onPressed: () {
-            if (_firstnameField.isValid && _lastnameField.isValid && _numberField.isValid) {
+            if (_firstnameField.isValid &&
+                _lastnameField.isValid &&
+                _numberField.isValid) {
+              store.dispatch(
+                OnCreateEmployee(
+                  Employee(
+                    firstname: _firstnameField.value,
+                    lastname: _lastnameField.value,
+                    number: int.parse(_numberField.value),
+                  ),
+                ),
+              );
               Navigator.pop(context);
             }
           },

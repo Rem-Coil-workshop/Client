@@ -35,10 +35,11 @@ class EmployeesTable extends StatelessWidget {
                     DataColumn(label: Text('Имя')),
                     DataColumn(label: Text('Фамилия')),
                     DataColumn(label: Text('Номер пропуска')),
+                    DataColumn(label: Container()),
                   ],
                   rows: List.generate(
                     employees.length,
-                        (index) => recentFileDataRow(employees[index]),
+                    (index) => recentFileDataRow(employees[index], context),
                   ),
                 ),
               ),
@@ -49,14 +50,26 @@ class EmployeesTable extends StatelessWidget {
     );
   }
 
-  // TODO - Добавить обработку нажатий
-  DataRow recentFileDataRow(Employee employee) {
+  DataRow recentFileDataRow(Employee employee, BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     return DataRow(
-      onSelectChanged: (value) => print(employee.number),
       cells: [
         DataCell(Text(employee.firstname)),
         DataCell(Text(employee.lastname)),
         DataCell(Text(employee.number.toString())),
+        DataCell(Row(
+          children: [
+            Spacer(),
+            IconButton(
+              onPressed: () => store.dispatch(OnDeleteEmployee(employee)),
+              splashRadius: 8,
+              icon: Icon(
+                Icons.remove_circle,
+                color: Colors.red,
+              ),
+            ),
+          ],
+        )),
       ],
     );
   }

@@ -5,6 +5,7 @@ part 'employee.freezed.dart';
 @freezed
 class Employee with _$Employee {
   const factory Employee({
+    int? id,
     required String firstname,
     required String lastname,
     required int number,

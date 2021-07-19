@@ -23,7 +23,8 @@ class TasksRepository extends BaseRepository {
     );
 
     if (response.statusCode == 200) {
-      final responseBody = JsonTask.fromJson(jsonDecode(response.body)).toTask();
+      final responseBody =
+          JsonTask.fromJson(jsonDecode(response.body)).toTask();
       _tasks.add(responseBody);
       return _tasks;
     } else {
@@ -36,10 +37,7 @@ class TasksRepository extends BaseRepository {
   }
 
   Future<List<Task>> removeTask(Task task) async {
-    final Response response = await HttpAdapter.delete(
-      '/v1/tasks',
-      {'qrCode': task.name},
-    );
+    final Response response = await HttpAdapter.delete('/v1/tasks/${task.id}');
 
     if (response.statusCode == 200) {
       _tasks.remove(task);

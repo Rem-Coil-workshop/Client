@@ -50,13 +50,11 @@ class HttpAdapter {
 
   static Future<http.Response> delete(
     String path,
-    Map<String, dynamic> json,
   ) async {
     try {
       return http.delete(
         UriBuilder.withoutParams(path),
         headers: headers,
-        body: jsonEncode(json),
       );
     } catch (e) {
       throw NetworkException.socketException();
