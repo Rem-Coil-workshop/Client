@@ -4,7 +4,7 @@ import 'package:slot_service_app/core/models/task.dart';
 part 'state.freezed.dart';
 
 @freezed
-abstract class TasksState with _$TasksState {
+class TasksState with _$TasksState {
   static const initState = TasksState();
 
   const factory TasksState({

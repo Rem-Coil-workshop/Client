@@ -3,7 +3,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:slot_service_app/constants.dart';
+import 'package:slot_service_app/core/repository/base_repository.dart';
 import 'package:slot_service_app/core/repository/boxes_repository.dart';
+import 'package:slot_service_app/core/repository/employees_repository.dart';
 import 'package:slot_service_app/core/repository/tasks_repository.dart';
 import 'package:slot_service_app/redux/reducer.dart';
 import 'package:slot_service_app/redux/state.dart';
@@ -26,23 +28,27 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
 
   Store<AppState> get _appState {
     if (_appStateHolder == null) {
-      final tasksRepository = TasksRepository();
-      final boxesRepository = BoxesRepository();
-
-      final taskThunkMiddleware =
-          ExtraArgumentThunkMiddleware<AppState, TasksRepository>(
-              tasksRepository);
-      final boxThunkMiddleware =
-          ExtraArgumentThunkMiddleware<AppState, BoxesRepository>(
-              boxesRepository);
+      final taskThunkMiddleware = _getThunkMiddleware(TasksRepository());
+      final boxThunkMiddleware = _getThunkMiddleware(BoxesRepository());
+      final employeeThunkMiddleware =_getThunkMiddleware(EmployeesRepository());
 
       _appStateHolder ??= Store<AppState>(
         appReducer,
         initialState: AppState.initState,
-        middleware: [thunkMiddleware, taskThunkMiddleware, boxThunkMiddleware],
+        middleware: [
+          thunkMiddleware,
+          taskThunkMiddleware,
+          boxThunkMiddleware,
+          employeeThunkMiddleware,
+        ],
       );
     }
     return _appStateHolder!;
+  }
+
+  ExtraArgumentThunkMiddleware _getThunkMiddleware<T extends BaseRepository>(
+      T repository,) {
+    return ExtraArgumentThunkMiddleware<AppState, T>(repository);
   }
 
   @override
@@ -63,7 +69,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
           EmployeesScreen.route: (context) => EmployeesScreen(),
           LogsScreen.route: (context) => LogsScreen(),
         },
-        initialRoute: BoxesScreen.route,
+        initialRoute: EmployeesScreen.route,
       ),
     );
   }

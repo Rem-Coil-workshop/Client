@@ -4,7 +4,7 @@ import 'package:slot_service_app/core/models/box.dart';
 part 'state.freezed.dart';
 
 @freezed
-abstract class BoxesState with _$BoxesState {
+class BoxesState with _$BoxesState {
   static const initState = BoxesState();
 
   const factory BoxesState({

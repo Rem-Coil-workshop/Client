@@ -20,12 +20,14 @@ class _$AppStateTearOff {
       {required BoxesState boxesState,
       required TasksState tasksState,
       required AuthState authState,
-      required StatusState statusState}) {
+      required StatusState statusState,
+      required EmployeesState employeesState}) {
     return _AppState(
       boxesState: boxesState,
       tasksState: tasksState,
       authState: authState,
       statusState: statusState,
+      employeesState: employeesState,
     );
   }
 }
@@ -39,6 +41,7 @@ mixin _$AppState {
   TasksState get tasksState => throw _privateConstructorUsedError;
   AuthState get authState => throw _privateConstructorUsedError;
   StatusState get statusState => throw _privateConstructorUsedError;
+  EmployeesState get employeesState => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -53,12 +56,14 @@ abstract class $AppStateCopyWith<$Res> {
       {BoxesState boxesState,
       TasksState tasksState,
       AuthState authState,
-      StatusState statusState});
+      StatusState statusState,
+      EmployeesState employeesState});
 
   $BoxesStateCopyWith<$Res> get boxesState;
   $TasksStateCopyWith<$Res> get tasksState;
   $AuthStateCopyWith<$Res> get authState;
   $StatusStateCopyWith<$Res> get statusState;
+  $EmployeesStateCopyWith<$Res> get employeesState;
 }
 
 /// @nodoc
@@ -75,6 +80,7 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
     Object? tasksState = freezed,
     Object? authState = freezed,
     Object? statusState = freezed,
+    Object? employeesState = freezed,
   }) {
     return _then(_value.copyWith(
       boxesState: boxesState == freezed
@@ -93,6 +99,10 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
           ? _value.statusState
           : statusState // ignore: cast_nullable_to_non_nullable
               as StatusState,
+      employeesState: employeesState == freezed
+          ? _value.employeesState
+          : employeesState // ignore: cast_nullable_to_non_nullable
+              as EmployeesState,
     ));
   }
 
@@ -123,6 +133,13 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
       return _then(_value.copyWith(statusState: value));
     });
   }
+
+  @override
+  $EmployeesStateCopyWith<$Res> get employeesState {
+    return $EmployeesStateCopyWith<$Res>(_value.employeesState, (value) {
+      return _then(_value.copyWith(employeesState: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -134,7 +151,8 @@ abstract class _$AppStateCopyWith<$Res> implements $AppStateCopyWith<$Res> {
       {BoxesState boxesState,
       TasksState tasksState,
       AuthState authState,
-      StatusState statusState});
+      StatusState statusState,
+      EmployeesState employeesState});
 
   @override
   $BoxesStateCopyWith<$Res> get boxesState;
@@ -144,6 +162,8 @@ abstract class _$AppStateCopyWith<$Res> implements $AppStateCopyWith<$Res> {
   $AuthStateCopyWith<$Res> get authState;
   @override
   $StatusStateCopyWith<$Res> get statusState;
+  @override
+  $EmployeesStateCopyWith<$Res> get employeesState;
 }
 
 /// @nodoc
@@ -161,6 +181,7 @@ class __$AppStateCopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
     Object? tasksState = freezed,
     Object? authState = freezed,
     Object? statusState = freezed,
+    Object? employeesState = freezed,
   }) {
     return _then(_AppState(
       boxesState: boxesState == freezed
@@ -179,6 +200,10 @@ class __$AppStateCopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
           ? _value.statusState
           : statusState // ignore: cast_nullable_to_non_nullable
               as StatusState,
+      employeesState: employeesState == freezed
+          ? _value.employeesState
+          : employeesState // ignore: cast_nullable_to_non_nullable
+              as EmployeesState,
     ));
   }
 }
@@ -190,7 +215,8 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
       {required this.boxesState,
       required this.tasksState,
       required this.authState,
-      required this.statusState});
+      required this.statusState,
+      required this.employeesState});
 
   @override
   final BoxesState boxesState;
@@ -200,10 +226,12 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
   final AuthState authState;
   @override
   final StatusState statusState;
+  @override
+  final EmployeesState employeesState;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState(boxesState: $boxesState, tasksState: $tasksState, authState: $authState, statusState: $statusState)';
+    return 'AppState(boxesState: $boxesState, tasksState: $tasksState, authState: $authState, statusState: $statusState, employeesState: $employeesState)';
   }
 
   @override
@@ -214,7 +242,8 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
       ..add(DiagnosticsProperty('boxesState', boxesState))
       ..add(DiagnosticsProperty('tasksState', tasksState))
       ..add(DiagnosticsProperty('authState', authState))
-      ..add(DiagnosticsProperty('statusState', statusState));
+      ..add(DiagnosticsProperty('statusState', statusState))
+      ..add(DiagnosticsProperty('employeesState', employeesState));
   }
 
   @override
@@ -232,7 +261,10 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
                     .equals(other.authState, authState)) &&
             (identical(other.statusState, statusState) ||
                 const DeepCollectionEquality()
-                    .equals(other.statusState, statusState)));
+                    .equals(other.statusState, statusState)) &&
+            (identical(other.employeesState, employeesState) ||
+                const DeepCollectionEquality()
+                    .equals(other.employeesState, employeesState)));
   }
 
   @override
@@ -241,7 +273,8 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
       const DeepCollectionEquality().hash(boxesState) ^
       const DeepCollectionEquality().hash(tasksState) ^
       const DeepCollectionEquality().hash(authState) ^
-      const DeepCollectionEquality().hash(statusState);
+      const DeepCollectionEquality().hash(statusState) ^
+      const DeepCollectionEquality().hash(employeesState);
 
   @JsonKey(ignore: true)
   @override
@@ -254,7 +287,8 @@ abstract class _AppState implements AppState {
       {required BoxesState boxesState,
       required TasksState tasksState,
       required AuthState authState,
-      required StatusState statusState}) = _$_AppState;
+      required StatusState statusState,
+      required EmployeesState employeesState}) = _$_AppState;
 
   @override
   BoxesState get boxesState => throw _privateConstructorUsedError;
@@ -264,6 +298,8 @@ abstract class _AppState implements AppState {
   AuthState get authState => throw _privateConstructorUsedError;
   @override
   StatusState get statusState => throw _privateConstructorUsedError;
+  @override
+  EmployeesState get employeesState => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AppStateCopyWith<_AppState> get copyWith =>

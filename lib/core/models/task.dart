@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'task.freezed.dart';
 
 @freezed
-abstract class Task with _$Task {
+class Task with _$Task {
   static const Task nullValue = Task(id: 0, name: 'Пусто');
 
   const factory Task({

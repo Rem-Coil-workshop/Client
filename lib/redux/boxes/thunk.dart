@@ -26,9 +26,9 @@ class OnTaskChange extends BaseThunkWithExtra<BoxesRepository> {
       final boxes = await repository.changeBoxTask(box, task);
       store.dispatch(OnUpdateBoxes(boxes));
     } on NetworkException catch (e) {
-      store.dispatch(OnBoxesNetworkError(e.message));
+      store.dispatch(OnError(e.message));
     } catch(e) {
-      store.dispatch(OnBoxesNetworkError('Ошибка подключения к сети'));
+      store.dispatch(OnError('Ошибка подключения к сети'));
     }
   }
 }
@@ -45,9 +45,9 @@ class OnFetchBoxes extends BaseThunkWithExtra<BoxesRepository> {
       final boxes = await repository.boxes;
       store.dispatch(OnUpdateBoxes(boxes));
     } on NetworkException catch (e) {
-      store.dispatch(OnBoxesNetworkError(e.message));
+      store.dispatch(OnError(e.message));
     } catch(e) {
-      store.dispatch(OnBoxesNetworkError('Ошибка подключения к сети'));
+      store.dispatch(OnError('Ошибка подключения к сети'));
     }
   }
 }
@@ -61,17 +61,6 @@ class OnUpdateBoxes extends BaseThunk {
   Future<void> execute(Store<AppState> store) async {
     store.dispatch(SetBoxesAction(boxes));
     store.dispatch(OnSuccess('Список ячеек обновлён'));
-  }
-}
-
-class OnBoxesNetworkError extends BaseThunk {
-  final String message;
-
-  OnBoxesNetworkError(this.message);
-
-  @override
-  Future<void> execute(Store<AppState> store) async {
-    store.dispatch(OnError(message));
   }
 }
 
@@ -92,9 +81,9 @@ class OnOpenBox extends BaseThunk {
         store.dispatch(OnError('Данной ячейки не существует'));
       }
     } on NetworkException catch (e) {
-      store.dispatch(OnBoxesNetworkError(e.message));
+      store.dispatch(OnError(e.message));
     } catch(e) {
-      store.dispatch(OnBoxesNetworkError('Ошибка подключения к сети'));
+      store.dispatch(OnError('Ошибка подключения к сети'));
     }
   }
 }

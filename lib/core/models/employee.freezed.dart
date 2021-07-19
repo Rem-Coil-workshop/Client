@@ -16,10 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$EmployeeTearOff {
   const _$EmployeeTearOff();
 
-  _Employee call({required String firstname, required String lastname}) {
+  _Employee call(
+      {required String firstname,
+      required String lastname,
+      required int number}) {
     return _Employee(
       firstname: firstname,
       lastname: lastname,
+      number: number,
     );
   }
 }
@@ -31,6 +35,7 @@ const $Employee = _$EmployeeTearOff();
 mixin _$Employee {
   String get firstname => throw _privateConstructorUsedError;
   String get lastname => throw _privateConstructorUsedError;
+  int get number => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $EmployeeCopyWith<Employee> get copyWith =>
@@ -41,7 +46,7 @@ mixin _$Employee {
 abstract class $EmployeeCopyWith<$Res> {
   factory $EmployeeCopyWith(Employee value, $Res Function(Employee) then) =
       _$EmployeeCopyWithImpl<$Res>;
-  $Res call({String firstname, String lastname});
+  $Res call({String firstname, String lastname, int number});
 }
 
 /// @nodoc
@@ -56,6 +61,7 @@ class _$EmployeeCopyWithImpl<$Res> implements $EmployeeCopyWith<$Res> {
   $Res call({
     Object? firstname = freezed,
     Object? lastname = freezed,
+    Object? number = freezed,
   }) {
     return _then(_value.copyWith(
       firstname: firstname == freezed
@@ -66,6 +72,10 @@ class _$EmployeeCopyWithImpl<$Res> implements $EmployeeCopyWith<$Res> {
           ? _value.lastname
           : lastname // ignore: cast_nullable_to_non_nullable
               as String,
+      number: number == freezed
+          ? _value.number
+          : number // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -75,7 +85,7 @@ abstract class _$EmployeeCopyWith<$Res> implements $EmployeeCopyWith<$Res> {
   factory _$EmployeeCopyWith(_Employee value, $Res Function(_Employee) then) =
       __$EmployeeCopyWithImpl<$Res>;
   @override
-  $Res call({String firstname, String lastname});
+  $Res call({String firstname, String lastname, int number});
 }
 
 /// @nodoc
@@ -91,6 +101,7 @@ class __$EmployeeCopyWithImpl<$Res> extends _$EmployeeCopyWithImpl<$Res>
   $Res call({
     Object? firstname = freezed,
     Object? lastname = freezed,
+    Object? number = freezed,
   }) {
     return _then(_Employee(
       firstname: firstname == freezed
@@ -101,6 +112,10 @@ class __$EmployeeCopyWithImpl<$Res> extends _$EmployeeCopyWithImpl<$Res>
           ? _value.lastname
           : lastname // ignore: cast_nullable_to_non_nullable
               as String,
+      number: number == freezed
+          ? _value.number
+          : number // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -108,16 +123,19 @@ class __$EmployeeCopyWithImpl<$Res> extends _$EmployeeCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Employee implements _Employee {
-  const _$_Employee({required this.firstname, required this.lastname});
+  const _$_Employee(
+      {required this.firstname, required this.lastname, required this.number});
 
   @override
   final String firstname;
   @override
   final String lastname;
+  @override
+  final int number;
 
   @override
   String toString() {
-    return 'Employee(firstname: $firstname, lastname: $lastname)';
+    return 'Employee(firstname: $firstname, lastname: $lastname, number: $number)';
   }
 
   @override
@@ -129,14 +147,17 @@ class _$_Employee implements _Employee {
                     .equals(other.firstname, firstname)) &&
             (identical(other.lastname, lastname) ||
                 const DeepCollectionEquality()
-                    .equals(other.lastname, lastname)));
+                    .equals(other.lastname, lastname)) &&
+            (identical(other.number, number) ||
+                const DeepCollectionEquality().equals(other.number, number)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(firstname) ^
-      const DeepCollectionEquality().hash(lastname);
+      const DeepCollectionEquality().hash(lastname) ^
+      const DeepCollectionEquality().hash(number);
 
   @JsonKey(ignore: true)
   @override
@@ -146,12 +167,16 @@ class _$_Employee implements _Employee {
 
 abstract class _Employee implements Employee {
   const factory _Employee(
-      {required String firstname, required String lastname}) = _$_Employee;
+      {required String firstname,
+      required String lastname,
+      required int number}) = _$_Employee;
 
   @override
   String get firstname => throw _privateConstructorUsedError;
   @override
   String get lastname => throw _privateConstructorUsedError;
+  @override
+  int get number => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$EmployeeCopyWith<_Employee> get copyWith =>
