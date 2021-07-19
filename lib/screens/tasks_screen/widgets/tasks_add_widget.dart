@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:slot_service_app/core/utils/validation.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/tasks/thunk.dart';
 
@@ -28,16 +29,6 @@ class AddTaskWidget extends StatefulWidget {
 class _AddTaskWidgetState extends State<AddTaskWidget> {
   final _controller = TextEditingController();
   var _isInputValid = true;
-
-  bool _validateQrCode(String qrCode) {
-    for (var rune in qrCode.runes) {
-      var character = String.fromCharCode(rune);
-      if (!AddTaskWidget.CORRECT_CODES.contains(character)) {
-        return false;
-      }
-    }
-    return true;
-  }
 
   @override
   void dispose() {
@@ -69,7 +60,9 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
             child: TextField(
               controller: _controller,
               onChanged: (value) => setState(() {
-                this._isInputValid = _validateQrCode(value);
+                this._isInputValid = isValidInput(value, (chr) {
+                  return AddTaskWidget.CORRECT_CODES.contains(chr);
+                });
               }),
               decoration: InputDecoration(
                 errorText: _isInputValid ? null : 'Неверный формат кода',
@@ -83,8 +76,10 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                 ),
                 suffixIcon: InkWell(
                   onTap: () {
-                    store.dispatch(OnCreateTask(_controller.text));
-                    _controller.clear();
+                    if (_isInputValid) {
+                      store.dispatch(OnCreateTask(_controller.text));
+                      _controller.clear();
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.all(defaultPadding * 0.5),

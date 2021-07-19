@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slot_service_app/screens/employees_screen/widgets/add_employee_dialog.dart';
 
 import '../../../constants.dart';
 
@@ -14,7 +15,10 @@ class AddEmployeeButton extends StatelessWidget {
         top: defaultPadding,
       ),
       child: ElevatedButton(
-        onPressed: () => null,
+        onPressed: () => showDialog(
+          context: context,
+          builder: (context) => AddEmployeeDialog(),
+        ),
         child: Text('Добавить сотрудника'),
       ),
     );

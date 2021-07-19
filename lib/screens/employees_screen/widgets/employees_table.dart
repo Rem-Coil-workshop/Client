@@ -49,6 +49,7 @@ class EmployeesTable extends StatelessWidget {
     );
   }
 
+  // TODO - Добавить обработку нажатий
   DataRow recentFileDataRow(Employee employee) {
     return DataRow(
       onSelectChanged: (value) => print(employee.number),
