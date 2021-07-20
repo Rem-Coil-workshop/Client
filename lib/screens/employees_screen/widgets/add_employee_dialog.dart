@@ -6,6 +6,7 @@ import 'package:slot_service_app/core/utils/validation.dart';
 import 'package:slot_service_app/redux/employees/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/screens/employees_screen/widgets/simple_text_field.dart';
+import 'package:slot_service_app/screens/employees_screen/widgets/websocket_field.dart';
 
 import 'dialog_title.dart';
 
@@ -22,11 +23,7 @@ class AddEmployeeDialog extends StatelessWidget {
     isValidCharacter: isWord,
   );
 
-  final _numberField = SimpleTextField(
-    hintText: 'Номер сотрудника',
-    errorText: 'Номер может состоять только из цифр.',
-    isValidCharacter: isDigit,
-  );
+  final _numberField = WebSocketField();
 
   AddEmployeeDialog({Key? key}) : super(key: key);
 
@@ -59,6 +56,7 @@ class AddEmployeeDialog extends StatelessWidget {
       child: Container(
         width: double.infinity,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _firstnameField,
             _lastnameField,
