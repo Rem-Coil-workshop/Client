@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/src/store.dart';
+import 'package:redux/redux.dart';
 import 'package:slot_service_app/core/models/task.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/tasks/thunk.dart';

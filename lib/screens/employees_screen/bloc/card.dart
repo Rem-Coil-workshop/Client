@@ -1,13 +1,11 @@
 import 'dart:async';
 
-import 'package:slot_service_app/core/network/config.dart';
+import 'package:slot_service_app/redux/settings/state.dart';
 import 'package:slot_service_app/screens/employees_screen/view_models/card.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class CardBloc {
-  final _channel = WebSocketChannel.connect(
-    Uri.parse('ws://$HOST:$PORT/websocket'),
-  );
+  late WebSocketChannel _channel;
 
   String _currentValue = '';
 
@@ -19,6 +17,12 @@ class CardBloc {
 
   CardBloc() {
     _inputController.stream.listen(_mapEventToStream);
+  }
+
+  void openSocket(Network network) {
+    _channel = WebSocketChannel.connect(
+      Uri.parse('ws://${network.host}:${network.port}/websocket'),
+    );
 
     _channel.stream.listen((message) {
       _currentValue = message;

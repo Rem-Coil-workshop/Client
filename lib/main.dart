@@ -12,6 +12,7 @@ import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/screens/employees_screen/employees_screen.dart';
 import 'package:slot_service_app/screens/logs_screen/logs_screen.dart';
+import 'package:slot_service_app/screens/settings_screen/settings_screen.dart';
 import 'package:slot_service_app/screens/tasks_screen/tasks_screen.dart';
 
 void main() {
@@ -68,8 +69,9 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
           TasksScreen.route: (context) => TasksScreen(),
           EmployeesScreen.route: (context) => EmployeesScreen(),
           LogsScreen.route: (context) => LogsScreen(),
+          SettingsScreen.route: (context) => SettingsScreen(),
         },
-        initialRoute: EmployeesScreen.route,
+        initialRoute: SettingsScreen.route,
       ),
     );
   }

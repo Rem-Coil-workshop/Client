@@ -4,7 +4,6 @@ import 'package:http/http.dart';
 import 'package:slot_service_app/core/json_models/box.dart';
 import 'package:slot_service_app/core/models/box.dart';
 import 'package:slot_service_app/core/models/task.dart';
-import 'package:slot_service_app/core/network/http_adapter.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/base_repository.dart';
 
@@ -18,7 +17,7 @@ class BoxesRepository extends BaseRepository {
   }
 
   Future<Iterable<JsonBox>> _fetchBoxes() async {
-    final response = await HttpAdapter.get('/v1/boxes');
+    final response = await client.get('/v1/boxes');
 
     if (response.statusCode == 200) {
       return _parseBody(response);
@@ -35,7 +34,7 @@ class BoxesRepository extends BaseRepository {
     if (box.taskId == task.id) return _boxes;
 
     final jsonBox = JsonBox.fromBox(box.copyWith(taskId: task.id));
-    final response = await HttpAdapter.put('/v1/boxes', jsonBox.toJson());
+    final response = await client.put('/v1/boxes', jsonBox.toJson());
 
     if (response.statusCode == 200) {
       final newBox = JsonBox.fromJson(jsonDecode(response.body)).toBox();

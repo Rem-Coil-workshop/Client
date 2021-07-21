@@ -27,7 +27,7 @@ class OnTaskChange extends BaseThunkWithExtra<BoxesRepository> {
       store.dispatch(OnUpdateBoxes(boxes));
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));
-    } catch(e) {
+    } catch (e) {
       store.dispatch(OnError('Ошибка подключения к сети'));
     }
   }
@@ -46,7 +46,7 @@ class OnFetchBoxes extends BaseThunkWithExtra<BoxesRepository> {
       store.dispatch(OnUpdateBoxes(boxes));
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));
-    } catch(e) {
+    } catch (e) {
       store.dispatch(OnError('Ошибка подключения к сети'));
     }
   }
@@ -73,7 +73,10 @@ class OnOpenBox extends BaseThunk {
   Future<void> execute(Store<AppState> store) async {
     try {
       final url = '/v1/slots/open/' + box.id.toString();
-      final response = await HttpAdapter.get(url);
+      store.dispatch(OnBeginLoad('Пытаемся открыть ячейку'));
+
+      final client = HttpAdapter(store.state.settingsState.network);
+      final response = await client.get(url);
 
       if (response.statusCode == 204) {
         store.dispatch(OnSuccess('Ячейка открыта'));
@@ -82,8 +85,22 @@ class OnOpenBox extends BaseThunk {
       }
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));
-    } catch(e) {
+    } catch (e) {
       store.dispatch(OnError('Ошибка подключения к сети'));
     }
+  }
+}
+
+class OnUpdateNetworkConfigInBoxesRepository
+    extends BaseThunkWithExtra<BoxesRepository> {
+
+  OnUpdateNetworkConfigInBoxesRepository();
+
+  @override
+  Future<void> execute(
+    Store<AppState> store,
+    BoxesRepository repository,
+  ) async {
+    repository.changeNetworkClient(store.state.settingsState.network);
   }
 }

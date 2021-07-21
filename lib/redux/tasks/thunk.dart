@@ -13,15 +13,15 @@ class OnCreateTask extends BaseThunkWithExtra<TasksRepository> {
   const OnCreateTask(this.task);
 
   @override
-  Future<void> execute(Store<AppState> store,
-      TasksRepository repository) async {
+  Future<void> execute(
+      Store<AppState> store, TasksRepository repository) async {
     store.dispatch(OnBeginLoad('Добавляем задачу'));
     try {
       final tasks = await repository.addTask(task);
       store.dispatch(OnUpdateTasks(tasks));
     } on NetworkException catch (e) {
       store.dispatch(OnTasksNetworkError(e.message));
-    } catch(e) {
+    } catch (e) {
       store.dispatch(OnTasksNetworkError('Ошибка подключения к сети'));
     }
   }
@@ -33,15 +33,15 @@ class OnRemoveTask extends BaseThunkWithExtra<TasksRepository> {
   const OnRemoveTask(this.task);
 
   @override
-  Future<void> execute(Store<AppState> store,
-      TasksRepository repository) async {
+  Future<void> execute(
+      Store<AppState> store, TasksRepository repository) async {
     store.dispatch(OnBeginLoad('Удаляем задачу'));
     try {
       final tasks = await repository.removeTask(task);
       store.dispatch(OnUpdateTasks(tasks));
-    } on NetworkException catch(e) {
+    } on NetworkException catch (e) {
       store.dispatch(OnTasksNetworkError(e.message));
-    } catch(e) {
+    } catch (e) {
       store.dispatch(OnTasksNetworkError('Ошибка подключения к сети'));
     }
   }
@@ -49,15 +49,15 @@ class OnRemoveTask extends BaseThunkWithExtra<TasksRepository> {
 
 class OnFetchTasks extends BaseThunkWithExtra<TasksRepository> {
   @override
-  Future<void> execute(Store<AppState> store,
-      TasksRepository repository) async {
+  Future<void> execute(
+      Store<AppState> store, TasksRepository repository) async {
     store.dispatch(OnBeginLoad('Загружаем задачи'));
     try {
       final tasks = await repository.fetchTasks();
       store.dispatch(OnUpdateTasks(tasks));
-    } on NetworkException catch(e) {
+    } on NetworkException catch (e) {
       store.dispatch(OnTasksNetworkError(e.message));
-    } catch(e) {
+    } catch (e) {
       store.dispatch(OnTasksNetworkError('Ошибка подключения к сети'));
     }
   }
@@ -83,5 +83,16 @@ class OnTasksNetworkError extends BaseThunk {
   @override
   Future<void> execute(Store<AppState> store) async {
     store.dispatch(OnError(message));
+  }
+}
+
+class OnUpdateNetworkConfigInTasksRepository
+    extends BaseThunkWithExtra<TasksRepository> {
+  @override
+  Future<void> execute(
+    Store<AppState> store,
+    TasksRepository repository,
+  ) async {
+    repository.changeNetworkClient(store.state.settingsState.network);
   }
 }

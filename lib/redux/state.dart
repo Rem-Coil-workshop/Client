@@ -1,8 +1,9 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:slot_service_app/redux/auth/state.dart';
 import 'package:slot_service_app/redux/boxes/state.dart';
 import 'package:slot_service_app/redux/employees/state.dart';
+import 'package:slot_service_app/redux/settings/state.dart';
 import 'package:slot_service_app/redux/status/state.dart';
 import 'package:slot_service_app/redux/tasks/state.dart';
 
@@ -16,6 +17,7 @@ class AppState with _$AppState {
     boxesState: BoxesState.initState,
     tasksState: TasksState.initState,
     employeesState: EmployeesState.initState,
+    settingsState: SettingsState.initState,
   );
 
   const factory AppState({
@@ -24,5 +26,6 @@ class AppState with _$AppState {
     required AuthState authState,
     required StatusState statusState,
     required EmployeesState employeesState,
+    required SettingsState settingsState,
   }) = _AppState;
 }

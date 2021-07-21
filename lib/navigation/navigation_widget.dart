@@ -4,6 +4,7 @@ import 'package:slot_service_app/navigation/widgets/navigation_logo_item.dart';
 import 'package:slot_service_app/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/screens/employees_screen/employees_screen.dart';
 import 'package:slot_service_app/screens/logs_screen/logs_screen.dart';
+import 'package:slot_service_app/screens/settings_screen/settings_screen.dart';
 import 'package:slot_service_app/screens/tasks_screen/tasks_screen.dart';
 import 'models/navigation_item_info.dart';
 
@@ -29,6 +30,11 @@ class NavigationWidget extends StatelessWidget {
       icon: Icons.ballot_outlined,
       title: 'Логи',
       widget: LogsScreen(),
+    ),
+    NavigationItemInfo(
+      icon: Icons.settings_applications,
+      title: 'Настройки',
+      widget: SettingsScreen(),
     ),
   ];
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/screens/employees_screen/bloc/card.dart';
 
 import '../../../constants.dart';
@@ -33,6 +35,9 @@ class _WebSocketFieldState extends State<WebSocketField> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    widget._bloc.openSocket(store.state.settingsState.network);
+
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),
       child: Text(_cardValue),

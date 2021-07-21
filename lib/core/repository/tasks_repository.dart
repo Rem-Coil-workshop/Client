@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:slot_service_app/core/json_models/task.dart';
 import 'package:slot_service_app/core/models/task.dart';
-import 'package:slot_service_app/core/network/http_adapter.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/base_repository.dart';
 
@@ -17,7 +16,7 @@ class TasksRepository extends BaseRepository {
   }
 
   Future<List<Task>> addTask(String taskName) async {
-    final Response response = await HttpAdapter.post(
+    final Response response = await client.post(
       '/v1/tasks',
       {'qrCode': taskName},
     );
@@ -37,7 +36,7 @@ class TasksRepository extends BaseRepository {
   }
 
   Future<List<Task>> removeTask(Task task) async {
-    final Response response = await HttpAdapter.delete('/v1/tasks/${task.id}');
+    final Response response = await client.delete('/v1/tasks/${task.id}');
 
     if (response.statusCode == 200) {
       _tasks.remove(task);
@@ -52,7 +51,7 @@ class TasksRepository extends BaseRepository {
   }
 
   Future<List<JsonTask>> _fetchTasks() async {
-    final Response response = await HttpAdapter.get('/v1/tasks');
+    final Response response = await client.get('/v1/tasks');
 
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body) as List;

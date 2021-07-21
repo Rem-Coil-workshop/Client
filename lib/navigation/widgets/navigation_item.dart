@@ -29,7 +29,7 @@ class NavigationItem extends StatelessWidget {
       child: ListTile(
         onTap: () {
           Navigator.of(context).pushReplacement(
-            RouteBulider(widget: item.widget, name: item.widget.getRoute()),
+            RouteBuilder(widget: item.widget, name: item.widget.getRoute()),
           );
         },
         horizontalTitleGap: 0.0,

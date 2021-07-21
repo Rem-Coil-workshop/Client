@@ -4,27 +4,32 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/network/uri_builder.dart';
+import 'package:slot_service_app/redux/settings/state.dart';
 
 class HttpAdapter {
+  final UriBuilder _builder;
+
   static const headers = <String, String>{
     HttpHeaders.contentTypeHeader: "application/json",
   };
 
-  static Future<http.Response> get(String path) async {
+  HttpAdapter(Network config) : _builder = UriBuilder(config);
+
+  Future<http.Response> get(String path) async {
     try {
-      return http.get(UriBuilder.withoutParams(path));
+      return http.get(_builder.withoutParams(path));
     } catch (e) {
       throw NetworkException.socketException();
     }
   }
 
-  static Future<http.Response> post(
+  Future<http.Response> post(
     String path,
     Map<String, dynamic> json,
   ) async {
     try {
       return http.post(
-        UriBuilder.withoutParams(path),
+        _builder.withoutParams(path),
         headers: headers,
         body: jsonEncode(json),
       );
@@ -33,13 +38,13 @@ class HttpAdapter {
     }
   }
 
-  static Future<http.Response> put(
+  Future<http.Response> put(
     String path,
     Map<String, dynamic> json,
   ) async {
     try {
       return http.put(
-        UriBuilder.withoutParams(path),
+        _builder.withoutParams(path),
         headers: headers,
         body: jsonEncode(json),
       );
@@ -48,12 +53,12 @@ class HttpAdapter {
     }
   }
 
-  static Future<http.Response> delete(
+  Future<http.Response> delete(
     String path,
   ) async {
     try {
       return http.delete(
-        UriBuilder.withoutParams(path),
+        _builder.withoutParams(path),
         headers: headers,
       );
     } catch (e) {

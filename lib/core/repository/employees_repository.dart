@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:slot_service_app/core/json_models/employee.dart';
 import 'package:slot_service_app/core/models/employee.dart';
-import 'package:slot_service_app/core/network/http_adapter.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/base_repository.dart';
 
@@ -17,7 +16,7 @@ class EmployeesRepository extends BaseRepository {
   }
 
   Future<Iterable<JsonEmployee>> _fetchEmployees() async {
-    final response = await HttpAdapter.get('/v1/employees');
+    final response = await client.get('/v1/employees');
 
     if (response.statusCode == 200) {
       return _parseBody(response);
@@ -37,7 +36,7 @@ class EmployeesRepository extends BaseRepository {
   }
 
   Future<List<Employee>> addEmployee(Employee employee) async {
-    final response = await HttpAdapter.post(
+    final response = await client.post(
       '/v1/employees',
       JsonEmployee.fromEmployee(employee).toJson(),
     );
@@ -57,7 +56,7 @@ class EmployeesRepository extends BaseRepository {
   }
 
   Future<List<Employee>> deleteEmployee(Employee employee) async {
-    final response = await HttpAdapter.delete('/v1/employees/${employee.id}');
+    final response = await client.delete('/v1/employees/${employee.id}');
 
 
     if (response.statusCode == 204) {
