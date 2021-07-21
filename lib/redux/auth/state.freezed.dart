@@ -16,9 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$AuthStateTearOff {
   const _$AuthStateTearOff();
 
-  _AuthState call({required Employee employee}) {
+  _AuthState call({List<User> users = const [], User? currentUser}) {
     return _AuthState(
-      employee: employee,
+      users: users,
+      currentUser: currentUser,
     );
   }
 }
@@ -28,7 +29,8 @@ const $AuthState = _$AuthStateTearOff();
 
 /// @nodoc
 mixin _$AuthState {
-  Employee get employee => throw _privateConstructorUsedError;
+  List<User> get users => throw _privateConstructorUsedError;
+  User? get currentUser => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthStateCopyWith<AuthState> get copyWith =>
@@ -39,9 +41,9 @@ mixin _$AuthState {
 abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res>;
-  $Res call({Employee employee});
+  $Res call({List<User> users, User? currentUser});
 
-  $EmployeeCopyWith<$Res> get employee;
+  $UserCopyWith<$Res>? get currentUser;
 }
 
 /// @nodoc
@@ -54,20 +56,29 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? employee = freezed,
+    Object? users = freezed,
+    Object? currentUser = freezed,
   }) {
     return _then(_value.copyWith(
-      employee: employee == freezed
-          ? _value.employee
-          : employee // ignore: cast_nullable_to_non_nullable
-              as Employee,
+      users: users == freezed
+          ? _value.users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<User>,
+      currentUser: currentUser == freezed
+          ? _value.currentUser
+          : currentUser // ignore: cast_nullable_to_non_nullable
+              as User?,
     ));
   }
 
   @override
-  $EmployeeCopyWith<$Res> get employee {
-    return $EmployeeCopyWith<$Res>(_value.employee, (value) {
-      return _then(_value.copyWith(employee: value));
+  $UserCopyWith<$Res>? get currentUser {
+    if (_value.currentUser == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.currentUser!, (value) {
+      return _then(_value.copyWith(currentUser: value));
     });
   }
 }
@@ -78,10 +89,10 @@ abstract class _$AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
           _AuthState value, $Res Function(_AuthState) then) =
       __$AuthStateCopyWithImpl<$Res>;
   @override
-  $Res call({Employee employee});
+  $Res call({List<User> users, User? currentUser});
 
   @override
-  $EmployeeCopyWith<$Res> get employee;
+  $UserCopyWith<$Res>? get currentUser;
 }
 
 /// @nodoc
@@ -95,13 +106,18 @@ class __$AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? employee = freezed,
+    Object? users = freezed,
+    Object? currentUser = freezed,
   }) {
     return _then(_AuthState(
-      employee: employee == freezed
-          ? _value.employee
-          : employee // ignore: cast_nullable_to_non_nullable
-              as Employee,
+      users: users == freezed
+          ? _value.users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<User>,
+      currentUser: currentUser == freezed
+          ? _value.currentUser
+          : currentUser // ignore: cast_nullable_to_non_nullable
+              as User?,
     ));
   }
 }
@@ -109,28 +125,35 @@ class __$AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AuthState implements _AuthState {
-  const _$_AuthState({required this.employee});
+  const _$_AuthState({this.users = const [], this.currentUser});
 
+  @JsonKey(defaultValue: const [])
   @override
-  final Employee employee;
+  final List<User> users;
+  @override
+  final User? currentUser;
 
   @override
   String toString() {
-    return 'AuthState(employee: $employee)';
+    return 'AuthState(users: $users, currentUser: $currentUser)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _AuthState &&
-            (identical(other.employee, employee) ||
+            (identical(other.users, users) ||
+                const DeepCollectionEquality().equals(other.users, users)) &&
+            (identical(other.currentUser, currentUser) ||
                 const DeepCollectionEquality()
-                    .equals(other.employee, employee)));
+                    .equals(other.currentUser, currentUser)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(employee);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(users) ^
+      const DeepCollectionEquality().hash(currentUser);
 
   @JsonKey(ignore: true)
   @override
@@ -139,10 +162,13 @@ class _$_AuthState implements _AuthState {
 }
 
 abstract class _AuthState implements AuthState {
-  const factory _AuthState({required Employee employee}) = _$_AuthState;
+  const factory _AuthState({List<User> users, User? currentUser}) =
+      _$_AuthState;
 
   @override
-  Employee get employee => throw _privateConstructorUsedError;
+  List<User> get users => throw _privateConstructorUsedError;
+  @override
+  User? get currentUser => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AuthStateCopyWith<_AuthState> get copyWith =>

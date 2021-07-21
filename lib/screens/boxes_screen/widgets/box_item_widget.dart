@@ -7,7 +7,7 @@ import 'package:slot_service_app/redux/boxes/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_button_widget.dart';
 import 'package:slot_service_app/screens/boxes_screen/widgets/box_number_widget.dart';
-import 'package:slot_service_app/screens/boxes_screen/widgets/box_select_task_widget.dart';
+import 'package:slot_service_app/screens/widgets/dropdown.dart';
 
 import '../../../constants.dart';
 
@@ -39,15 +39,15 @@ class BoxItemWidget extends StatelessWidget {
         title: Row(
           children: [
             SizedBox(width: 50),
-            BoxSelectTaskWidget(
-              tasks: [...tasks, Task.nullValue],
+            DropdownWidget<Task>(
+              elements: [...tasks, Task.nullValue],
               onChanged: (Task? task) {
                 store.dispatch(OnTaskChange(
                   box: _box,
                   task: task!,
                 ));
               },
-              currentTask: _getTask(tasks),
+              currentElement: _getTask(tasks),
             ),
             Spacer(),
             BoxButtonWidget(

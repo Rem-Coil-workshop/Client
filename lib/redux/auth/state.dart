@@ -1,16 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:slot_service_app/core/models/employee.dart';
+import 'package:slot_service_app/core/models/user.dart';
 
 part 'state.freezed.dart';
 
 @freezed
 class AuthState with _$AuthState {
-  static const initState = AuthState(
-    employee: Employee(firstname: 'Илья', lastname: 'Родионов', number: 1976534),
-  );
+  static const initState = AuthState();
 
   const factory AuthState({
-    required Employee employee,
+    @Default([]) List<User> users,
+    User? currentUser,
   }) = _AuthState;
 }
-

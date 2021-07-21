@@ -50,9 +50,14 @@ class ProfileCard extends StatelessWidget {
                 left: defaultPadding / 2,
               ),
               child: StoreConnector<AppState, AuthViewModel>(
-                converter: (store) => AuthViewModel.success(
-                  employee: store.state.authState.employee,
-                ),
+                converter: (store) {
+                  final user = store.state.authState.currentUser;
+                  if (user == null) {
+                    return AuthViewModel.noUser();
+                  } else {
+                    return AuthViewModel.success(user: user);
+                  }
+                },
                 builder: (context, vm) => vm.when(
                   success: (employee) => Text(
                     "${employee.lastname} ${employee.firstname}",
@@ -61,6 +66,10 @@ class ProfileCard extends StatelessWidget {
                         .bodyText2!
                         .copyWith(color: Colors.white),
                   ),
+                  noUser: () {
+                    // Navigator.of(context).pushReplacementNamed(LoginScreen.route);
+                    return Container();
+                  },
                 ),
               ),
             ),

@@ -23,7 +23,6 @@ class BoxesScreen extends BaseMainScreen {
   Widget getMainWidget(BuildContext context) {
     return StoreConnector<AppState, BoxesViewModel>(
       onInit: (store) => store.dispatch(OnFetchBoxes()),
-      onDispose: (store) => _scrollController.dispose(),
       converter: (store) =>
           BoxesViewModel.success(boxes: store.state.boxesState.boxes),
       builder: (context, vm) => vm.when(

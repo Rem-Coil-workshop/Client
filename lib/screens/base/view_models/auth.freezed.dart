@@ -16,10 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$AuthViewModelTearOff {
   const _$AuthViewModelTearOff();
 
-  Success success({required Employee employee}) {
+  Success success({required User user}) {
     return Success(
-      employee: employee,
+      user: user,
     );
+  }
+
+  NoUser noUser() {
+    return const NoUser();
   }
 }
 
@@ -28,33 +32,31 @@ const $AuthViewModel = _$AuthViewModelTearOff();
 
 /// @nodoc
 mixin _$AuthViewModel {
-  Employee get employee => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Employee employee) success,
+    required TResult Function(User user) success,
+    required TResult Function() noUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Employee employee)? success,
+    TResult Function(User user)? success,
+    TResult Function()? noUser,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
+    required TResult Function(NoUser value) noUser,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
+    TResult Function(NoUser value)? noUser,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $AuthViewModelCopyWith<AuthViewModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -63,9 +65,6 @@ abstract class $AuthViewModelCopyWith<$Res> {
   factory $AuthViewModelCopyWith(
           AuthViewModel value, $Res Function(AuthViewModel) then) =
       _$AuthViewModelCopyWithImpl<$Res>;
-  $Res call({Employee employee});
-
-  $EmployeeCopyWith<$Res> get employee;
 }
 
 /// @nodoc
@@ -76,36 +75,15 @@ class _$AuthViewModelCopyWithImpl<$Res>
   final AuthViewModel _value;
   // ignore: unused_field
   final $Res Function(AuthViewModel) _then;
-
-  @override
-  $Res call({
-    Object? employee = freezed,
-  }) {
-    return _then(_value.copyWith(
-      employee: employee == freezed
-          ? _value.employee
-          : employee // ignore: cast_nullable_to_non_nullable
-              as Employee,
-    ));
-  }
-
-  @override
-  $EmployeeCopyWith<$Res> get employee {
-    return $EmployeeCopyWith<$Res>(_value.employee, (value) {
-      return _then(_value.copyWith(employee: value));
-    });
-  }
 }
 
 /// @nodoc
-abstract class $SuccessCopyWith<$Res> implements $AuthViewModelCopyWith<$Res> {
+abstract class $SuccessCopyWith<$Res> {
   factory $SuccessCopyWith(Success value, $Res Function(Success) then) =
       _$SuccessCopyWithImpl<$Res>;
-  @override
-  $Res call({Employee employee});
+  $Res call({User user});
 
-  @override
-  $EmployeeCopyWith<$Res> get employee;
+  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -119,42 +97,48 @@ class _$SuccessCopyWithImpl<$Res> extends _$AuthViewModelCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? employee = freezed,
+    Object? user = freezed,
   }) {
     return _then(Success(
-      employee: employee == freezed
-          ? _value.employee
-          : employee // ignore: cast_nullable_to_non_nullable
-              as Employee,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
     ));
+  }
+
+  @override
+  $UserCopyWith<$Res> get user {
+    return $UserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$Success implements Success {
-  const _$Success({required this.employee});
+  const _$Success({required this.user});
 
   @override
-  final Employee employee;
+  final User user;
 
   @override
   String toString() {
-    return 'AuthViewModel.success(employee: $employee)';
+    return 'AuthViewModel.success(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Success &&
-            (identical(other.employee, employee) ||
-                const DeepCollectionEquality()
-                    .equals(other.employee, employee)));
+            (identical(other.user, user) ||
+                const DeepCollectionEquality().equals(other.user, user)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(employee);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(user);
 
   @JsonKey(ignore: true)
   @override
@@ -164,19 +148,21 @@ class _$Success implements Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Employee employee) success,
+    required TResult Function(User user) success,
+    required TResult Function() noUser,
   }) {
-    return success(employee);
+    return success(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Employee employee)? success,
+    TResult Function(User user)? success,
+    TResult Function()? noUser,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(employee);
+      return success(user);
     }
     return orElse();
   }
@@ -185,6 +171,7 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
+    required TResult Function(NoUser value) noUser,
   }) {
     return success(this);
   }
@@ -193,6 +180,7 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
+    TResult Function(NoUser value)? noUser,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -203,11 +191,92 @@ class _$Success implements Success {
 }
 
 abstract class Success implements AuthViewModel {
-  const factory Success({required Employee employee}) = _$Success;
+  const factory Success({required User user}) = _$Success;
 
-  @override
-  Employee get employee => throw _privateConstructorUsedError;
-  @override
+  User get user => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SuccessCopyWith<Success> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NoUserCopyWith<$Res> {
+  factory $NoUserCopyWith(NoUser value, $Res Function(NoUser) then) =
+      _$NoUserCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$NoUserCopyWithImpl<$Res> extends _$AuthViewModelCopyWithImpl<$Res>
+    implements $NoUserCopyWith<$Res> {
+  _$NoUserCopyWithImpl(NoUser _value, $Res Function(NoUser) _then)
+      : super(_value, (v) => _then(v as NoUser));
+
+  @override
+  NoUser get _value => super._value as NoUser;
+}
+
+/// @nodoc
+
+class _$NoUser implements NoUser {
+  const _$NoUser();
+
+  @override
+  String toString() {
+    return 'AuthViewModel.noUser()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is NoUser);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(User user) success,
+    required TResult Function() noUser,
+  }) {
+    return noUser();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(User user)? success,
+    TResult Function()? noUser,
+    required TResult orElse(),
+  }) {
+    if (noUser != null) {
+      return noUser();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Success value) success,
+    required TResult Function(NoUser value) noUser,
+  }) {
+    return noUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Success value)? success,
+    TResult Function(NoUser value)? noUser,
+    required TResult orElse(),
+  }) {
+    if (noUser != null) {
+      return noUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NoUser implements AuthViewModel {
+  const factory NoUser() = _$NoUser;
 }

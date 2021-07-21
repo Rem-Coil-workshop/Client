@@ -106,18 +106,13 @@ class __$TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Task implements _Task {
-  const _$_Task({required this.id, required this.name});
+class _$_Task extends _Task {
+  const _$_Task({required this.id, required this.name}) : super._();
 
   @override
   final int id;
   @override
   final String name;
-
-  @override
-  String toString() {
-    return 'Task(id: $id, name: $name)';
-  }
 
   @override
   bool operator ==(dynamic other) {
@@ -141,8 +136,9 @@ class _$_Task implements _Task {
       __$TaskCopyWithImpl<_Task>(this, _$identity);
 }
 
-abstract class _Task implements Task {
+abstract class _Task extends Task {
   const factory _Task({required int id, required String name}) = _$_Task;
+  const _Task._() : super._();
 
   @override
   int get id => throw _privateConstructorUsedError;
