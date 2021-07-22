@@ -8,6 +8,7 @@ import 'package:slot_service_app/core/repository/auth_repository.dart';
 import 'package:slot_service_app/core/repository/base_repository.dart';
 import 'package:slot_service_app/core/repository/boxes_repository.dart';
 import 'package:slot_service_app/core/repository/employees_repository.dart';
+import 'package:slot_service_app/core/repository/local.dart';
 import 'package:slot_service_app/core/repository/tasks_repository.dart';
 import 'package:slot_service_app/navigation/route_builder.dart';
 import 'package:slot_service_app/redux/reducer.dart';
@@ -18,6 +19,7 @@ import 'package:slot_service_app/screens/login_screen/login_screen.dart';
 import 'package:slot_service_app/screens/logs_screen/logs_screen.dart';
 import 'package:slot_service_app/screens/settings_screen/settings_screen.dart';
 import 'package:slot_service_app/screens/tasks_screen/tasks_screen.dart';
+import 'package:slot_service_app/screens/welcome_screen/welcome_screen.dart';
 
 void main() {
   runApp(RemCoilDashboardApp());
@@ -33,10 +35,11 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
 
   Store<AppState> get _appState {
     if (_appStateHolder == null) {
+      final localThunkMiddleware = _getThunkMiddleware(LocalRepository());
       final taskThunkMiddleware = _getThunkMiddleware(TasksRepository());
       final boxThunkMiddleware = _getThunkMiddleware(BoxesRepository());
-      final employeeThunkMiddleware = _getThunkMiddleware(
-          EmployeesRepository());
+      final employeeThunkMiddleware =
+          _getThunkMiddleware(EmployeesRepository());
       final authThunkMiddleware = _getThunkMiddleware(AuthRepository());
 
       _appStateHolder ??= Store<AppState>(
@@ -45,6 +48,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         middleware: [
           thunkMiddleware,
           NavigationMiddleware(),
+          localThunkMiddleware,
           taskThunkMiddleware,
           boxThunkMiddleware,
           employeeThunkMiddleware,
@@ -56,7 +60,8 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
   }
 
   ExtraArgumentThunkMiddleware _getThunkMiddleware<T extends BaseRepository>(
-      T repository,) {
+    T repository,
+  ) {
     return ExtraArgumentThunkMiddleware<AppState, T>(repository);
   }
 
@@ -93,7 +98,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
       case SettingsScreen.route:
         return RouteBuilder(widget: SettingsScreen(), name: settings.name!);
       default:
-        return RouteBuilder(widget: LoginScreen(), name: '/login');
+        return RouteBuilder(widget: WelcomeScreen(), name: '/');
     }
   }
 }

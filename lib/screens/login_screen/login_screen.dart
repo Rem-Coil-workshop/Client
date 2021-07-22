@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:slot_service_app/constants.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/redux/auth/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/screens/login_screen/view_models/login_view_model.dart';
 import 'package:slot_service_app/screens/widgets/dropdown.dart';
 
@@ -19,7 +21,9 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColor,
       body: Center(
         child: StoreConnector<AppState, LoginViewModel>(
-          onInit: (store) => store.dispatch(OnGetUsers()),
+          onInit: (store) {
+            store.dispatch(OnGetUsers());
+          },
           converter: (store) {
             final users = store.state.authState.users;
             if (users.isNotEmpty) {
@@ -75,21 +79,27 @@ class LoginScreen extends StatelessWidget {
                     height: 40,
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: secondaryColor),
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        final store = StoreProvider.of<AppState>(context);
+                        store.dispatch(NavigateToAction.replace(BoxesScreen.route));
+                      },
                       child: Text('Войти'),
                     ),
                   ),
                 ],
               ),
             ),
-            load: () => CircularProgressIndicator(color: Colors.white,),
+            load: () => CircularProgressIndicator(
+              color: Colors.white,
+            ),
           ),
         ),
       ),

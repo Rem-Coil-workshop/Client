@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'status.freezed.dart';
 
 @freezed
-abstract class StatusViewModel with _$StatusViewModel {
+class StatusViewModel with _$StatusViewModel {
   const factory StatusViewModel.success({
     required String message,
   }) = Success;

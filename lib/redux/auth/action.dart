@@ -11,3 +11,9 @@ class SetUserAction {
 
   SetUserAction(this.user);
 }
+
+class SetEnterStatusAction {
+  final bool isEntered;
+
+  SetEnterStatusAction(this.isEntered);
+}

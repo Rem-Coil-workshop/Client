@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 final authReducer = combineReducers<AuthState>([
   TypedReducer<AuthState, SetUsersAction>(_setUsers),
   TypedReducer<AuthState, SetUserAction>(_setUser),
+  TypedReducer<AuthState, SetEnterStatusAction>(_setEnterStatus)
 ]);
 
 AuthState _setUsers(AuthState state, SetUsersAction action) =>
@@ -12,3 +13,6 @@ AuthState _setUsers(AuthState state, SetUsersAction action) =>
 
 AuthState _setUser(AuthState state, SetUserAction action) =>
     state.copyWith(currentUser: action.user);
+
+AuthState _setEnterStatus(AuthState state, SetEnterStatusAction action) =>
+    state.copyWith(isEntered: action.isEntered);

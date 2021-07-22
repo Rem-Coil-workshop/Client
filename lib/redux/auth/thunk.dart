@@ -1,8 +1,12 @@
+import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:slot_service_app/core/repository/auth_repository.dart';
+import 'package:slot_service_app/core/repository/local.dart';
 import 'package:slot_service_app/redux/auth/action.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/screens/boxes_screen/boxes_screen.dart';
+import 'package:slot_service_app/screens/login_screen/login_screen.dart';
 
 class OnGetUsers extends BaseThunkWithExtra<AuthRepository> {
   @override
@@ -11,3 +15,20 @@ class OnGetUsers extends BaseThunkWithExtra<AuthRepository> {
     store.dispatch(SetUsersAction(users));
   }
 }
+
+class OnEnterInApp extends BaseThunkWithExtra<LocalRepository> {
+  @override
+  Future<void> execute(
+    Store<AppState> store,
+    LocalRepository repository,
+  ) async {
+    final isEntered = await repository.isEntered;
+    store.dispatch(SetEnterStatusAction(isEntered));
+    if (isEntered) {
+      store.dispatch(NavigateToAction.replace(BoxesScreen.route));
+    } else {
+      store.dispatch(NavigateToAction.replace(LoginScreen.route));
+    }
+  }
+}
+

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
+import 'package:slot_service_app/redux/auth/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
-import 'package:slot_service_app/screens/boxes_screen/boxes_screen.dart';
-import 'package:slot_service_app/screens/login_screen/login_screen.dart';
 
 import '../../constants.dart';
 
@@ -36,11 +34,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 onPressed: () {
                   final store = StoreProvider.of<AppState>(context);
-                  if (store.state.authState.isEntered) {
-                    store.dispatch(NavigateToAction.replace(BoxesScreen.route));
-                  } else {
-                    store.dispatch(NavigateToAction.replace(LoginScreen.route));
-                  }
+                  store.dispatch(OnEnterInApp());
                 },
                 child: Text('Начать'),
               ),

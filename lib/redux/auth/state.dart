@@ -10,5 +10,6 @@ class AuthState with _$AuthState {
   const factory AuthState({
     @Default([]) List<User> users,
     User? currentUser,
+    @Default(false) bool isEntered,
   }) = _AuthState;
 }
