@@ -13,7 +13,7 @@ class LocalRepository extends BaseRepository {
     await _updatePrefs();
     final token = prefs.getBool('token');
     // TODO - Добавить проверку активности пользователя
-    return true;
+    return false;
   }
 
   Future<User> get currentUser async {

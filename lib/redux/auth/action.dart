@@ -17,3 +17,9 @@ class SetEnterStatusAction {
 
   SetEnterStatusAction(this.isEntered);
 }
+
+class SetPasswordCorrectStatusAction {
+  final bool isCorrect;
+
+  SetPasswordCorrectStatusAction(this.isCorrect);
+}

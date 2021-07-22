@@ -19,11 +19,13 @@ class _$AuthStateTearOff {
   _AuthState call(
       {List<User> users = const [],
       User? currentUser,
-      bool isEntered = false}) {
+      bool isEntered = false,
+      bool isPasswordCorrect = true}) {
     return _AuthState(
       users: users,
       currentUser: currentUser,
       isEntered: isEntered,
+      isPasswordCorrect: isPasswordCorrect,
     );
   }
 }
@@ -36,6 +38,7 @@ mixin _$AuthState {
   List<User> get users => throw _privateConstructorUsedError;
   User? get currentUser => throw _privateConstructorUsedError;
   bool get isEntered => throw _privateConstructorUsedError;
+  bool get isPasswordCorrect => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthStateCopyWith<AuthState> get copyWith =>
@@ -46,7 +49,11 @@ mixin _$AuthState {
 abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res>;
-  $Res call({List<User> users, User? currentUser, bool isEntered});
+  $Res call(
+      {List<User> users,
+      User? currentUser,
+      bool isEntered,
+      bool isPasswordCorrect});
 
   $UserCopyWith<$Res>? get currentUser;
 }
@@ -64,6 +71,7 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
     Object? users = freezed,
     Object? currentUser = freezed,
     Object? isEntered = freezed,
+    Object? isPasswordCorrect = freezed,
   }) {
     return _then(_value.copyWith(
       users: users == freezed
@@ -77,6 +85,10 @@ class _$AuthStateCopyWithImpl<$Res> implements $AuthStateCopyWith<$Res> {
       isEntered: isEntered == freezed
           ? _value.isEntered
           : isEntered // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPasswordCorrect: isPasswordCorrect == freezed
+          ? _value.isPasswordCorrect
+          : isPasswordCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -99,7 +111,11 @@ abstract class _$AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
           _AuthState value, $Res Function(_AuthState) then) =
       __$AuthStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<User> users, User? currentUser, bool isEntered});
+  $Res call(
+      {List<User> users,
+      User? currentUser,
+      bool isEntered,
+      bool isPasswordCorrect});
 
   @override
   $UserCopyWith<$Res>? get currentUser;
@@ -119,6 +135,7 @@ class __$AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
     Object? users = freezed,
     Object? currentUser = freezed,
     Object? isEntered = freezed,
+    Object? isPasswordCorrect = freezed,
   }) {
     return _then(_AuthState(
       users: users == freezed
@@ -133,6 +150,10 @@ class __$AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
           ? _value.isEntered
           : isEntered // ignore: cast_nullable_to_non_nullable
               as bool,
+      isPasswordCorrect: isPasswordCorrect == freezed
+          ? _value.isPasswordCorrect
+          : isPasswordCorrect // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -141,7 +162,10 @@ class __$AuthStateCopyWithImpl<$Res> extends _$AuthStateCopyWithImpl<$Res>
 
 class _$_AuthState implements _AuthState {
   const _$_AuthState(
-      {this.users = const [], this.currentUser, this.isEntered = false});
+      {this.users = const [],
+      this.currentUser,
+      this.isEntered = false,
+      this.isPasswordCorrect = true});
 
   @JsonKey(defaultValue: const [])
   @override
@@ -151,10 +175,13 @@ class _$_AuthState implements _AuthState {
   @JsonKey(defaultValue: false)
   @override
   final bool isEntered;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool isPasswordCorrect;
 
   @override
   String toString() {
-    return 'AuthState(users: $users, currentUser: $currentUser, isEntered: $isEntered)';
+    return 'AuthState(users: $users, currentUser: $currentUser, isEntered: $isEntered, isPasswordCorrect: $isPasswordCorrect)';
   }
 
   @override
@@ -168,7 +195,10 @@ class _$_AuthState implements _AuthState {
                     .equals(other.currentUser, currentUser)) &&
             (identical(other.isEntered, isEntered) ||
                 const DeepCollectionEquality()
-                    .equals(other.isEntered, isEntered)));
+                    .equals(other.isEntered, isEntered)) &&
+            (identical(other.isPasswordCorrect, isPasswordCorrect) ||
+                const DeepCollectionEquality()
+                    .equals(other.isPasswordCorrect, isPasswordCorrect)));
   }
 
   @override
@@ -176,7 +206,8 @@ class _$_AuthState implements _AuthState {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(users) ^
       const DeepCollectionEquality().hash(currentUser) ^
-      const DeepCollectionEquality().hash(isEntered);
+      const DeepCollectionEquality().hash(isEntered) ^
+      const DeepCollectionEquality().hash(isPasswordCorrect);
 
   @JsonKey(ignore: true)
   @override
@@ -186,7 +217,10 @@ class _$_AuthState implements _AuthState {
 
 abstract class _AuthState implements AuthState {
   const factory _AuthState(
-      {List<User> users, User? currentUser, bool isEntered}) = _$_AuthState;
+      {List<User> users,
+      User? currentUser,
+      bool isEntered,
+      bool isPasswordCorrect}) = _$_AuthState;
 
   @override
   List<User> get users => throw _privateConstructorUsedError;
@@ -194,6 +228,8 @@ abstract class _AuthState implements AuthState {
   User? get currentUser => throw _privateConstructorUsedError;
   @override
   bool get isEntered => throw _privateConstructorUsedError;
+  @override
+  bool get isPasswordCorrect => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AuthStateCopyWith<_AuthState> get copyWith =>

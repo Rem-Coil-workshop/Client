@@ -11,5 +11,6 @@ class AuthState with _$AuthState {
     @Default([]) List<User> users,
     User? currentUser,
     @Default(false) bool isEntered,
+    @Default(true) bool isPasswordCorrect,
   }) = _AuthState;
 }

@@ -16,14 +16,21 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$LoginViewModelTearOff {
   const _$LoginViewModelTearOff();
 
-  WithUsers withUsers({required List<User> users}) {
-    return WithUsers(
+  Load load() {
+    return const Load();
+  }
+
+  Success success({required List<User> users, required User? currentUser}) {
+    return Success(
       users: users,
+      currentUser: currentUser,
     );
   }
 
-  Load load() {
-    return const Load();
+  Error error({required BuildContext context}) {
+    return Error(
+      context: context,
+    );
   }
 }
 
@@ -34,27 +41,31 @@ const $LoginViewModel = _$LoginViewModelTearOff();
 mixin _$LoginViewModel {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<User> users) withUsers,
     required TResult Function() load,
+    required TResult Function(List<User> users, User? currentUser) success,
+    required TResult Function(BuildContext context) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<User> users)? withUsers,
     TResult Function()? load,
+    TResult Function(List<User> users, User? currentUser)? success,
+    TResult Function(BuildContext context)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(WithUsers value) withUsers,
     required TResult Function(Load value) load,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(WithUsers value)? withUsers,
     TResult Function(Load value)? load,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -75,119 +86,6 @@ class _$LoginViewModelCopyWithImpl<$Res>
   final LoginViewModel _value;
   // ignore: unused_field
   final $Res Function(LoginViewModel) _then;
-}
-
-/// @nodoc
-abstract class $WithUsersCopyWith<$Res> {
-  factory $WithUsersCopyWith(WithUsers value, $Res Function(WithUsers) then) =
-      _$WithUsersCopyWithImpl<$Res>;
-  $Res call({List<User> users});
-}
-
-/// @nodoc
-class _$WithUsersCopyWithImpl<$Res> extends _$LoginViewModelCopyWithImpl<$Res>
-    implements $WithUsersCopyWith<$Res> {
-  _$WithUsersCopyWithImpl(WithUsers _value, $Res Function(WithUsers) _then)
-      : super(_value, (v) => _then(v as WithUsers));
-
-  @override
-  WithUsers get _value => super._value as WithUsers;
-
-  @override
-  $Res call({
-    Object? users = freezed,
-  }) {
-    return _then(WithUsers(
-      users: users == freezed
-          ? _value.users
-          : users // ignore: cast_nullable_to_non_nullable
-              as List<User>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$WithUsers implements WithUsers {
-  const _$WithUsers({required this.users});
-
-  @override
-  final List<User> users;
-
-  @override
-  String toString() {
-    return 'LoginViewModel.withUsers(users: $users)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is WithUsers &&
-            (identical(other.users, users) ||
-                const DeepCollectionEquality().equals(other.users, users)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(users);
-
-  @JsonKey(ignore: true)
-  @override
-  $WithUsersCopyWith<WithUsers> get copyWith =>
-      _$WithUsersCopyWithImpl<WithUsers>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<User> users) withUsers,
-    required TResult Function() load,
-  }) {
-    return withUsers(users);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<User> users)? withUsers,
-    TResult Function()? load,
-    required TResult orElse(),
-  }) {
-    if (withUsers != null) {
-      return withUsers(users);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(WithUsers value) withUsers,
-    required TResult Function(Load value) load,
-  }) {
-    return withUsers(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(WithUsers value)? withUsers,
-    TResult Function(Load value)? load,
-    required TResult orElse(),
-  }) {
-    if (withUsers != null) {
-      return withUsers(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class WithUsers implements LoginViewModel {
-  const factory WithUsers({required List<User> users}) = _$WithUsers;
-
-  List<User> get users => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $WithUsersCopyWith<WithUsers> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -227,8 +125,9 @@ class _$Load implements Load {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<User> users) withUsers,
     required TResult Function() load,
+    required TResult Function(List<User> users, User? currentUser) success,
+    required TResult Function(BuildContext context) error,
   }) {
     return load();
   }
@@ -236,8 +135,9 @@ class _$Load implements Load {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<User> users)? withUsers,
     TResult Function()? load,
+    TResult Function(List<User> users, User? currentUser)? success,
+    TResult Function(BuildContext context)? error,
     required TResult orElse(),
   }) {
     if (load != null) {
@@ -249,8 +149,9 @@ class _$Load implements Load {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(WithUsers value) withUsers,
     required TResult Function(Load value) load,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) {
     return load(this);
   }
@@ -258,8 +159,9 @@ class _$Load implements Load {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(WithUsers value)? withUsers,
     TResult Function(Load value)? load,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (load != null) {
@@ -271,4 +173,263 @@ class _$Load implements Load {
 
 abstract class Load implements LoginViewModel {
   const factory Load() = _$Load;
+}
+
+/// @nodoc
+abstract class $SuccessCopyWith<$Res> {
+  factory $SuccessCopyWith(Success value, $Res Function(Success) then) =
+      _$SuccessCopyWithImpl<$Res>;
+  $Res call({List<User> users, User? currentUser});
+
+  $UserCopyWith<$Res>? get currentUser;
+}
+
+/// @nodoc
+class _$SuccessCopyWithImpl<$Res> extends _$LoginViewModelCopyWithImpl<$Res>
+    implements $SuccessCopyWith<$Res> {
+  _$SuccessCopyWithImpl(Success _value, $Res Function(Success) _then)
+      : super(_value, (v) => _then(v as Success));
+
+  @override
+  Success get _value => super._value as Success;
+
+  @override
+  $Res call({
+    Object? users = freezed,
+    Object? currentUser = freezed,
+  }) {
+    return _then(Success(
+      users: users == freezed
+          ? _value.users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<User>,
+      currentUser: currentUser == freezed
+          ? _value.currentUser
+          : currentUser // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ));
+  }
+
+  @override
+  $UserCopyWith<$Res>? get currentUser {
+    if (_value.currentUser == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.currentUser!, (value) {
+      return _then(_value.copyWith(currentUser: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$Success implements Success {
+  const _$Success({required this.users, required this.currentUser});
+
+  @override
+  final List<User> users;
+  @override
+  final User? currentUser;
+
+  @override
+  String toString() {
+    return 'LoginViewModel.success(users: $users, currentUser: $currentUser)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is Success &&
+            (identical(other.users, users) ||
+                const DeepCollectionEquality().equals(other.users, users)) &&
+            (identical(other.currentUser, currentUser) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentUser, currentUser)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(users) ^
+      const DeepCollectionEquality().hash(currentUser);
+
+  @JsonKey(ignore: true)
+  @override
+  $SuccessCopyWith<Success> get copyWith =>
+      _$SuccessCopyWithImpl<Success>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() load,
+    required TResult Function(List<User> users, User? currentUser) success,
+    required TResult Function(BuildContext context) error,
+  }) {
+    return success(users, currentUser);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? load,
+    TResult Function(List<User> users, User? currentUser)? success,
+    TResult Function(BuildContext context)? error,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(users, currentUser);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Load value) load,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
+  }) {
+    return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Load value)? load,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (success != null) {
+      return success(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Success implements LoginViewModel {
+  const factory Success(
+      {required List<User> users, required User? currentUser}) = _$Success;
+
+  List<User> get users => throw _privateConstructorUsedError;
+  User? get currentUser => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SuccessCopyWith<Success> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ErrorCopyWith<$Res> {
+  factory $ErrorCopyWith(Error value, $Res Function(Error) then) =
+      _$ErrorCopyWithImpl<$Res>;
+  $Res call({BuildContext context});
+}
+
+/// @nodoc
+class _$ErrorCopyWithImpl<$Res> extends _$LoginViewModelCopyWithImpl<$Res>
+    implements $ErrorCopyWith<$Res> {
+  _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
+      : super(_value, (v) => _then(v as Error));
+
+  @override
+  Error get _value => super._value as Error;
+
+  @override
+  $Res call({
+    Object? context = freezed,
+  }) {
+    return _then(Error(
+      context: context == freezed
+          ? _value.context
+          : context // ignore: cast_nullable_to_non_nullable
+              as BuildContext,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$Error implements Error {
+  const _$Error({required this.context});
+
+  @override
+  final BuildContext context;
+
+  @override
+  String toString() {
+    return 'LoginViewModel.error(context: $context)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is Error &&
+            (identical(other.context, context) ||
+                const DeepCollectionEquality().equals(other.context, context)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(context);
+
+  @JsonKey(ignore: true)
+  @override
+  $ErrorCopyWith<Error> get copyWith =>
+      _$ErrorCopyWithImpl<Error>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() load,
+    required TResult Function(List<User> users, User? currentUser) success,
+    required TResult Function(BuildContext context) error,
+  }) {
+    return error(context);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? load,
+    TResult Function(List<User> users, User? currentUser)? success,
+    TResult Function(BuildContext context)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(context);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Load value) load,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Load value)? load,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Error implements LoginViewModel {
+  const factory Error({required BuildContext context}) = _$Error;
+
+  BuildContext get context => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ErrorCopyWith<Error> get copyWith => throw _privateConstructorUsedError;
 }
