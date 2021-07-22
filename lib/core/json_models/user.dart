@@ -1,4 +1,5 @@
 import 'package:slot_service_app/core/models/user.dart';
+import 'package:slot_service_app/core/utils/converters.dart';
 
 class JsonUser {
   final String firstname;
@@ -39,16 +40,7 @@ class JsonUser {
     return User(
       firstname: firstname,
       lastname: lastname,
-      role: _toUserRole(role),
+      role: toUserRole(role),
     );
-  }
-
-  UserRole _toUserRole(String role) {
-    switch(role.toUpperCase()) {
-      case 'ADMIN':
-        return UserRole.ADMIN;
-      default:
-        return UserRole.EMPLOYEE;
-    }
   }
 }

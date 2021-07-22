@@ -49,6 +49,7 @@ class OnEnterInApp extends BaseThunkWithExtra<LocalRepository> {
     if (isEntered) {
       store.dispatch(OnEnterWithUser());
     } else {
+      await repository.logout();
       store.dispatch(NavigateToAction.replace(LoginScreen.route));
     }
   }

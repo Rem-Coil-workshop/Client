@@ -1,6 +1,8 @@
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/core/repository/base_repository.dart';
+import 'package:slot_service_app/core/utils/converters.dart';
 
 class LocalRepository extends BaseRepository {
   static const TOKEN_KEY = 'token';
@@ -13,17 +15,21 @@ class LocalRepository extends BaseRepository {
   Future<bool> get isEntered async {
     await _updatePrefs();
     final token = prefs.getString(TOKEN_KEY);
-    // TODO - Добавить проверку активности пользователя
-    return false;
+    if (token == null) return false;
+    return !Jwt.isExpired(token);
   }
 
-  Future<User> get currentUser async {
+  Future<User?> get currentUser async {
     await _updatePrefs();
     final token = prefs.getString(TOKEN_KEY);
+    if (token == null) return null;
+    final payload = Jwt.parseJwt(token);
 
-    // TODO - Добавить парсинг токена
-
-    return User(firstname: '', lastname: '', role: UserRole.ADMIN);
+    return User(
+      firstname: payload['firstname'],
+      lastname: payload['lastname'],
+      role: toUserRole(payload['role']),
+    );
   }
 
   Future<void> logout() async {
