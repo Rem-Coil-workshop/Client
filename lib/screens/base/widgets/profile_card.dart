@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:slot_service_app/redux/auth/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/screens/base/view_models/auth.dart';
 
@@ -22,6 +23,8 @@ class ProfileCard extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    final store = StoreProvider.of<AppState>(context);
+                    store.dispatch(OnExitApp());
                   },
                   child: Text('Да'),
                 ),
@@ -67,7 +70,6 @@ class ProfileCard extends StatelessWidget {
                         .copyWith(color: Colors.white),
                   ),
                   noUser: () {
-                    // Navigator.of(context).pushReplacementNamed(LoginScreen.route);
                     return Container();
                   },
                 ),

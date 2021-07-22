@@ -7,7 +7,7 @@ class SetUsersAction {
 }
 
 class SetUserAction {
-  final User user;
+  final User? user;
 
   SetUserAction(this.user);
 }
