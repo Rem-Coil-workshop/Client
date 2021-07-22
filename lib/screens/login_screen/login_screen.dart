@@ -9,8 +9,9 @@ import 'package:slot_service_app/screens/widgets/dropdown.dart';
 
 class LoginScreen extends StatelessWidget {
   static const route = "/login";
+  final _controller = TextEditingController();
 
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +45,51 @@ class LoginScreen extends StatelessWidget {
                     'Вход',
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   DropdownWidget<User>(
                     currentElement: users[0],
                     elements: users,
                     onChanged: (value) {},
-                  )
+                    isExpanded: true,
+                  ),
+                  SizedBox(height: 20),
+                  TextField(
+                    obscureText: true,
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: "Пароль",
+                      fillColor: Colors.white,
+                      hoverColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Theme.of(context).primaryColor),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 40,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: secondaryColor),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Text('Войти'),
+                    ),
+                  ),
                 ],
               ),
             ),
-            load: () => CircularProgressIndicator(),
+            load: () => CircularProgressIndicator(color: Colors.white,),
           ),
         ),
       ),
