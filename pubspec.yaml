@@ -15,6 +15,7 @@ dependencies:
   provider: ^5.0.0
   flutter_redux: ^0.8.0
   flutter_redux_dev_tools: ^0.5.0
+  flutter_redux_navigation: ^0.7.0
   redux_thunk: ^0.4.0
   freezed_annotation: ^0.14.2
   web_socket_channel: ^2.1.0

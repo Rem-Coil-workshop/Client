@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:slot_service_app/constants.dart';
@@ -8,6 +9,7 @@ import 'package:slot_service_app/core/repository/base_repository.dart';
 import 'package:slot_service_app/core/repository/boxes_repository.dart';
 import 'package:slot_service_app/core/repository/employees_repository.dart';
 import 'package:slot_service_app/core/repository/tasks_repository.dart';
+import 'package:slot_service_app/navigation/route_builder.dart';
 import 'package:slot_service_app/redux/reducer.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/screens/boxes_screen/boxes_screen.dart';
@@ -33,14 +35,16 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
     if (_appStateHolder == null) {
       final taskThunkMiddleware = _getThunkMiddleware(TasksRepository());
       final boxThunkMiddleware = _getThunkMiddleware(BoxesRepository());
-      final employeeThunkMiddleware =_getThunkMiddleware(EmployeesRepository());
-      final authThunkMiddleware =_getThunkMiddleware(AuthRepository());
+      final employeeThunkMiddleware = _getThunkMiddleware(
+          EmployeesRepository());
+      final authThunkMiddleware = _getThunkMiddleware(AuthRepository());
 
       _appStateHolder ??= Store<AppState>(
         appReducer,
         initialState: AppState.initState,
         middleware: [
           thunkMiddleware,
+          NavigationMiddleware(),
           taskThunkMiddleware,
           boxThunkMiddleware,
           employeeThunkMiddleware,
@@ -68,16 +72,28 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
           scaffoldBackgroundColor: bgColor,
           primaryColor: primaryColor,
         ),
-        routes: {
-          BoxesScreen.route: (context) => BoxesScreen(),
-          LoginScreen.route: (context) => LoginScreen(),
-          TasksScreen.route: (context) => TasksScreen(),
-          EmployeesScreen.route: (context) => EmployeesScreen(),
-          LogsScreen.route: (context) => LogsScreen(),
-          SettingsScreen.route: (context) => SettingsScreen(),
-        },
-        initialRoute: LoginScreen.route,
+        navigatorKey: NavigatorHolder.navigatorKey,
+        onGenerateRoute: _getRoute,
       ),
     );
+  }
+
+  Route _getRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case BoxesScreen.route:
+        return RouteBuilder(widget: BoxesScreen(), name: settings.name!);
+      case LoginScreen.route:
+        return RouteBuilder(widget: LoginScreen(), name: settings.name!);
+      case TasksScreen.route:
+        return RouteBuilder(widget: TasksScreen(), name: settings.name!);
+      case EmployeesScreen.route:
+        return RouteBuilder(widget: EmployeesScreen(), name: settings.name!);
+      case LogsScreen.route:
+        return RouteBuilder(widget: LogsScreen(), name: settings.name!);
+      case SettingsScreen.route:
+        return RouteBuilder(widget: SettingsScreen(), name: settings.name!);
+      default:
+        return RouteBuilder(widget: LoginScreen(), name: '/login');
+    }
   }
 }

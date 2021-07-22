@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:slot_service_app/navigation/models/navigation_item_info.dart';
-import 'package:slot_service_app/navigation/route_builder.dart';
+import 'package:slot_service_app/redux/state.dart';
 
 class NavigationItem extends StatelessWidget {
   final NavigationItemInfo item;
@@ -28,9 +30,8 @@ class NavigationItem extends StatelessWidget {
           : null,
       child: ListTile(
         onTap: () {
-          Navigator.of(context).pushReplacement(
-            RouteBuilder(widget: item.widget, name: item.widget.getRoute()),
-          );
+          final store = StoreProvider.of<AppState>(context);
+          store.dispatch(NavigateToAction.replace(item.widget.getRoute()));
         },
         horizontalTitleGap: 0.0,
         leading: Icon(
