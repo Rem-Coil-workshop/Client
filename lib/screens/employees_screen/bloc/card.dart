@@ -21,7 +21,7 @@ class CardBloc {
 
   void openSocket(Network network) {
     _channel = WebSocketChannel.connect(
-      Uri.parse('ws://${network.host}:${network.port}/websocket'),
+      Uri.parse('ws://${network.host}:${network.port}/card'),
     );
 
     _channel.stream.listen((message) {

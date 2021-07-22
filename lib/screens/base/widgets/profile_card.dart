@@ -29,9 +29,7 @@ class ProfileCard extends StatelessWidget {
                   child: Text('Да'),
                 ),
                 TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: () => Navigator.pop(context),
                   child: Text('Нет'),
                 ),
               ],
@@ -62,15 +60,12 @@ class ProfileCard extends StatelessWidget {
                   }
                 },
                 builder: (context, vm) => vm.when(
-                  success: (employee) => Text(
-                    "${employee.lastname} ${employee.firstname}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .copyWith(color: Colors.white),
-                  ),
+                  success: (employee) =>
+                      Text("${employee.lastname} ${employee.firstname}"),
                   noUser: () {
-                    return Container();
+                    final store = StoreProvider.of<AppState>(context);
+                    store.dispatch(OnEnterInApp());
+                    return Text('Без пользователя');
                   },
                 ),
               ),
