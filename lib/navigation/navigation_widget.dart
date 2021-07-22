@@ -9,6 +9,8 @@ import 'package:slot_service_app/screens/tasks_screen/tasks_screen.dart';
 import 'models/navigation_item_info.dart';
 
 class NavigationWidget extends StatelessWidget {
+  // TODO - поправить то, что может быть пустой пользователь
+
   final int selectedItem;
   static List<NavigationItemInfo> navigationItems = [
     NavigationItemInfo(

@@ -11,6 +11,7 @@ import 'package:slot_service_app/screens/login_screen/widgets/error_title.dart';
 import 'package:slot_service_app/screens/login_screen/widgets/password_field.dart';
 import 'package:slot_service_app/screens/login_screen/widgets/select_user_field.dart';
 import 'package:slot_service_app/screens/login_screen/widgets/title_widget.dart';
+import 'package:slot_service_app/screens/widgets/login_container.dart';
 
 class LoginScreen extends StatefulWidget {
   static const route = "/login";
@@ -27,52 +28,47 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: Center(
-        child: StoreConnector<AppState, LoginViewModel>(
-          onInit: (store) => store.dispatch(OnGetUsers()),
-          converter: (store) {
-            final state = store.state;
+    return StoreConnector<AppState, LoginViewModel>(
+      onInit: (store) => store.dispatch(OnGetUsers()),
+      converter: (store) {
+        final state = store.state;
 
-            if (state.statusState.isLoad) {
-              return LoginViewModel.load();
-            }
+        if (state.statusState.isLoad) {
+          return LoginViewModel.load();
+        }
 
-            if (state.statusState.isError || state.authState.users.isEmpty) {
-              return LoginViewModel.error(context: context);
-            }
+        if (state.statusState.isError || state.authState.users.isEmpty) {
+          return LoginViewModel.error(context: context);
+        }
 
-            if (!state.authState.isPasswordCorrect) {
-              _errorMessage = 'Неверный пароль';
-            }
+        if (!state.authState.isPasswordCorrect) {
+          _errorMessage = 'Неверный пароль';
+        }
 
-            return LoginViewModel.success(
-              users: state.authState.users,
-              currentUser: state.authState.currentUser,
-            );
-          },
-          builder: (context, vm) => vm.when(
-            load: _onLoad,
-            success: _onSuccess,
-            error: _onError,
-          ),
-        ),
+        return LoginViewModel.success(
+          users: state.authState.users,
+          currentUser: state.authState.currentUser,
+        );
+      },
+      builder: (context, vm) => vm.when(
+        load: _onLoad,
+        success: _onSuccess,
+        error: _onError,
       ),
     );
   }
 
   Widget _onLoad() =>
-      _withContainer(child: Center(child: CircularProgressIndicator()));
+      LoginContainer(child: Center(child: CircularProgressIndicator()));
 
   Widget _onSuccess(List<User> users, User? currentUser) {
-    return _withContainer(
+    return LoginContainer(
       child: Column(
         children: [
           TitleWidget(),
-          SizedBox(height: 20),
+          SizedBox(height: defaultPadding),
           SelectUserField(users: users, currentUser: currentUser),
-          SizedBox(height: 10),
+          SizedBox(height: defaultPadding),
           PasswordField(controller: _controller),
           SizedBox(height: 5),
           ErrorTitle(errorMessage: _errorMessage),
@@ -87,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _onError(BuildContext context) {
-    return _withContainer(
+    return LoginContainer(
       child: Center(
         child: Text(
           'Произошла ошибка загрузки данных, поробуйте позже или обратитесь к администратору',
@@ -95,21 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
           textAlign: TextAlign.center,
         ),
       ),
-    );
-  }
-
-  Widget _withContainer({required Widget child}) {
-    return Container(
-      padding: EdgeInsets.all(2 * defaultPadding),
-      width: 300,
-      height: 300,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: child,
     );
   }
 

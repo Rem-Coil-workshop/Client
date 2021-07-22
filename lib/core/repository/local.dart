@@ -3,6 +3,7 @@ import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/core/repository/base_repository.dart';
 
 class LocalRepository extends BaseRepository {
+  static const TOKEN_KEY = 'token';
   late SharedPreferences prefs;
 
   Future<void> _updatePrefs() async {
@@ -11,14 +12,14 @@ class LocalRepository extends BaseRepository {
 
   Future<bool> get isEntered async {
     await _updatePrefs();
-    final token = prefs.getBool('token');
+    final token = prefs.getString(TOKEN_KEY);
     // TODO - Добавить проверку активности пользователя
     return false;
   }
 
   Future<User> get currentUser async {
     await _updatePrefs();
-    final token = prefs.getString('token');
+    final token = prefs.getString(TOKEN_KEY);
 
     // TODO - Добавить парсинг токена
 
@@ -26,6 +27,10 @@ class LocalRepository extends BaseRepository {
   }
 
   Future<void> logout() async {
-    // TODO - Удалить токен
+    prefs.remove(TOKEN_KEY);
+  }
+
+  Future<void> saveToken(String token) async {
+    prefs.setString(TOKEN_KEY, token);
   }
 }
