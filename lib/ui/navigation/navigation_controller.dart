@@ -9,6 +9,7 @@ import 'package:slot_service_app/ui/screens/employees_screen/employees_screen.da
 import 'package:slot_service_app/ui/screens/logs_screen/logs_screen.dart';
 import 'package:slot_service_app/ui/screens/settings_screen/settings_screen.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/tasks_screen.dart';
+import 'package:slot_service_app/ui/screens/users/users_screen.dart';
 
 class NavigationController extends StatelessWidget {
   static final screenList = [
@@ -41,6 +42,12 @@ class NavigationController extends StatelessWidget {
       title: 'Настройки',
       route: SettingsScreen.route,
       privacyLevel: SettingsScreen.privacyLevel,
+    ),
+    NavigationItemInfo(
+      icon: Icons.settings_applications,
+      title: 'Пользователи',
+      route: UsersScreen.route,
+      privacyLevel: UsersScreen.privacyLevel,
     ),
   ];
 

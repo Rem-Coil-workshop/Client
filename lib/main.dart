@@ -19,6 +19,7 @@ import 'package:slot_service_app/ui/screens/login_screen/login_screen.dart';
 import 'package:slot_service_app/ui/screens/logs_screen/logs_screen.dart';
 import 'package:slot_service_app/ui/screens/settings_screen/settings_screen.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/tasks_screen.dart';
+import 'package:slot_service_app/ui/screens/users/users_screen.dart';
 import 'package:slot_service_app/ui/screens/welcome_screen/welcome_screen.dart';
 
 void main() {
@@ -97,6 +98,8 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         return RouteBuilder(widget: LogsScreen(), name: settings.name!);
       case SettingsScreen.route:
         return RouteBuilder(widget: SettingsScreen(), name: settings.name!);
+      case UsersScreen.route:
+        return RouteBuilder(widget: UsersScreen(), name: settings.name!);
       default:
         return RouteBuilder(widget: WelcomeScreen(), name: WelcomeScreen.route);
         // return RouteBuilder(widget: LoginScreen(), name: LoginScreen.route);
