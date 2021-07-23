@@ -39,7 +39,7 @@ class EmployeesTable extends StatelessWidget {
                   ],
                   rows: List.generate(
                     employees.length,
-                    (index) => recentFileDataRow(employees[index], context),
+                    (index) => employeeDataRow(employees[index], context),
                   ),
                 ),
               ),
@@ -50,7 +50,7 @@ class EmployeesTable extends StatelessWidget {
     );
   }
 
-  DataRow recentFileDataRow(Employee employee, BuildContext context) {
+  DataRow employeeDataRow(Employee employee, BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     return DataRow(
       cells: [
