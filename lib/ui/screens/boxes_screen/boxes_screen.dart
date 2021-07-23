@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:slot_service_app/core/models/box.dart';
+import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/redux/boxes/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
@@ -8,16 +9,13 @@ import 'package:slot_service_app/ui/screens/boxes_screen/widgets/box_item.dart';
 import 'package:slot_service_app/ui/view_models/boxes.dart';
 
 class BoxesScreen extends BaseMainScreen {
-  static const String route = '/boxes';
+  static const route = '/boxes';
+  static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
+
   final ScrollController _scrollController = ScrollController();
 
   BoxesScreen({Key? key})
       : super(key: key, screenIndex: 1, title: 'Доступные ячейки');
-
-  @override
-  String getRoute() {
-    return route;
-  }
 
   @override
   Widget getMainWidget(BuildContext context) {

@@ -22,9 +22,7 @@ class NavigationItem extends StatelessWidget {
     return Container(
       decoration: isSelected ? _onSelectedDecoration() : null,
       child: ListTile(
-        onTap: () {
-          store.dispatch(NavigateToAction.replace(item.widget.getRoute()));
-        },
+        onTap: () => store.dispatch(NavigateToAction.replace(item.route)),
         horizontalTitleGap: 0.0,
         leading: _getLeading(theme),
         title: _getTitle(theme),

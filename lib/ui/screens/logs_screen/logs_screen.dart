@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
 
 class LogsScreen extends BaseMainScreen {
-  static const String route = '/logs';
+  static const route = '/logs';
+  static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
 
   LogsScreen({Key? key}) : super(key: key, screenIndex: 4, title: 'Логи');
-
-  @override
-  String getRoute() {
-    return route;
-  }
 
   @override
   Widget getMainWidget(BuildContext context) {

@@ -98,7 +98,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
       case SettingsScreen.route:
         return RouteBuilder(widget: SettingsScreen(), name: settings.name!);
       default:
-        return RouteBuilder(widget: WelcomeScreen(), name: '/');
+        return RouteBuilder(widget: WelcomeScreen(), name: WelcomeScreen.route);
         // return RouteBuilder(widget: LoginScreen(), name: LoginScreen.route);
     }
   }

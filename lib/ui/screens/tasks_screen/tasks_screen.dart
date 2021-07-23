@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/widgets/tasks_add_widget.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/widgets/tasks_current_list.dart';
 
 class TasksScreen extends BaseMainScreen {
-  static const String route = '/tasks';
+  static const route = '/tasks';
+  static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
 
   TasksScreen({Key? key}) : super(key: key, screenIndex: 2, title: 'Задачи');
-
-  @override
-  String getRoute() {
-    return route;
-  }
 
   @override
   Widget getMainWidget(BuildContext context) {

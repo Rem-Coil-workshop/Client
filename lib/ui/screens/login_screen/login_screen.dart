@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:slot_service_app/ui/constants.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/redux/auth/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/ui/constants.dart';
 import 'package:slot_service_app/ui/screens/login_screen/widgets/login_enter_button.dart';
 import 'package:slot_service_app/ui/screens/login_screen/widgets/login_error_title.dart';
 import 'package:slot_service_app/ui/screens/login_screen/widgets/login_password_field.dart';
@@ -15,6 +15,7 @@ import 'package:slot_service_app/ui/widgets/login_container.dart';
 
 class LoginScreen extends StatefulWidget {
   static const route = "/login";
+  static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
 
   LoginScreen({Key? key}) : super(key: key);
 

@@ -20,3 +20,6 @@ class User with _$User {
 }
 
 enum UserRole { ADMIN, EMPLOYEE }
+
+const ADMIN_PRIVACY_LEVEL = 0;
+const EMPLOYEE_PRIVACY_LEVEL = 1;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slot_service_app/ui/constants.dart';
-import 'package:slot_service_app/ui/navigation/navigation_list.dart';
+import 'package:slot_service_app/ui/navigation/navigation_controller.dart';
 import 'package:slot_service_app/ui/screens/base/widgets/header.dart';
 
 abstract class BaseMainScreen extends StatelessWidget {
@@ -15,16 +15,14 @@ abstract class BaseMainScreen extends StatelessWidget {
 
   Widget getMainWidget(BuildContext context);
 
-  String getRoute();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationList(selectedItem: screenIndex),
+      drawer: NavigationController(currentScreen: screenIndex),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(child: NavigationList(selectedItem: screenIndex)),
+          Expanded(child: NavigationController(currentScreen: screenIndex)),
           Expanded(
             flex: 5,
             child: Container(

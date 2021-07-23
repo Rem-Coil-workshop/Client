@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
 
 class NavigationItemInfo {
   final String title;
   final IconData icon;
-  final BaseMainScreen widget;
+  final int privacyLevel;
+  final String route;
 
   NavigationItemInfo({
     required this.title,
     required this.icon,
-    required this.widget,
+    required this.route,
+    required this.privacyLevel,
   });
 }
