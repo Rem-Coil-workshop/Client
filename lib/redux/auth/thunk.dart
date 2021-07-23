@@ -2,14 +2,14 @@ import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
-import 'package:slot_service_app/core/repository/auth_repository.dart';
+import 'package:slot_service_app/core/repository/auth.dart';
 import 'package:slot_service_app/core/repository/local.dart';
 import 'package:slot_service_app/redux/auth/action.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/status/thunk.dart';
-import 'package:slot_service_app/screens/boxes_screen/boxes_screen.dart';
-import 'package:slot_service_app/screens/login_screen/login_screen.dart';
+import 'package:slot_service_app/ui/screens/boxes_screen/boxes_screen.dart';
+import 'package:slot_service_app/ui/screens/login_screen/login_screen.dart';
 
 class OnGetUsers extends BaseThunkWithExtra<AuthRepository> {
   @override
@@ -96,15 +96,19 @@ class OnUserCredentialsEnter extends BaseThunkWithExtra<AuthRepository> {
       store.dispatch(OnBeginLoad(''));
       final token = await repository.signIn(user, password);
       store.dispatch(OnSuccess(''));
-      if (token == AuthRepository.UNAUTHORIZED_STATUS) {
-        store.dispatch(SetPasswordCorrectStatusAction(false));
-      } else {
-        store.dispatch(OnSaveUserCredentials(token));
-      }
+      _validateToken(token, store);
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));
     } catch (e) {
-      store.dispatch('Ошибка подключения к сети');
+      store.dispatch(OnError('Ошибка подключения к сети'));
+    }
+  }
+
+  Future<void> _validateToken(String? token, Store<AppState> store) async {
+    if (token == null) {
+      store.dispatch(SetPasswordCorrectStatusAction(false));
+    } else {
+      store.dispatch(OnSaveUserCredentials(token));
     }
   }
 }

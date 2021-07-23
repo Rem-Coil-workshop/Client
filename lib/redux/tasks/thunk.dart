@@ -1,6 +1,6 @@
 import 'package:slot_service_app/core/models/task.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
-import 'package:slot_service_app/core/repository/tasks_repository.dart';
+import 'package:slot_service_app/core/repository/tasks.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/status/thunk.dart';

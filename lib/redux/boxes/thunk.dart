@@ -1,9 +1,9 @@
 import 'package:redux/redux.dart';
 import 'package:slot_service_app/core/models/box.dart';
 import 'package:slot_service_app/core/models/task.dart';
-import 'package:slot_service_app/core/network/http_adapter.dart';
+import 'package:slot_service_app/core/network/client.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
-import 'package:slot_service_app/core/repository/boxes_repository.dart';
+import 'package:slot_service_app/core/repository/boxes.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/boxes/actions.dart';
 import 'package:slot_service_app/redux/state.dart';
@@ -75,7 +75,7 @@ class OnOpenBox extends BaseThunk {
       final url = '/v1/slots/open/' + box.id.toString();
       store.dispatch(OnBeginLoad('Пытаемся открыть ячейку'));
 
-      final client = HttpAdapter(store.state.settingsState.network);
+      final client = HttpClient(store.state.settingsState.network);
       final response = await client.get(url);
 
       if (response.statusCode == 204) {

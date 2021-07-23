@@ -1,12 +1,10 @@
 import 'package:slot_service_app/redux/settings/state.dart';
 
 class UriBuilder {
-  final Network _config;
+  final String _host;
 
-  UriBuilder(this._config);
+  UriBuilder(Network config)
+      : _host = config.host + ':' + config.port.toString();
 
-  Uri withoutParams(String path) {
-    final host = _config.host + ':' + _config.port.toString();
-    return Uri.http(host, path);
-  }
+  Uri withoutParams(String path) => Uri.http(_host, path);
 }

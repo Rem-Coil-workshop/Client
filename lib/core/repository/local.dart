@@ -1,7 +1,7 @@
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slot_service_app/core/models/user.dart';
-import 'package:slot_service_app/core/repository/base_repository.dart';
+import 'package:slot_service_app/core/repository/base.dart';
 import 'package:slot_service_app/core/utils/converters.dart';
 
 class LocalRepository extends BaseRepository {

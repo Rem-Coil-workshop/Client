@@ -1,5 +1,5 @@
 import 'package:redux_thunk/redux_thunk.dart';
-import 'package:slot_service_app/core/repository/base_repository.dart';
+import 'package:slot_service_app/core/repository/base.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:redux/redux.dart';
 

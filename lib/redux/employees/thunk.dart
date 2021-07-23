@@ -1,7 +1,7 @@
 import 'package:redux/redux.dart';
 import 'package:slot_service_app/core/models/employee.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
-import 'package:slot_service_app/core/repository/employees_repository.dart';
+import 'package:slot_service_app/core/repository/employees.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/employees/actions.dart';
 import 'package:slot_service_app/redux/state.dart';

@@ -24,6 +24,7 @@ dependencies:
   http: ^0.13.3
   shared_preferences: any
   jwt_decode: ^0.3.1
+  universal_html: ^2.0.8
 
   cupertino_icons: ^1.0.2
 
