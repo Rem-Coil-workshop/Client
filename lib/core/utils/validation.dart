@@ -10,6 +10,8 @@ bool isValidInput(String input, bool Function(String) isValidChar) {
   return true;
 }
 
+bool isAll(String character) => true;
+
 bool isWord(String character) =>
     !isDigit(character) && !isSpecSymbol(character);
 

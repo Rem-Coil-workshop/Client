@@ -8,6 +8,7 @@ class SimpleTextField extends StatefulWidget {
   final String _errorText;
   final TextEditingController _controller = TextEditingController();
   final bool Function(String) isValidCharacter;
+  final bool isObscureText;
 
   String get value => _controller.text;
 
@@ -18,6 +19,7 @@ class SimpleTextField extends StatefulWidget {
     required String hintText,
     required String errorText,
     required this.isValidCharacter,
+    this.isObscureText = false,
   })  : _hintText = hintText,
         _errorText = errorText,
         super(key: key);
@@ -46,12 +48,12 @@ class _SimpleTextFieldState extends State<SimpleTextField> {
       padding: const EdgeInsets.all(defaultPadding),
       child: TextField(
         controller: widget._controller,
+        obscureText: widget.isObscureText,
         decoration: InputDecoration(
           errorText: isValidValue
               ? null
               : 'Неверный формат введенныйх данных. ${widget._errorText}',
           hintText: widget._hintText,
-
         ),
       ),
     );

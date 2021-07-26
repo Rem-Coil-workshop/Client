@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
+import 'package:slot_service_app/ui/screens/users/widgets/user_add_dialog.dart';
 import 'package:slot_service_app/ui/screens/users/widgets/users_table.dart';
-import 'package:slot_service_app/ui/widgets/add_entity_dialog.dart';
 import 'package:slot_service_app/ui/widgets/open_dialog_button.dart';
 
 class UsersScreen extends BaseMainScreen {
@@ -27,21 +27,5 @@ class UsersScreen extends BaseMainScreen {
         ),
       ],
     );
-  }
-}
-
-class UserAddDialog extends AddEntityDialog {
-  const UserAddDialog({Key? key}) : super(key: key, title: 'Введите данные пользователя');
-
-  @override
-  Widget getActions(BuildContext context) {
-    // TODO: implement getActions
-    throw UnimplementedError();
-  }
-
-  @override
-  Widget getFields(BuildContext context) {
-    // TODO: implement getFields
-    throw UnimplementedError();
   }
 }
