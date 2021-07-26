@@ -13,6 +13,9 @@ class SettingsScreen extends BaseMainScreen {
       : super(key: key, screenIndex: 5, title: 'Настройки');
 
   @override
+  String get currentRoute => route;
+
+  @override
   Widget getMainWidget(BuildContext context) {
     return Container(
       width: double.infinity,

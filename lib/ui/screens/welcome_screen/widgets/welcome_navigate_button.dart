@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:slot_service_app/redux/auth/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/constants.dart';
+import 'package:slot_service_app/ui/screens/boxes_screen/boxes_screen.dart';
 
 
 class NavigateButton extends StatelessWidget {
@@ -24,7 +25,7 @@ class NavigateButton extends StatelessWidget {
         ),
         onPressed: () {
           final store = StoreProvider.of<AppState>(context);
-          store.dispatch(OnEnterInApp());
+          store.dispatch(OnEnterInApp(BoxesScreen.route));
         },
         child: Text('Начать'),
       ),

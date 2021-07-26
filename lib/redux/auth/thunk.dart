@@ -39,6 +39,10 @@ class OnChangeCurrentUser extends BaseThunk {
 }
 
 class OnEnterInApp extends BaseThunkWithExtra<LocalRepository> {
+  final String nextRoute;
+
+  OnEnterInApp(this.nextRoute);
+
   @override
   Future<void> execute(
     Store<AppState> store,
@@ -47,7 +51,7 @@ class OnEnterInApp extends BaseThunkWithExtra<LocalRepository> {
     final isEntered = await repository.isEntered;
     store.dispatch(SetEnterStatusAction(isEntered));
     if (isEntered) {
-      store.dispatch(OnGetCachedUser());
+      store.dispatch(OnGetCachedUser(nextRoute));
     } else {
       await repository.logout();
       store.dispatch(NavigateToAction.replace(LoginScreen.route));
@@ -56,6 +60,10 @@ class OnEnterInApp extends BaseThunkWithExtra<LocalRepository> {
 }
 
 class OnGetCachedUser extends BaseThunkWithExtra<LocalRepository> {
+  final String nextRoute;
+
+  OnGetCachedUser(this.nextRoute);
+
   @override
   Future<void> execute(
     Store<AppState> store,
@@ -64,7 +72,7 @@ class OnGetCachedUser extends BaseThunkWithExtra<LocalRepository> {
     final user = await repository.currentUser;
     if (user != null) {
       store.dispatch(SetUserAction(user));
-      store.dispatch(NavigateToAction.replace(BoxesScreen.route));
+      store.dispatch(NavigateToAction.replace(nextRoute));
     } else {
       store.dispatch(NavigateToAction.replace(LoginScreen.route));
     }

@@ -14,6 +14,9 @@ class EmployeesScreen extends BaseMainScreen {
       : super(key: key, screenIndex: 3, title: 'Сотрудники');
 
   @override
+  String get currentRoute => route;
+
+  @override
   Widget getMainWidget(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,

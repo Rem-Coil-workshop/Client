@@ -9,6 +9,9 @@ class LogsScreen extends BaseMainScreen {
   LogsScreen({Key? key}) : super(key: key, screenIndex: 4, title: 'Логи');
 
   @override
+  String get currentRoute => route;
+
+  @override
   Widget getMainWidget(BuildContext context) {
     return Center(
       child: Text('Logs Screen'),

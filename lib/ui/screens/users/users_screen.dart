@@ -16,6 +16,9 @@ class UsersScreen extends BaseMainScreen {
       : super(key: key, screenIndex: 6, title: 'Пользователи');
 
   @override
+  String get currentRoute => route;
+
+  @override
   Widget getMainWidget(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,

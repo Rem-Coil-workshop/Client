@@ -18,6 +18,9 @@ class BoxesScreen extends BaseMainScreen {
       : super(key: key, screenIndex: 1, title: 'Доступные ячейки');
 
   @override
+  String get currentRoute => route;
+
+  @override
   Widget getMainWidget(BuildContext context) {
     return StoreConnector<AppState, BoxesViewModel>(
       onInit: (store) => store.dispatch(OnFetchBoxes()),

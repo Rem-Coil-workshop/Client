@@ -11,6 +11,9 @@ class TasksScreen extends BaseMainScreen {
   TasksScreen({Key? key}) : super(key: key, screenIndex: 2, title: 'Задачи');
 
   @override
+  String get currentRoute => route;
+
+  @override
   Widget getMainWidget(BuildContext context) {
     return Column(
       children: [
