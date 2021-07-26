@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:slot_service_app/core/utils/validation.dart';
+import 'package:slot_service_app/redux/auth/thunk.dart';
+import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/constants.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/widgets/simple_text_field.dart';
 import 'package:slot_service_app/ui/screens/users/widgets/user_select_field.dart';
 import 'package:slot_service_app/ui/widgets/add_entity_dialog.dart';
+import 'package:slot_service_app/core/models/user.dart';
 
 class UserAddDialog extends AddEntityDialog {
   final _firstnameField = SimpleTextField(
@@ -32,7 +36,7 @@ class UserAddDialog extends AddEntityDialog {
 
   @override
   Widget getActions(BuildContext context) {
-    // final store = StoreProvider.of<AppState>(context);
+    final store = StoreProvider.of<AppState>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -42,7 +46,12 @@ class UserAddDialog extends AddEntityDialog {
                 _lastnameField.isValid &&
                 _roleField.isValid &&
                 _passwordField.isValid) {
-              print('save user');
+              final user = User(
+                firstname: _firstnameField.value,
+                lastname: _lastnameField.value,
+                role: _roleField.value,
+              );
+              store.dispatch(OnSingUp(user, _passwordField.value));
               Navigator.pop(context);
             }
           },

@@ -16,7 +16,7 @@ class JsonUser {
     return JsonUser(
       firstname: user.firstname,
       lastname: user.lastname,
-      role: user.role.toString(),
+      role: user.role.toServerRole(),
     );
   }
 
@@ -34,6 +34,12 @@ class JsonUser {
       'lastname': lastname,
       'role': role,
     };
+  }
+
+  Map<String, dynamic> toJsonWithPassword(String password) {
+    final json = this.toJson();
+    json['password'] = password;
+    return json;
   }
 
   User toUser() {

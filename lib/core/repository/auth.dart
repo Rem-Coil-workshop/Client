@@ -31,14 +31,32 @@ class AuthRepository extends BaseRepository {
   }
 
   Future<String?> signIn(User user, String password) async {
-    final json = JsonUser.fromUser(user).toJson();
-    json['password'] = password;
+    final json = JsonUser.fromUser(user).toJsonWithPassword(password);
     final response = await client.post('$BASE_URL/sign_in', json);
 
     if (response.statusCode == HttpStatus.ok) {
       return jsonDecode(response.body)['token'];
     } else if (response.statusCode == HttpStatus.unauthorized) {
       return null;
+    } else {
+      throw NetworkException.fromResponse(
+        response: response,
+        message: 'Ошибка сети',
+      );
+    }
+  }
+
+  Future<String> signUp(User user, String password) async {
+    final json = JsonUser.fromUser(user).toJsonWithPassword(password);
+    final response = await client.post('$BASE_URL/sign_up', json);
+
+    if (response.statusCode == HttpStatus.ok) {
+      return jsonDecode(response.body)['token'];
+    } else if (response.statusCode == HttpStatus.badRequest) {
+      throw NetworkException.fromResponse(
+        response: response,
+        message: 'Введено неуникально значение пользователя',
+      );
     } else {
       throw NetworkException.fromResponse(
         response: response,

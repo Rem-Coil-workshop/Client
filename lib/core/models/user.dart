@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:slot_service_app/core/utils/converters.dart';
 
 part 'user.freezed.dart';
 
@@ -20,20 +21,24 @@ class User with _$User {
 
 enum UserRole { ADMIN, EMPLOYEE }
 
+extension ServerRole on UserRole {
+  String toServerRole() {
+    switch (this) {
+      case UserRole.ADMIN:
+        return 'ADMIN';
+      case UserRole.EMPLOYEE:
+        return 'EMPLOYEE';
+    }
+  }
+}
+
 class RoleHolder {
   final UserRole role;
 
   RoleHolder(this.role);
 
   @override
-  String toString() {
-    switch (role) {
-      case UserRole.ADMIN:
-        return 'Администратор';
-      case UserRole.EMPLOYEE:
-        return 'Обычный пользователь';
-    }
-  }
+  String toString() => convertRoleToString(role);
 }
 
 const ADMIN_PRIVACY_LEVEL = 0;

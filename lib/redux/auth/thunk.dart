@@ -11,6 +11,27 @@ import 'package:slot_service_app/redux/status/thunk.dart';
 import 'package:slot_service_app/ui/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/ui/screens/login_screen/login_screen.dart';
 
+class OnSingUp extends BaseThunkWithExtra<AuthRepository> {
+  final User user;
+  final String password;
+
+  OnSingUp(this.user, this.password);
+
+  @override
+  Future<void> execute(Store<AppState> store, AuthRepository repository) async {
+    try {
+      store.dispatch(OnBeginLoad('Сохраняем пользователя'));
+      await repository.signUp(user, password);
+      store.dispatch(OnSuccess('Пользователь добавлен'));
+      store.dispatch(OnGetUsers());
+    } on NetworkException catch (e) {
+      store.dispatch(OnError(e.message));
+    } catch (e) {
+      store.dispatch('Ошибка сети');
+    }
+  }
+}
+
 class OnGetUsers extends BaseThunkWithExtra<AuthRepository> {
   @override
   Future<void> execute(Store<AppState> store, AuthRepository repository) async {
@@ -101,9 +122,9 @@ class OnUserCredentialsEnter extends BaseThunkWithExtra<AuthRepository> {
   @override
   Future<void> execute(Store<AppState> store, AuthRepository repository) async {
     try {
-      store.dispatch(OnBeginLoad(''));
+      store.dispatch(OnBeginLoad('Проверяем данные пользователя'));
       final token = await repository.signIn(user, password);
-      store.dispatch(OnSuccess(''));
+      store.dispatch(OnSuccess('Пришел ответ от сервера'));
       _validateToken(token, store);
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));

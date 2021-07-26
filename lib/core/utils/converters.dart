@@ -9,3 +9,12 @@ UserRole toUserRole(String role) {
       return UserRole.EMPLOYEE;
   }
 }
+
+String convertRoleToString(UserRole role) {
+  switch (role) {
+    case UserRole.ADMIN:
+      return 'Администратор';
+    case UserRole.EMPLOYEE:
+      return 'Обычный пользователь';
+  }
+}
