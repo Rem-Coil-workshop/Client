@@ -44,7 +44,7 @@ class NavigationController extends StatelessWidget {
       privacyLevel: SettingsScreen.privacyLevel,
     ),
     NavigationItemInfo(
-      icon: Icons.settings_applications,
+      icon: Icons.supervised_user_circle_rounded,
       title: 'Пользователи',
       route: UsersScreen.route,
       privacyLevel: UsersScreen.privacyLevel,

@@ -6,7 +6,7 @@ import 'package:slot_service_app/core/models/task.dart';
 import 'package:slot_service_app/redux/boxes/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/screens/boxes_screen/widgets/box_open_button.dart';
-import 'package:slot_service_app/ui/screens/boxes_screen/widgets/box_number.dart';
+import 'package:slot_service_app/ui/widgets/box_number.dart';
 import 'package:slot_service_app/ui/widgets/dropdown.dart';
 
 import '../../../constants.dart';
@@ -34,7 +34,7 @@ class BoxItem extends StatelessWidget {
         border: Border.all(color: Colors.white10),
       ),
       child: ListTile(
-        leading: BoxNumber(number: _box.number),
+        leading: NumberHolder(number: _box.number),
         mouseCursor: SystemMouseCursors.basic,
         title: Row(
           children: [

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BoxNumber extends StatelessWidget {
-  const BoxNumber({
+class NumberHolder extends StatelessWidget {
+  const NumberHolder({
     Key? key,
     required this.number,
   }) : super(key: key);

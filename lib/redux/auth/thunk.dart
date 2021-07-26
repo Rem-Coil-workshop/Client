@@ -15,9 +15,9 @@ class OnGetUsers extends BaseThunkWithExtra<AuthRepository> {
   @override
   Future<void> execute(Store<AppState> store, AuthRepository repository) async {
     try {
-      store.dispatch(OnBeginLoad(''));
+      store.dispatch(OnBeginLoad('Загружаем список пользователей'));
       final users = await repository.users;
-      store.dispatch(OnSuccess(''));
+      store.dispatch(OnSuccess('Список пользователй обновлён'));
       store.dispatch(SetUsersAction(users));
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));
