@@ -33,10 +33,12 @@ class LocalRepository extends BaseRepository {
   }
 
   Future<void> logout() async {
+    await _updatePrefs();
     prefs.remove(TOKEN_KEY);
   }
 
   Future<void> saveToken(String token) async {
+    await _updatePrefs();
     prefs.setString(TOKEN_KEY, token);
   }
 }
