@@ -1,58 +1,71 @@
 import 'dart:async';
 
+import 'package:slot_service_app/core/utils/validation.dart';
+import 'package:slot_service_app/core/websocket/websocket_channel.dart';
 import 'package:slot_service_app/redux/settings/state.dart';
-import 'package:slot_service_app/ui/view_models/card.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
-class CardBloc {
-  late WebSocketChannel _channel;
+class EmployeeBloc {
+  late CardChannel _channel;
+  EmployeeDialogState _state = EmployeeDialogState.init();
 
-  String _currentValue = '';
+  final _outputController = StreamController<EmployeeDialogState>();
 
-  final _inputController = StreamController<Event>();
-  final _outputController = StreamController<CardViewModel>();
+  Stream<EmployeeDialogState> get outputStateStream => _outputController.stream;
 
-  StreamSink<Event> get inputSink => _inputController.sink;
-  Stream<CardViewModel> get outputStateStream => _outputController.stream;
-
-  CardBloc() {
-    _inputController.stream.listen(_mapEventToStream);
+  EmployeeBloc() {
+    _channel = CardChannel(onData: onCardValueEntered);
+    _outputController.sink.add(_state);
   }
 
-  void openSocket(Network network) {
-    _channel = WebSocketChannel.connect(
-      Uri.parse('ws://${network.host}:${network.port}/card'),
-    );
-
-    _channel.stream.listen((message) {
-      _currentValue = message;
-      _sendMessage();
-    });
+  onOpenDialog(Network config) {
+    _channel.open(config);
   }
 
-  void _sendMessage() {
-    final card = CardViewModel(_currentValue);
-    _outputController.sink.add(card);
+  onCardValueEntered(dynamic data) {
+    _state.cardValue = data;
+    _outputController.sink.add(_state);
   }
 
-  void _mapEventToStream(Event event) {
-    switch (event) {
-      case Event.getValue:
-        _sendMessage();
-        break;
-    }
+  onFirstNameChanged(String firstname) {
+    _state.isFirstnameCorrect = _onNameChanged(firstname);
+    _outputController.sink.add(_state);
   }
 
-  bool get isValid => _currentValue.isNotEmpty;
+  onLastNameChanged(String lastname) {
+    _state.isLastnameCorrect = _onNameChanged(lastname);
+    _outputController.sink.add(_state);
+  }
 
-  String get value => _currentValue;
+  _onNameChanged(String name) {
+    return isValidInput(name, isWord);
+  }
 
+  onCloseDialog() {
+    _channel.close();
+  }
 
   void dispose() {
-    _channel.sink.close();
-    _inputController.close();
-    _outputController.close();
+    onCloseDialog();
+    _channel.close();
   }
 }
 
-enum Event {getValue}
+class EmployeeDialogState {
+  bool isFirstnameCorrect;
+  bool isLastnameCorrect;
+  String? cardValue;
+
+  factory EmployeeDialogState.init() {
+    return EmployeeDialogState(
+      isFirstnameCorrect: true,
+      isLastnameCorrect: true,
+      cardValue: null,
+    );
+  }
+
+  EmployeeDialogState({
+    required this.isFirstnameCorrect,
+    required this.isLastnameCorrect,
+    required this.cardValue,
+  });
+}

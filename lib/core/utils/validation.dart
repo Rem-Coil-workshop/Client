@@ -1,6 +1,4 @@
 bool isValidInput(String input, bool Function(String) isValidChar) {
-  if (input.isEmpty) return false;
-
   for (var rune in input.runes) {
     var character = String.fromCharCode(rune);
     if (!isValidChar(character)) {

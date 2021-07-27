@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:slot_service_app/ui/constants.dart';
 
-abstract class AddEntityDialog extends StatelessWidget {
+class AddEntityDialog extends StatelessWidget {
   final String _title;
+  final Widget fields;
+  final bool Function() onSuccessButtonPressed;
 
   const AddEntityDialog({
     Key? key,
     required String title,
+    required this.fields,
+    required this.onSuccessButtonPressed,
   })  : _title = title,
         super(key: key);
-
-  Widget getFields(BuildContext context);
-  Widget getActions(BuildContext context);
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +29,29 @@ abstract class AddEntityDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _getTitle(context),
-            getFields(context),
+            fields,
             SizedBox(height: defaultPadding),
-            getActions(context),
+            _getActions(context),
           ],
         ),
       ),
+    );
+  }
+
+  _getActions(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        TextButton(
+          onPressed: () { if (onSuccessButtonPressed()) Navigator.pop(context);},
+          child: Text('Добавить'),
+        ),
+        SizedBox(width: defaultPadding),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text('Отмена'),
+        ),
+      ],
     );
   }
 

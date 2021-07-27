@@ -24,7 +24,7 @@ class _UserSelectFieldState extends State<UserSelectField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(2 * defaultPadding),
+      padding: const EdgeInsets.all(defaultPadding),
       child: DropdownWidget<RoleHolder>(
         elements: widget._roles,
         onChanged: (value) => setState(() => widget._controller.role = value),

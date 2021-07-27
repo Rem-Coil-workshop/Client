@@ -80,6 +80,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         ),
         navigatorKey: NavigatorHolder.navigatorKey,
         onGenerateRoute: _getRoute,
+        initialRoute: UsersScreen.route,
       ),
     );
   }

@@ -75,8 +75,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
   void _onInput() {
     setState(() {
       final value = _controller.text;
-      this._isInputValid = value.isEmpty ||
-          isValidInput(value, (chr) {
+      this._isInputValid = isValidInput(value, (chr) {
             return AddTaskWidget.CORRECT_CODES.contains(chr);
           });
     });

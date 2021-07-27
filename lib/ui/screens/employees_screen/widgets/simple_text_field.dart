@@ -1,67 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:slot_service_app/core/utils/validation.dart';
 
 import '../../../constants.dart';
 
-class SimpleTextField extends StatefulWidget {
+class SimpleTextField extends StatelessWidget {
   final String _hintText;
   final String _errorText;
-  final TextEditingController _controller = TextEditingController();
-  final bool Function(String) isValidCharacter;
+  final bool _isValid;
+  final TextEditingController _controller;
   final bool isObscureText;
-
-  String get value => _controller.text;
-
-  bool get isValid => isValidInput(_controller.text, isValidCharacter);
 
   SimpleTextField({
     Key? key,
+    required TextEditingController controller,
+    required bool isValid,
     required String hintText,
     required String errorText,
-    required this.isValidCharacter,
     this.isObscureText = false,
-  })  : _hintText = hintText,
+  })  : _controller = controller,
+        _isValid = isValid,
+        _hintText = hintText,
         _errorText = errorText,
         super(key: key);
-
-  @override
-  _SimpleTextFieldState createState() => _SimpleTextFieldState();
-}
-
-class _SimpleTextFieldState extends State<SimpleTextField> {
-  var isValidValue = true;
-
-  @override
-  void initState() {
-    super.initState();
-    widget._controller.addListener(() {
-      setState(() {
-        this.isValidValue =
-            isValidInput(widget._controller.text, widget.isValidCharacter);
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),
       child: TextField(
-        controller: widget._controller,
-        obscureText: widget.isObscureText,
+        controller: _controller,
+        obscureText: isObscureText,
         decoration: InputDecoration(
-          errorText: isValidValue
+          errorText: _isValid
               ? null
-              : 'Неверный формат введенныйх данных. ${widget._errorText}',
-          hintText: widget._hintText,
+              : 'Неверный формат введенныйх данных. $_errorText',
+          hintText: _hintText,
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    widget._controller.dispose();
-    super.dispose();
   }
 }
