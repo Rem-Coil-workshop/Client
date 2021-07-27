@@ -37,6 +37,14 @@ class RoleHolder {
 
   RoleHolder(this.role);
 
+
+  @override
+  bool operator ==(Object other) {
+    if (!(other is RoleHolder)) return false;
+
+    return this.role == other.role;
+  }
+
   @override
   String toString() => convertRoleToString(role);
 }

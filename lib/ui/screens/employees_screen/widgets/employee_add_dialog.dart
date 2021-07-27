@@ -27,20 +27,16 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
   void initState() {
     _bloc.outputStateStream.listen(_onStateChanged);
 
-    _firstnameController.addListener(
-      () => _bloc.onFirstNameChanged(_firstnameController.text),
-    );
+    _firstnameController
+        .addListener(() => _bloc.onFirstNameChanged(_firstnameController.text));
 
-    _lastnameController.addListener(
-      () => _bloc.onLastNameChanged(_lastnameController.text),
-    );
+    _lastnameController
+        .addListener(() => _bloc.onLastNameChanged(_lastnameController.text));
 
     super.initState();
   }
 
-  _onStateChanged(EmployeeDialogState state) => setState(() {
-        _state = state;
-      });
+  _onStateChanged(EmployeeDialogState state) => setState(() => _state = state);
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +82,8 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
         lastname: _lastnameController.text,
         number: int.parse(currentCardValue!),
       );
-      _clearControllers();
       store.dispatch(OnCreateEmployee(employee));
+      _clearControllers();
       return true;
     }
     return false;

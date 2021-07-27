@@ -46,7 +46,7 @@ class EmployeeBloc {
 
   void dispose() {
     onCloseDialog();
-    _channel.close();
+    _outputController.close();
   }
 }
 
