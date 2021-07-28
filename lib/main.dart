@@ -27,6 +27,8 @@ void main() {
 }
 
 class RemCoilDashboardApp extends StatefulWidget {
+  static const MAIN_ROUTE = LogsScreen.route;
+
   @override
   _RemCoilDashboardAppState createState() => _RemCoilDashboardAppState();
 }
@@ -80,7 +82,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         ),
         navigatorKey: NavigatorHolder.navigatorKey,
         onGenerateRoute: _getRoute,
-        initialRoute: UsersScreen.route,
+        initialRoute: WelcomeScreen.route,
       ),
     );
   }

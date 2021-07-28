@@ -4,11 +4,11 @@ import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/auth.dart';
 import 'package:slot_service_app/core/repository/local.dart';
+import 'package:slot_service_app/main.dart';
 import 'package:slot_service_app/redux/auth/action.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/status/thunk.dart';
-import 'package:slot_service_app/ui/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/ui/screens/login_screen/login_screen.dart';
 
 class OnSingUp extends BaseThunkWithExtra<AuthRepository> {
@@ -154,6 +154,6 @@ class OnSaveUserCredentials extends BaseThunkWithExtra<LocalRepository> {
   ) async {
     await repository.saveToken(token);
     store.dispatch(SetPasswordCorrectStatusAction(true));
-    store.dispatch(NavigateToAction.replace(BoxesScreen.route));
+    store.dispatch(NavigateToAction.replace(RemCoilDashboardApp.MAIN_ROUTE));
   }
 }
