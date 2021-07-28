@@ -1,6 +1,7 @@
-import 'package:slot_service_app/redux/auth/action.dart';
-import 'package:slot_service_app/redux/auth/state.dart';
 import 'package:redux/redux.dart';
+import 'package:slot_service_app/redux/user/state.dart';
+
+import 'action.dart';
 
 final authReducer = combineReducers<AuthState>([
   TypedReducer<AuthState, SetUsersAction>(_setUsers),

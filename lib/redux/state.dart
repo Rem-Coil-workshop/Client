@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:slot_service_app/redux/auth/state.dart';
 import 'package:slot_service_app/redux/boxes/state.dart';
 import 'package:slot_service_app/redux/employees/state.dart';
 import 'package:slot_service_app/redux/logs/state.dart';
 import 'package:slot_service_app/redux/settings/state.dart';
 import 'package:slot_service_app/redux/status/state.dart';
 import 'package:slot_service_app/redux/tasks/state.dart';
+import 'package:slot_service_app/redux/user/state.dart';
 
 part 'state.freezed.dart';
 

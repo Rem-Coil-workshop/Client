@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:slot_service_app/core/models/user.dart';
-import 'package:slot_service_app/redux/auth/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/redux/user/thunk.dart';
 import 'package:slot_service_app/ui/constants.dart';
 import 'package:slot_service_app/ui/screens/users/widgets/user_list.dart';
 import 'package:slot_service_app/ui/view_models/user.dart';

@@ -2,23 +2,24 @@ import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
-import 'package:slot_service_app/core/repository/auth.dart';
+import 'package:slot_service_app/core/repository/user.dart';
 import 'package:slot_service_app/core/repository/local.dart';
 import 'package:slot_service_app/main.dart';
-import 'package:slot_service_app/redux/auth/action.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/status/thunk.dart';
 import 'package:slot_service_app/ui/screens/login_screen/login_screen.dart';
 
-class OnSingUp extends BaseThunkWithExtra<AuthRepository> {
+import 'action.dart';
+
+class OnSingUp extends BaseThunkWithExtra<UserRepository> {
   final User user;
   final String password;
 
   OnSingUp(this.user, this.password);
 
   @override
-  Future<void> execute(Store<AppState> store, AuthRepository repository) async {
+  Future<void> execute(Store<AppState> store, UserRepository repository) async {
     try {
       store.dispatch(OnBeginLoad('Сохраняем пользователя'));
       await repository.signUp(user, password);
@@ -32,9 +33,9 @@ class OnSingUp extends BaseThunkWithExtra<AuthRepository> {
   }
 }
 
-class OnGetUsers extends BaseThunkWithExtra<AuthRepository> {
+class OnGetUsers extends BaseThunkWithExtra<UserRepository> {
   @override
-  Future<void> execute(Store<AppState> store, AuthRepository repository) async {
+  Future<void> execute(Store<AppState> store, UserRepository repository) async {
     try {
       store.dispatch(OnBeginLoad('Загружаем список пользователей'));
       final users = await repository.users;
@@ -124,14 +125,14 @@ class OnExitApp extends BaseThunkWithExtra<LocalRepository> {
   }
 }
 
-class OnUserCredentialsEnter extends BaseThunkWithExtra<AuthRepository> {
+class OnUserCredentialsEnter extends BaseThunkWithExtra<UserRepository> {
   final User user;
   final String password;
 
   OnUserCredentialsEnter(this.user, this.password);
 
   @override
-  Future<void> execute(Store<AppState> store, AuthRepository repository) async {
+  Future<void> execute(Store<AppState> store, UserRepository repository) async {
     try {
       store.dispatch(OnBeginLoad('Проверяем данные пользователя'));
       final token = await repository.signIn(user, password);
@@ -169,7 +170,7 @@ class OnSaveUserCredentials extends BaseThunkWithExtra<LocalRepository> {
   }
 }
 
-class OnDeleteUser extends BaseThunkWithExtra<AuthRepository> {
+class OnDeleteUser extends BaseThunkWithExtra<UserRepository> {
   final User user;
 
   OnDeleteUser(this.user);
@@ -177,7 +178,7 @@ class OnDeleteUser extends BaseThunkWithExtra<AuthRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    AuthRepository repository,
+    UserRepository repository,
   ) async {
     try {
       store.dispatch(OnBeginLoad('Удаляем пользователя'));
@@ -192,5 +193,16 @@ class OnDeleteUser extends BaseThunkWithExtra<AuthRepository> {
     } catch (e) {
       store.dispatch(OnError('Ошибка подключения к сети'));
     }
+  }
+}
+
+class OnUpdateNetworkConfigInUserRepository
+    extends BaseThunkWithExtra<UserRepository> {
+  @override
+  Future<void> execute(
+    Store<AppState> store,
+      UserRepository repository,
+  ) async {
+    repository.changeNetworkClient(store.state.settingsState.network);
   }
 }

@@ -4,8 +4,9 @@ import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:slot_service_app/core/repository/logs.dart';
+import 'package:slot_service_app/redux/settings/thunk.dart';
 import 'package:slot_service_app/ui/constants.dart';
-import 'package:slot_service_app/core/repository/auth.dart';
+import 'package:slot_service_app/core/repository/user.dart';
 import 'package:slot_service_app/core/repository/base.dart';
 import 'package:slot_service_app/core/repository/boxes.dart';
 import 'package:slot_service_app/core/repository/employees.dart';
@@ -28,6 +29,7 @@ void main() {
 }
 
 class RemCoilDashboardApp extends StatefulWidget {
+  // TODO - было бы немплохо вернуть нормальную главнуюстраницу
   static const MAIN_ROUTE = LogsScreen.route;
 
   @override
@@ -44,7 +46,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
       final boxThunkMiddleware = _getThunkMiddleware(BoxesRepository());
       final employeeThunkMiddleware =
           _getThunkMiddleware(EmployeesRepository());
-      final authThunkMiddleware = _getThunkMiddleware(AuthRepository());
+      final authThunkMiddleware = _getThunkMiddleware(UserRepository());
       final logsThunkMiddleware = _getThunkMiddleware(LogsRepository());
 
       _appStateHolder ??= Store<AppState>(
@@ -62,6 +64,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         ],
       );
     }
+
     return _appStateHolder!;
   }
 
@@ -73,6 +76,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
 
   @override
   Widget build(BuildContext context) {
+    _appState.dispatch(OnLoadFromCacheSetting());
     return StoreProvider<AppState>(
       store: _appState,
       child: MaterialApp(
@@ -90,6 +94,8 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
       ),
     );
   }
+
+  // TODO - было бы немплохо вернуть нормальную главнуюстраницу
 
   Route _getRoute(RouteSettings settings) {
     switch (settings.name) {

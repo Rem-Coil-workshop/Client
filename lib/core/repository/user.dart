@@ -7,7 +7,7 @@ import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/base.dart';
 import 'package:universal_html/html.dart';
 
-class AuthRepository extends BaseRepository {
+class UserRepository extends BaseRepository {
   static const BASE_URL = '/v1/users';
   List<User> _users = [];
 
