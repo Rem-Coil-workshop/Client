@@ -66,4 +66,19 @@ class HttpClient {
       throw NetworkException.socketException();
     }
   }
+
+  Future<http.Response> deleteWithBody(
+    String path,
+    Map<String, dynamic> body,
+  ) async {
+    try {
+      return http.delete(
+        _builder.withoutParams(path),
+        headers: headers,
+        body: jsonEncode(body),
+      );
+    } catch (e) {
+      throw NetworkException.socketException();
+    }
+  }
 }

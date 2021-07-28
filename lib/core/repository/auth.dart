@@ -71,4 +71,21 @@ class AuthRepository extends BaseRepository {
       return JsonUser.fromJson(json);
     });
   }
+
+  Future<List<User>> deleteUser(User user) async {
+    final response = await client.deleteWithBody(
+      '$BASE_URL',
+      JsonUser.fromUser(user).toJson(),
+    );
+
+    if (response.statusCode == HttpStatus.noContent) {
+      _users.remove(user);
+      return _users;
+    } else {
+      throw NetworkException.fromResponse(
+        response: response,
+        message: 'Ошибка удаления пользователя.',
+      );
+    }
+  }
 }

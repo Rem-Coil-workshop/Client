@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:slot_service_app/core/models/user.dart';
+import 'package:slot_service_app/redux/auth/thunk.dart';
+import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/constants.dart';
 
 class UserList extends StatelessWidget {
@@ -39,10 +42,11 @@ class UserList extends StatelessWidget {
                     columns: [
                       DataColumn(label: Text('Имя')),
                       DataColumn(label: Text('Фамилия')),
+                      DataColumn(label: Container()),
                     ],
                     rows: List.generate(
                       _users.length,
-                      (index) => _dataRow(index, _users[index]),
+                      (index) => _dataRow(index, _users[index], context),
                     ),
                   ),
                 ),
@@ -54,13 +58,27 @@ class UserList extends StatelessWidget {
     );
   }
 
-  _dataRow(int index, User user) {
+  _dataRow(int index, User user, BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     return DataRow(
       color: MaterialStateProperty.resolveWith(
           (states) => index % 2 == 1 ? Colors.blue[50] : Colors.white),
       cells: [
         DataCell(Text(user.firstname)),
         DataCell(Text(user.lastname)),
+        DataCell(Row(
+          children: [
+            Spacer(),
+            IconButton(
+              onPressed: () => store.dispatch(OnDeleteUser(user)),
+              splashRadius: 8,
+              icon: Icon(
+                Icons.remove_circle,
+                color: Colors.red,
+              ),
+            ),
+          ],
+        )),
       ],
     );
   }

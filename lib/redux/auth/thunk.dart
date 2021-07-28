@@ -38,13 +38,24 @@ class OnGetUsers extends BaseThunkWithExtra<AuthRepository> {
     try {
       store.dispatch(OnBeginLoad('Загружаем список пользователей'));
       final users = await repository.users;
-      store.dispatch(OnSuccess('Список пользователй обновлён'));
-      store.dispatch(SetUsersAction(users));
+      store.dispatch(OnUpdateUsers(users));
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));
     } catch (e) {
       store.dispatch('Ошибка подключения к сети');
     }
+  }
+}
+
+class OnUpdateUsers extends BaseThunk {
+  final List<User> users;
+
+  OnUpdateUsers(this.users);
+
+  @override
+  Future<void> execute(Store<AppState> store) async {
+    store.dispatch(OnSuccess('Список пользователй обновлён'));
+    store.dispatch(SetUsersAction(users));
   }
 }
 
@@ -155,5 +166,31 @@ class OnSaveUserCredentials extends BaseThunkWithExtra<LocalRepository> {
     await repository.saveToken(token);
     store.dispatch(SetPasswordCorrectStatusAction(true));
     store.dispatch(NavigateToAction.replace(RemCoilDashboardApp.MAIN_ROUTE));
+  }
+}
+
+class OnDeleteUser extends BaseThunkWithExtra<AuthRepository> {
+  final User user;
+
+  OnDeleteUser(this.user);
+
+  @override
+  Future<void> execute(
+    Store<AppState> store,
+    AuthRepository repository,
+  ) async {
+    try {
+      store.dispatch(OnBeginLoad('Удаляем пользователя'));
+      if (store.state.authState.currentUser == user) {
+        store.dispatch(OnError('Вы удаляете текущего пользователя'));
+      } else {
+        final users = await repository.deleteUser(user);
+        store.dispatch(OnUpdateUsers(users));
+      }
+    } on NetworkException catch (e) {
+      store.dispatch(OnError(e.message));
+    } catch (e) {
+      store.dispatch(OnError('Ошибка подключения к сети'));
+    }
   }
 }
