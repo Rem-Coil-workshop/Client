@@ -18,40 +18,44 @@ class NavigationController extends StatelessWidget {
       title: 'Ячейки',
       route: BoxesScreen.route,
       privacyLevel: BoxesScreen.privacyLevel,
+      index: BoxesScreen.screenNumber,
     ),
     NavigationItemInfo(
       icon: Icons.task_rounded,
       title: 'Задачи',
       route: TasksScreen.route,
       privacyLevel: TasksScreen.privacyLevel,
+      index: TasksScreen.screenNumber,
     ),
     NavigationItemInfo(
       icon: Icons.account_box_rounded,
       title: 'Сотрудники',
       route: EmployeesScreen.route,
       privacyLevel: EmployeesScreen.privacyLevel,
+      index: EmployeesScreen.screenNumber,
     ),
     NavigationItemInfo(
       icon: Icons.ballot_outlined,
       title: 'Логи',
       route: LogsScreen.route,
       privacyLevel: LogsScreen.privacyLevel,
+      index: LogsScreen.screenNumber,
     ),
     NavigationItemInfo(
       icon: Icons.settings_applications,
       title: 'Настройки',
       route: SettingsScreen.route,
       privacyLevel: SettingsScreen.privacyLevel,
+      index: SettingsScreen.screenNumber,
     ),
     NavigationItemInfo(
       icon: Icons.supervised_user_circle_rounded,
       title: 'Пользователи',
       route: UsersScreen.route,
       privacyLevel: UsersScreen.privacyLevel,
+      index: UsersScreen.screenNumber,
     ),
   ];
-
-  // TODO - было бы круто, если бы элементы сами сотрировались
 
   final int currentScreen;
 
@@ -63,8 +67,11 @@ class NavigationController extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final user = store.state.authState.currentUser;
     final privacyLevel = user?.role.index ?? EMPLOYEE_PRIVACY_LEVEL;
-    final items =
-        screenList.where((screen) => screen.privacyLevel >= privacyLevel).toList();
+
+    screenList..sort((a, b) => a.index.compareTo(b.index));
+    final items = screenList
+      ..where((screen) => screen.privacyLevel >= privacyLevel)
+      ..toList();
 
     return NavigationList(navigationItems: items, selectedItem: currentScreen);
   }

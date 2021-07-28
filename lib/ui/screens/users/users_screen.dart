@@ -8,13 +8,14 @@ import 'package:slot_service_app/ui/widgets/open_dialog_button.dart';
 class UsersScreen extends StatelessWidget {
   static const route = '/users';
   static const privacyLevel = ADMIN_PRIVACY_LEVEL;
+  static const screenNumber = 5;
 
   UsersScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MainScreen(
-      screenIndex: 6,
+      screenIndex: screenNumber,
       title: 'Пользователи',
       currentRoute: route,
       child: Column(

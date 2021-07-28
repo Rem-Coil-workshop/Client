@@ -11,6 +11,7 @@ import 'package:slot_service_app/ui/view_models/boxes.dart';
 class BoxesScreen extends StatefulWidget {
   static const route = '/boxes';
   static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
+  static var screenNumber = 1;
 
   BoxesScreen({Key? key});
 
@@ -24,7 +25,7 @@ class _BoxesScreenState extends State<BoxesScreen> {
   @override
   Widget build(BuildContext context) {
     return MainScreen(
-      screenIndex: 1,
+      screenIndex: BoxesScreen.screenNumber,
       title: 'Доступные ячейки',
       currentRoute: BoxesScreen.route,
       child: StoreConnector<AppState, BoxesViewModel>(

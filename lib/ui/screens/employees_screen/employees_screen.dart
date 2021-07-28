@@ -9,13 +9,14 @@ import 'package:slot_service_app/ui/screens/employees_screen/widgets/employees_t
 class EmployeesScreen extends StatelessWidget {
   static const route = '/employees';
   static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
+  static const screenNumber = 3;
 
   EmployeesScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MainScreen(
-      screenIndex: 3,
+      screenIndex: screenNumber,
       title: 'Сотрудники',
       currentRoute: route,
       child: Column(

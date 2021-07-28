@@ -10,6 +10,7 @@ import 'package:slot_service_app/ui/view_models/logs.dart';
 class LogsScreen extends StatefulWidget {
   static const route = '/logs';
   static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
+  static const screenNumber = 4;
 
   LogsScreen({Key? key});
 
@@ -23,7 +24,7 @@ class _LogsScreenState extends State<LogsScreen> {
   @override
   Widget build(BuildContext context) {
     return MainScreen(
-      screenIndex: 4,
+      screenIndex: LogsScreen.screenNumber,
       title: 'Логи',
       currentRoute: LogsScreen.route,
       child: Container(

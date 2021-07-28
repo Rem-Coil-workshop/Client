@@ -7,13 +7,15 @@ import 'package:slot_service_app/ui/screens/tasks_screen/widgets/tasks_current_l
 class TasksScreen extends StatelessWidget {
   static const route = '/tasks';
   static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
+  static const screenNumber = 2;
+
 
   TasksScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MainScreen(
-      screenIndex: 2,
+      screenIndex: screenNumber,
       title: 'Задачи',
       currentRoute: route,
       child: Column(

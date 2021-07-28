@@ -8,13 +8,14 @@ import '../../constants.dart';
 class SettingsScreen extends StatelessWidget {
   static const route = '/settings';
   static const privacyLevel = ADMIN_PRIVACY_LEVEL;
+  static const screenNumber = 6;
 
   SettingsScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return MainScreen(
-      screenIndex: 5,
+      screenIndex: screenNumber,
       title: 'Настройки',
       currentRoute: route,
       child: Container(
