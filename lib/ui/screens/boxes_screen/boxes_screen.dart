@@ -8,27 +8,33 @@ import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
 import 'package:slot_service_app/ui/screens/boxes_screen/widgets/box_item.dart';
 import 'package:slot_service_app/ui/view_models/boxes.dart';
 
-class BoxesScreen extends BaseMainScreen {
+class BoxesScreen extends StatefulWidget {
   static const route = '/boxes';
   static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
 
+  BoxesScreen({Key? key});
+
+  @override
+  _BoxesScreenState createState() => _BoxesScreenState();
+}
+
+class _BoxesScreenState extends State<BoxesScreen> {
   final ScrollController _scrollController = ScrollController();
 
-  BoxesScreen({Key? key})
-      : super(key: key, screenIndex: 1, title: 'Доступные ячейки');
-
   @override
-  String get currentRoute => route;
-
-  @override
-  Widget getMainWidget(BuildContext context) {
-    return StoreConnector<AppState, BoxesViewModel>(
-      onInit: (store) => store.dispatch(OnFetchBoxes()),
-      converter: (store) =>
-          BoxesViewModel.success(boxes: store.state.boxesState.boxes),
-      builder: (context, vm) => vm.when(
-        success: (boxes) =>
-            boxes.isEmpty ? _emptyScreen() : _screenWithItems(boxes),
+  Widget build(BuildContext context) {
+    return MainScreen(
+      screenIndex: 1,
+      title: 'Доступные ячейки',
+      currentRoute: BoxesScreen.route,
+      child: StoreConnector<AppState, BoxesViewModel>(
+        onInit: (store) => store.dispatch(OnFetchBoxes()),
+        converter: (store) =>
+            BoxesViewModel.success(boxes: store.state.boxesState.boxes),
+        builder: (context, vm) => vm.when(
+          success: (boxes) =>
+              boxes.isEmpty ? _emptyScreen() : _screenWithItems(boxes),
+        ),
       ),
     );
   }
@@ -63,5 +69,11 @@ class BoxesScreen extends BaseMainScreen {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

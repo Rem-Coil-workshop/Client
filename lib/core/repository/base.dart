@@ -8,3 +8,5 @@ abstract class BaseRepository{
     client = HttpClient(network);
   }
 }
+
+// TODO - Неплохо бы было сохранять настройки в локальном хранилище

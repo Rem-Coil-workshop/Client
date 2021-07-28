@@ -4,27 +4,29 @@ import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/widgets/tasks_add_widget.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/widgets/tasks_current_list.dart';
 
-class TasksScreen extends BaseMainScreen {
+class TasksScreen extends StatelessWidget {
   static const route = '/tasks';
   static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
 
-  TasksScreen({Key? key}) : super(key: key, screenIndex: 2, title: 'Задачи');
+  TasksScreen({Key? key});
 
   @override
-  String get currentRoute => route;
-
-  @override
-  Widget getMainWidget(BuildContext context) {
-    return Column(
-      children: [
-        AddTaskWidget(),
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: CurrentTasksList(),
-          ),
-        )
-      ],
+  Widget build(BuildContext context) {
+    return MainScreen(
+      screenIndex: 2,
+      title: 'Задачи',
+      currentRoute: route,
+      child: Column(
+        children: [
+          AddTaskWidget(),
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: CurrentTasksList(),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
+import 'package:slot_service_app/core/repository/logs.dart';
 import 'package:slot_service_app/ui/constants.dart';
 import 'package:slot_service_app/core/repository/auth.dart';
 import 'package:slot_service_app/core/repository/base.dart';
@@ -44,6 +45,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
       final employeeThunkMiddleware =
           _getThunkMiddleware(EmployeesRepository());
       final authThunkMiddleware = _getThunkMiddleware(AuthRepository());
+      final logsThunkMiddleware = _getThunkMiddleware(LogsRepository());
 
       _appStateHolder ??= Store<AppState>(
         appReducer,
@@ -56,6 +58,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
           boxThunkMiddleware,
           employeeThunkMiddleware,
           authThunkMiddleware,
+          logsThunkMiddleware,
         ],
       );
     }
@@ -82,7 +85,8 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         ),
         navigatorKey: NavigatorHolder.navigatorKey,
         onGenerateRoute: _getRoute,
-        initialRoute: WelcomeScreen.route,
+        initialRoute: RemCoilDashboardApp.MAIN_ROUTE,
+        // initialRoute: WelcomeScreen.route,
       ),
     );
   }

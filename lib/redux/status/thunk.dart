@@ -12,6 +12,7 @@ class OnBeginLoad extends BaseThunk {
   @override
   Future<void> execute(Store<AppState> store) async {
     store.dispatch(SetMessageAction(message));
+    store.dispatch(SetErrorStatusAction(false));
     store.dispatch(SetLoadStatusAction(true));
   }
 }

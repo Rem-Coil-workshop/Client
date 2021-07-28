@@ -2,6 +2,7 @@ import 'package:redux/redux.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/boxes/thunk.dart';
 import 'package:slot_service_app/redux/employees/thunk.dart';
+import 'package:slot_service_app/redux/logs/thunk.dart';
 import 'package:slot_service_app/redux/settings/actions.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/status/thunk.dart';
@@ -19,6 +20,7 @@ class OnChangeNetworkConfig extends BaseThunk {
     store.dispatch(OnUpdateNetworkConfigInBoxesRepository());
     store.dispatch(OnUpdateNetworkConfigInEmployeesRepository());
     store.dispatch(OnUpdateNetworkConfigInTasksRepository());
+    store.dispatch(OnUpdateNetworkConfigInLogsRepository());
     store.dispatch(OnSuccess('Настройки обновлены'));
   }
 }

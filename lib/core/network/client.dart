@@ -8,12 +8,13 @@ import 'package:slot_service_app/redux/settings/state.dart';
 
 class HttpClient {
   final UriBuilder _builder;
+  final Network config;
 
   static const headers = <String, String>{
     HttpHeaders.contentTypeHeader: "application/json",
   };
 
-  HttpClient(Network config) : _builder = UriBuilder(config);
+  HttpClient(this.config) : _builder = UriBuilder(config);
 
   Future<http.Response> get(String path) async {
     try {

@@ -51,6 +51,8 @@ class NavigationController extends StatelessWidget {
     ),
   ];
 
+  // TODO - было бы круто, если бы элементы сами сотрировались
+
   final int currentScreen;
 
   const NavigationController({Key? key, required this.currentScreen})

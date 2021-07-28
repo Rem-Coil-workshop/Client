@@ -1,3 +1,4 @@
+import 'package:slot_service_app/redux/logs/reducer.dart';
 import 'package:slot_service_app/redux/settings/reducer.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/status/reducer.dart';
@@ -14,4 +15,5 @@ AppState appReducer(AppState state, dynamic action) => AppState(
   statusState: statusReducer(state.statusState, action),
   employeesState: employeesReducer(state.employeesState, action),
   settingsState: settingsReducer(state.settingsState, action),
+  logsState: logsReducer(state.logsState, action),
 );

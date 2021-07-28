@@ -5,19 +5,19 @@ import 'package:slot_service_app/ui/navigation/navigation_controller.dart';
 import 'package:slot_service_app/ui/screens/base/widgets/header.dart';
 import 'package:slot_service_app/ui/view_models/route.dart';
 
-abstract class BaseMainScreen extends StatelessWidget {
+class MainScreen extends StatelessWidget {
   final int screenIndex;
   final String title;
+  final String currentRoute;
+  final Widget child;
 
-  const BaseMainScreen({
+  const MainScreen({
     Key? key,
     required this.screenIndex,
     required this.title,
+    required this.currentRoute,
+    required this.child
   }) : super(key: key);
-
-  Widget getMainWidget(BuildContext context);
-
-  String get currentRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ abstract class BaseMainScreen extends StatelessWidget {
             horizontal: defaultPadding,
             vertical: defaultPadding,
           ),
-          child: getMainWidget(context),
+          child: child,
         ),
       );
 }

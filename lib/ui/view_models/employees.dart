@@ -9,3 +9,5 @@ class EmployeesViewModel with _$EmployeesViewModel {
     required List<Employee> employees,
   }) = Success;
 }
+
+// TODO - Тут ошибки быть не может?
