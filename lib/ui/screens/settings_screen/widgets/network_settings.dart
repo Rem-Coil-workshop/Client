@@ -19,14 +19,14 @@ class _NetworkSettingsState extends State<NetworkSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     return StoreConnector<AppState, NetworkViewModel>(
       converter: (store) {
         final network = store.state.settingsState.network;
-        return NetworkViewModel.update(host: network.host, port: network.port);
+        return NetworkViewModel.newConfig(host: network.host, port: network.port);
       },
       builder: (context, vm) => vm.when(
-        update: (String host, int port) {
-          final store = StoreProvider.of<AppState>(context);
+        newConfig: (String host, int port) {
           _hostController.text = host;
           _portController.text = port.toString();
 
@@ -38,29 +38,9 @@ class _NetworkSettingsState extends State<NetworkSettings> {
                 style: Theme.of(context).textTheme.headline6,
               ),
               SizedBox(height: defaultPadding),
-              Row(
-                children: [
-                  Text('Host:'),
-                  SizedBox(width: defaultPadding),
-                  SizedBox(
-                      width: 200,
-                      child: TextField(
-                        controller: _hostController,
-                      )),
-                ],
-              ),
+              SettingField(controller: _hostController, title: 'Host:'),
               SizedBox(height: defaultPadding),
-              Row(
-                children: [
-                  Text('Port:'),
-                  SizedBox(width: defaultPadding),
-                  SizedBox(
-                      width: 200,
-                      child: TextField(
-                        controller: _portController,
-                      )),
-                ],
-              ),
+              SettingField(controller: _portController, title: 'Port:'),
               SizedBox(height: defaultPadding),
               ElevatedButton(
                 onPressed: () {
@@ -74,6 +54,30 @@ class _NetworkSettingsState extends State<NetworkSettings> {
           );
         },
       ),
+    );
+  }
+}
+
+class SettingField extends StatelessWidget {
+  final String title;
+  final TextEditingController controller;
+
+  const SettingField({Key? key, required this.controller, required this.title})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(title),
+        SizedBox(width: defaultPadding),
+        SizedBox(
+          width: 200,
+          child: TextField(
+            controller: controller,
+          ),
+        ),
+      ],
     );
   }
 }

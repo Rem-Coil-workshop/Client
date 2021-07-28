@@ -8,4 +8,6 @@ class TasksViewModel with _$TasksViewModel {
   const factory TasksViewModel.success({
     required List<Task> tasks,
   }) = Success;
+
+  const factory TasksViewModel.empty() = Empty;
 }

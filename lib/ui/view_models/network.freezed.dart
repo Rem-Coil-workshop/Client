@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$NetworkViewModelTearOff {
   const _$NetworkViewModelTearOff();
 
-  Update update({required String host, required int port}) {
-    return Update(
+  NewConfig newConfig({required String host, required int port}) {
+    return NewConfig(
       host: host,
       port: port,
     );
@@ -34,23 +34,23 @@ mixin _$NetworkViewModel {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String host, int port) update,
+    required TResult Function(String host, int port) newConfig,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String host, int port)? update,
+    TResult Function(String host, int port)? newConfig,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Update value) update,
+    required TResult Function(NewConfig value) newConfig,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Update value)? update,
+    TResult Function(NewConfig value)? newConfig,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -96,29 +96,29 @@ class _$NetworkViewModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class $UpdateCopyWith<$Res>
+abstract class $NewConfigCopyWith<$Res>
     implements $NetworkViewModelCopyWith<$Res> {
-  factory $UpdateCopyWith(Update value, $Res Function(Update) then) =
-      _$UpdateCopyWithImpl<$Res>;
+  factory $NewConfigCopyWith(NewConfig value, $Res Function(NewConfig) then) =
+      _$NewConfigCopyWithImpl<$Res>;
   @override
   $Res call({String host, int port});
 }
 
 /// @nodoc
-class _$UpdateCopyWithImpl<$Res> extends _$NetworkViewModelCopyWithImpl<$Res>
-    implements $UpdateCopyWith<$Res> {
-  _$UpdateCopyWithImpl(Update _value, $Res Function(Update) _then)
-      : super(_value, (v) => _then(v as Update));
+class _$NewConfigCopyWithImpl<$Res> extends _$NetworkViewModelCopyWithImpl<$Res>
+    implements $NewConfigCopyWith<$Res> {
+  _$NewConfigCopyWithImpl(NewConfig _value, $Res Function(NewConfig) _then)
+      : super(_value, (v) => _then(v as NewConfig));
 
   @override
-  Update get _value => super._value as Update;
+  NewConfig get _value => super._value as NewConfig;
 
   @override
   $Res call({
     Object? host = freezed,
     Object? port = freezed,
   }) {
-    return _then(Update(
+    return _then(NewConfig(
       host: host == freezed
           ? _value.host
           : host // ignore: cast_nullable_to_non_nullable
@@ -133,8 +133,8 @@ class _$UpdateCopyWithImpl<$Res> extends _$NetworkViewModelCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Update implements Update {
-  const _$Update({required this.host, required this.port});
+class _$NewConfig implements NewConfig {
+  const _$NewConfig({required this.host, required this.port});
 
   @override
   final String host;
@@ -143,13 +143,13 @@ class _$Update implements Update {
 
   @override
   String toString() {
-    return 'NetworkViewModel.update(host: $host, port: $port)';
+    return 'NetworkViewModel.newConfig(host: $host, port: $port)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is Update &&
+        (other is NewConfig &&
             (identical(other.host, host) ||
                 const DeepCollectionEquality().equals(other.host, host)) &&
             (identical(other.port, port) ||
@@ -164,25 +164,25 @@ class _$Update implements Update {
 
   @JsonKey(ignore: true)
   @override
-  $UpdateCopyWith<Update> get copyWith =>
-      _$UpdateCopyWithImpl<Update>(this, _$identity);
+  $NewConfigCopyWith<NewConfig> get copyWith =>
+      _$NewConfigCopyWithImpl<NewConfig>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String host, int port) update,
+    required TResult Function(String host, int port) newConfig,
   }) {
-    return update(host, port);
+    return newConfig(host, port);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String host, int port)? update,
+    TResult Function(String host, int port)? newConfig,
     required TResult orElse(),
   }) {
-    if (update != null) {
-      return update(host, port);
+    if (newConfig != null) {
+      return newConfig(host, port);
     }
     return orElse();
   }
@@ -190,26 +190,27 @@ class _$Update implements Update {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Update value) update,
+    required TResult Function(NewConfig value) newConfig,
   }) {
-    return update(this);
+    return newConfig(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Update value)? update,
+    TResult Function(NewConfig value)? newConfig,
     required TResult orElse(),
   }) {
-    if (update != null) {
-      return update(this);
+    if (newConfig != null) {
+      return newConfig(this);
     }
     return orElse();
   }
 }
 
-abstract class Update implements NetworkViewModel {
-  const factory Update({required String host, required int port}) = _$Update;
+abstract class NewConfig implements NetworkViewModel {
+  const factory NewConfig({required String host, required int port}) =
+      _$NewConfig;
 
   @override
   String get host => throw _privateConstructorUsedError;
@@ -217,5 +218,6 @@ abstract class Update implements NetworkViewModel {
   int get port => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  $UpdateCopyWith<Update> get copyWith => throw _privateConstructorUsedError;
+  $NewConfigCopyWith<NewConfig> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -8,6 +8,5 @@ class LogsViewModel with _$LogsViewModel {
     required List<String> logs,
   }) = Success;
 
-  const factory LogsViewModel.onError() = OnError;
   const factory LogsViewModel.onEmpty() = OnEmpty;
 }

@@ -21,7 +21,6 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
   final _lastnameController = TextEditingController();
 
   EmployeeDialogState _state = EmployeeDialogState.init();
-  String? currentCardValue;
 
   @override
   void initState() {
@@ -80,7 +79,7 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
       final employee = Employee(
         firstname: _firstnameController.text,
         lastname: _lastnameController.text,
-        number: int.parse(currentCardValue!),
+        number: int.parse(_state.cardValue!),
       );
       store.dispatch(OnCreateEmployee(employee));
       _clearControllers();

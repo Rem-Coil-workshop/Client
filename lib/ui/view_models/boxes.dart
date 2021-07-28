@@ -8,4 +8,6 @@ class BoxesViewModel with _$BoxesViewModel {
   const factory BoxesViewModel.success({
     required List<Box> boxes,
   }) = Success;
+
+  const factory BoxesViewModel.empty() = Empty;
 }

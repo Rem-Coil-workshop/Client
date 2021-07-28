@@ -21,6 +21,10 @@ class _$BoxesViewModelTearOff {
       boxes: boxes,
     );
   }
+
+  Empty empty() {
+    return const Empty();
+  }
 }
 
 /// @nodoc
@@ -28,33 +32,31 @@ const $BoxesViewModel = _$BoxesViewModelTearOff();
 
 /// @nodoc
 mixin _$BoxesViewModel {
-  List<Box> get boxes => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<Box> boxes) success,
+    required TResult Function() empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Box> boxes)? success,
+    TResult Function()? empty,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
+    required TResult Function(Empty value) empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
+    TResult Function(Empty value)? empty,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $BoxesViewModelCopyWith<BoxesViewModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -63,7 +65,6 @@ abstract class $BoxesViewModelCopyWith<$Res> {
   factory $BoxesViewModelCopyWith(
           BoxesViewModel value, $Res Function(BoxesViewModel) then) =
       _$BoxesViewModelCopyWithImpl<$Res>;
-  $Res call({List<Box> boxes});
 }
 
 /// @nodoc
@@ -74,25 +75,12 @@ class _$BoxesViewModelCopyWithImpl<$Res>
   final BoxesViewModel _value;
   // ignore: unused_field
   final $Res Function(BoxesViewModel) _then;
-
-  @override
-  $Res call({
-    Object? boxes = freezed,
-  }) {
-    return _then(_value.copyWith(
-      boxes: boxes == freezed
-          ? _value.boxes
-          : boxes // ignore: cast_nullable_to_non_nullable
-              as List<Box>,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class $SuccessCopyWith<$Res> implements $BoxesViewModelCopyWith<$Res> {
+abstract class $SuccessCopyWith<$Res> {
   factory $SuccessCopyWith(Success value, $Res Function(Success) then) =
       _$SuccessCopyWithImpl<$Res>;
-  @override
   $Res call({List<Box> boxes});
 }
 
@@ -152,6 +140,7 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<Box> boxes) success,
+    required TResult Function() empty,
   }) {
     return success(boxes);
   }
@@ -160,6 +149,7 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Box> boxes)? success,
+    TResult Function()? empty,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -172,6 +162,7 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
+    required TResult Function(Empty value) empty,
   }) {
     return success(this);
   }
@@ -180,6 +171,7 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
+    TResult Function(Empty value)? empty,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -192,9 +184,90 @@ class _$Success implements Success {
 abstract class Success implements BoxesViewModel {
   const factory Success({required List<Box> boxes}) = _$Success;
 
-  @override
   List<Box> get boxes => throw _privateConstructorUsedError;
-  @override
   @JsonKey(ignore: true)
   $SuccessCopyWith<Success> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EmptyCopyWith<$Res> {
+  factory $EmptyCopyWith(Empty value, $Res Function(Empty) then) =
+      _$EmptyCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$EmptyCopyWithImpl<$Res> extends _$BoxesViewModelCopyWithImpl<$Res>
+    implements $EmptyCopyWith<$Res> {
+  _$EmptyCopyWithImpl(Empty _value, $Res Function(Empty) _then)
+      : super(_value, (v) => _then(v as Empty));
+
+  @override
+  Empty get _value => super._value as Empty;
+}
+
+/// @nodoc
+
+class _$Empty implements Empty {
+  const _$Empty();
+
+  @override
+  String toString() {
+    return 'BoxesViewModel.empty()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is Empty);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<Box> boxes) success,
+    required TResult Function() empty,
+  }) {
+    return empty();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<Box> boxes)? success,
+    TResult Function()? empty,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Success value) success,
+    required TResult Function(Empty value) empty,
+  }) {
+    return empty(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Success value)? success,
+    TResult Function(Empty value)? empty,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Empty implements BoxesViewModel {
+  const factory Empty() = _$Empty;
 }

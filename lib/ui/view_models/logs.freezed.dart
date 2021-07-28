@@ -22,10 +22,6 @@ class _$LogsViewModelTearOff {
     );
   }
 
-  OnError onError() {
-    return const OnError();
-  }
-
   OnEmpty onEmpty() {
     return const OnEmpty();
   }
@@ -39,14 +35,12 @@ mixin _$LogsViewModel {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<String> logs) success,
-    required TResult Function() onError,
     required TResult Function() onEmpty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<String> logs)? success,
-    TResult Function()? onError,
     TResult Function()? onEmpty,
     required TResult orElse(),
   }) =>
@@ -54,14 +48,12 @@ mixin _$LogsViewModel {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
-    required TResult Function(OnError value) onError,
     required TResult Function(OnEmpty value) onEmpty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
-    TResult Function(OnError value)? onError,
     TResult Function(OnEmpty value)? onEmpty,
     required TResult orElse(),
   }) =>
@@ -148,7 +140,6 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<String> logs) success,
-    required TResult Function() onError,
     required TResult Function() onEmpty,
   }) {
     return success(logs);
@@ -158,7 +149,6 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<String> logs)? success,
-    TResult Function()? onError,
     TResult Function()? onEmpty,
     required TResult orElse(),
   }) {
@@ -172,7 +162,6 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
-    required TResult Function(OnError value) onError,
     required TResult Function(OnEmpty value) onEmpty,
   }) {
     return success(this);
@@ -182,7 +171,6 @@ class _$Success implements Success {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
-    TResult Function(OnError value)? onError,
     TResult Function(OnEmpty value)? onEmpty,
     required TResult orElse(),
   }) {
@@ -199,93 +187,6 @@ abstract class Success implements LogsViewModel {
   List<String> get logs => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SuccessCopyWith<Success> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $OnErrorCopyWith<$Res> {
-  factory $OnErrorCopyWith(OnError value, $Res Function(OnError) then) =
-      _$OnErrorCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$OnErrorCopyWithImpl<$Res> extends _$LogsViewModelCopyWithImpl<$Res>
-    implements $OnErrorCopyWith<$Res> {
-  _$OnErrorCopyWithImpl(OnError _value, $Res Function(OnError) _then)
-      : super(_value, (v) => _then(v as OnError));
-
-  @override
-  OnError get _value => super._value as OnError;
-}
-
-/// @nodoc
-
-class _$OnError implements OnError {
-  const _$OnError();
-
-  @override
-  String toString() {
-    return 'LogsViewModel.onError()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is OnError);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(List<String> logs) success,
-    required TResult Function() onError,
-    required TResult Function() onEmpty,
-  }) {
-    return onError();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<String> logs)? success,
-    TResult Function()? onError,
-    TResult Function()? onEmpty,
-    required TResult orElse(),
-  }) {
-    if (onError != null) {
-      return onError();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Success value) success,
-    required TResult Function(OnError value) onError,
-    required TResult Function(OnEmpty value) onEmpty,
-  }) {
-    return onError(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Success value)? success,
-    TResult Function(OnError value)? onError,
-    TResult Function(OnEmpty value)? onEmpty,
-    required TResult orElse(),
-  }) {
-    if (onError != null) {
-      return onError(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class OnError implements LogsViewModel {
-  const factory OnError() = _$OnError;
 }
 
 /// @nodoc
@@ -326,7 +227,6 @@ class _$OnEmpty implements OnEmpty {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(List<String> logs) success,
-    required TResult Function() onError,
     required TResult Function() onEmpty,
   }) {
     return onEmpty();
@@ -336,7 +236,6 @@ class _$OnEmpty implements OnEmpty {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<String> logs)? success,
-    TResult Function()? onError,
     TResult Function()? onEmpty,
     required TResult orElse(),
   }) {
@@ -350,7 +249,6 @@ class _$OnEmpty implements OnEmpty {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
-    required TResult Function(OnError value) onError,
     required TResult Function(OnEmpty value) onEmpty,
   }) {
     return onEmpty(this);
@@ -360,7 +258,6 @@ class _$OnEmpty implements OnEmpty {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
-    TResult Function(OnError value)? onError,
     TResult Function(OnEmpty value)? onEmpty,
     required TResult orElse(),
   }) {

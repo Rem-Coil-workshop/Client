@@ -43,7 +43,10 @@ class AddEntityDialog extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         TextButton(
-          onPressed: () { if (onSuccessButtonPressed()) Navigator.pop(context);},
+          onPressed: () {
+            if (onSuccessButtonPressed())
+              Navigator.pop(context);
+          },
           child: Text('Добавить'),
         ),
         SizedBox(width: defaultPadding),

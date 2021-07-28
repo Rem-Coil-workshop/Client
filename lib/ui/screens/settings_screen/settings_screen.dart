@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
 import 'package:slot_service_app/ui/screens/settings_screen/widgets/network_settings.dart';
-
-import '../../constants.dart';
+import 'package:slot_service_app/ui/widgets/BackgroundContainer.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const route = '/settings';
@@ -18,13 +17,7 @@ class SettingsScreen extends StatelessWidget {
       screenIndex: screenNumber,
       title: 'Настройки',
       currentRoute: route,
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(2 * defaultPadding),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-        ),
+      child: BackgroundContainer(
         child: Column(
           children: [
             NetworkSettings(),

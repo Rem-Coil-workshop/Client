@@ -3,8 +3,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:provider/provider.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/user/thunk.dart';
+import 'package:slot_service_app/ui/screens/base/widgets/exit_app_dialog.dart';
 import 'package:slot_service_app/ui/view_models/auth.dart';
 import 'package:slot_service_app/ui/view_models/route.dart';
+import 'package:slot_service_app/ui/widgets/rounded_button.dart';
 
 import '../../../constants.dart';
 
@@ -13,38 +15,14 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final route = Provider.of<RouteHolder>(context);
     return Container(
-      child: ElevatedButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (_) => AlertDialog(
-              title: Text('Выйти из системы?'),
-              content: Text('Далее понадобится повторная авторизация.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    final store = StoreProvider.of<AppState>(context);
-                    store.dispatch(OnExitApp());
-                  },
-                  child: Text('Да'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text('Нет'),
-                ),
-              ],
-            ),
-          );
-        },
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-              side: BorderSide(color: secondaryColor),
-            ),
-          ),
+      child: RoundedButton(
+        radius: 18,
+        onPressed: () => showDialog(
+          context: context,
+          builder: (_) => ExitAppDialog(),
         ),
         child: Row(
           children: [
@@ -65,8 +43,6 @@ class ProfileCard extends StatelessWidget {
                   success: (employee) =>
                       Text("${employee.lastname} ${employee.firstname}"),
                   noUser: () {
-                    final store = StoreProvider.of<AppState>(context);
-                    final route = Provider.of<RouteHolder>(context);
                     store.dispatch(OnEnterInApp(route.route));
                     return Text('Без пользователя');
                   },

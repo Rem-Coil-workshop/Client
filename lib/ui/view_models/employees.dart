@@ -8,6 +8,6 @@ class EmployeesViewModel with _$EmployeesViewModel {
   const factory EmployeesViewModel.success({
     required List<Employee> employees,
   }) = Success;
-}
 
-// TODO - Тут ошибки быть не может?
+  const factory EmployeesViewModel.empty() = Empty;
+}
