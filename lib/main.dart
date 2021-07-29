@@ -17,6 +17,7 @@ import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/navigation/route_builder.dart';
 import 'package:slot_service_app/ui/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/employees_screen.dart';
+import 'package:slot_service_app/ui/screens/login_screen/login_network_screen.dart';
 import 'package:slot_service_app/ui/screens/login_screen/login_screen.dart';
 import 'package:slot_service_app/ui/screens/logs_screen/logs_screen.dart';
 import 'package:slot_service_app/ui/screens/settings_screen/settings_screen.dart';
@@ -89,8 +90,8 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         ),
         navigatorKey: NavigatorHolder.navigatorKey,
         onGenerateRoute: _getRoute,
-        initialRoute: RemCoilDashboardApp.MAIN_ROUTE,
-        // initialRoute: WelcomeScreen.route,
+        // initialRoute: RemCoilDashboardApp.MAIN_ROUTE,
+        initialRoute: WelcomeScreen.route,
       ),
     );
   }
@@ -113,6 +114,8 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         return RouteBuilder(widget: SettingsScreen(), name: settings.name!);
       case UsersScreen.route:
         return RouteBuilder(widget: UsersScreen(), name: settings.name!);
+      case LoginNetworkScreen.route:
+        return RouteBuilder(widget: LoginNetworkScreen(), name: settings.name!);
       default:
         return RouteBuilder(widget: WelcomeScreen(), name: WelcomeScreen.route);
     }

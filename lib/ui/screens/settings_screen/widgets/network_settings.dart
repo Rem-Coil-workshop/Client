@@ -72,7 +72,7 @@ class SettingField extends StatelessWidget {
         Text(title),
         SizedBox(width: defaultPadding),
         SizedBox(
-          width: 200,
+          width: 180,
           child: TextField(
             controller: controller,
           ),

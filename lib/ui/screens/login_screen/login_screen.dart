@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/user/thunk.dart';
 import 'package:slot_service_app/ui/constants.dart';
+import 'package:slot_service_app/ui/screens/login_screen/login_network_screen.dart';
 import 'package:slot_service_app/ui/screens/login_screen/widgets/login_enter_button.dart';
 import 'package:slot_service_app/ui/screens/login_screen/widgets/login_error_title.dart';
 import 'package:slot_service_app/ui/screens/login_screen/widgets/login_password_field.dart';
@@ -29,67 +31,83 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, LoginViewModel>(
-      onInit: (store) => store.dispatch(OnGetUsers()),
-      converter: (store) {
-        final state = store.state;
+    return LoginContainer(
+      child: StoreConnector<AppState, LoginViewModel>(
+        onInit: (store) => store.dispatch(OnGetUsers()),
+        converter: (store) {
+          final state = store.state;
 
-        if (state.statusState.isLoad) {
-          return LoginViewModel.load();
-        }
+          if (state.statusState.isLoad) {
+            return LoginViewModel.load();
+          }
 
-        if (state.statusState.isError || state.authState.users.isEmpty) {
-          return LoginViewModel.error(context: context);
-        }
+          if (state.statusState.isError || state.authState.users.isEmpty) {
+            return LoginViewModel.error(context: context);
+          }
 
-        if (!state.authState.isPasswordCorrect) {
-          _errorMessage = 'Неверный пароль';
-        }
+          if (!state.authState.isPasswordCorrect) {
+            _errorMessage = 'Неверный пароль';
+          }
 
-        return LoginViewModel.success(
-          users: state.authState.users,
-          currentUser: state.authState.currentUser,
-        );
-      },
-      builder: (context, vm) => vm.when(
-        load: _onLoad,
-        success: _onSuccess,
-        error: _onError,
+          return LoginViewModel.success(
+            users: state.authState.users,
+            currentUser: state.authState.currentUser,
+          );
+        },
+        builder: (context, vm) => vm.when(
+          load: _onLoad,
+          success: _onSuccess,
+          error: _onError,
+        ),
       ),
     );
   }
 
-  Widget _onLoad() =>
-      LoginContainer(child: Center(child: CircularProgressIndicator()));
+  Widget _onLoad() => Center(child: CircularProgressIndicator());
 
   Widget _onSuccess(List<User> users, User? currentUser) {
-    return LoginContainer(
-      child: Column(
-        children: [
-          TitleWidget(),
-          SizedBox(height: defaultPadding),
-          SelectUserField(users: users, currentUser: currentUser),
-          SizedBox(height: defaultPadding),
-          PasswordField(controller: _controller),
-          SizedBox(height: 5),
-          ErrorTitle(errorMessage: _errorMessage),
-          Spacer(),
-          EnterButton(
-            onWrongFields: _setErrorMessage,
-            passwordController: _controller,
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        TitleWidget(),
+        SizedBox(height: defaultPadding),
+        SelectUserField(users: users, currentUser: currentUser),
+        SizedBox(height: defaultPadding),
+        PasswordField(controller: _controller),
+        SizedBox(height: 5),
+        ErrorTitle(errorMessage: _errorMessage),
+        Spacer(),
+        EnterButton(
+          onWrongFields: _setErrorMessage,
+          passwordController: _controller,
+        ),
+      ],
     );
   }
 
   Widget _onError(BuildContext context) {
-    return LoginContainer(
-      child: Center(
-        child: Text(
-          'Произошла ошибка загрузки данных, поробуйте позже или обратитесь к администратору',
-          style: Theme.of(context).textTheme.headline6,
-          textAlign: TextAlign.center,
+    final store = StoreProvider.of<AppState>(context);
+    return Center(
+      child: SizedBox(
+        height: 180,
+        child: Column(
+          children: [
+            Text(
+              'Произошла ошибка загрузки данных, поробуйте позже или обратитесь к администратору',
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 8),
+            TextButton(
+              onPressed: () =>
+                  store.dispatch(NavigateToAction.push(LoginNetworkScreen.route)),
+              child: Text('Поменять настроки'),
+            ),
+            TextButton(
+              onPressed: () =>
+                  store.dispatch(NavigateToAction.replace(LoginScreen.route)),
+              child: Text('Обновить'),
+            ),
+          ],
         ),
       ),
     );
