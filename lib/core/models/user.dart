@@ -47,6 +47,10 @@ class RoleHolder {
 
   @override
   String toString() => convertRoleToString(role);
+
+  @override
+  int get hashCode => super.hashCode;
+
 }
 
 const ADMIN_PRIVACY_LEVEL = 0;

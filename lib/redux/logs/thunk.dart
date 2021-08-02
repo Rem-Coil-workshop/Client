@@ -1,4 +1,4 @@
-import 'package:redux/src/store.dart';
+import 'package:redux/redux.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/logs.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
@@ -14,7 +14,7 @@ class OnFetchLogs extends BaseThunkWithExtra<LogsRepository> {
   ) async {
     try {
       store.dispatch(OnBeginLoad('Загружаем список логов'));
-      final logs = await repository.files;
+      final logs = await repository.jobLogs;
       store.dispatch(OnUpdateLogs(logs));
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));

@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:slot_service_app/core/models/user.dart';
-import 'package:slot_service_app/redux/logs/thunk.dart';
+import 'package:slot_service_app/redux/server_logs/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
 import 'package:slot_service_app/ui/screens/logs_screen/widgets/log_item.dart';
 import 'package:slot_service_app/ui/view_models/logs.dart';
 import 'package:slot_service_app/ui/widgets/BackgroundContainer.dart';
 
-class LogsScreen extends StatefulWidget {
-  static const route = '/logs';
-  static const privacyLevel = EMPLOYEE_PRIVACY_LEVEL;
-  static const screenNumber = 4;
+class ServerLogsScreen extends StatefulWidget {
+  static const route = '/server_logs';
+  static const privacyLevel = ADMIN_PRIVACY_LEVEL;
+  static const screenNumber = 6;
 
-  LogsScreen({Key? key});
+  ServerLogsScreen({Key? key});
 
   @override
-  _LogsScreenState createState() => _LogsScreenState();
+  _ServerLogsScreenState createState() => _ServerLogsScreenState();
 }
 
-class _LogsScreenState extends State<LogsScreen> {
+class _ServerLogsScreenState extends State<ServerLogsScreen> {
   final _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return MainScreen(
-      screenIndex: LogsScreen.screenNumber,
-      title: 'Логи',
-      currentRoute: LogsScreen.route,
+      screenIndex: ServerLogsScreen.screenNumber,
+      title: 'Логи сервера',
+      currentRoute: ServerLogsScreen.route,
       child: BackgroundContainer(
         child: StoreConnector<AppState, LogsViewModel>(
-          onInit: (store) => store.dispatch(OnFetchLogs()),
+          onInit: (store) => store.dispatch(OnFetchServerLogs()),
           converter: (store) {
-            final logs = store.state.logsState.logsFiles;
+            final logs = store.state.serverLogsState.logsFiles;
             if (logs.length == 0)
               return LogsViewModel.onEmpty();
             else
@@ -46,7 +46,7 @@ class _LogsScreenState extends State<LogsScreen> {
                 itemCount: logs.length,
                 itemBuilder: (context, index) => LogItem(
                   log: logs[index],
-                  action: OnDownloadFileButtonPressed(logs[index]),
+                  action: OnDownloadServerLog(logs[index]),
                 ),
               ),
             ),

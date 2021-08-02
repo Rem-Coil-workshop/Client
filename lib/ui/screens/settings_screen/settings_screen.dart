@@ -7,7 +7,7 @@ import 'package:slot_service_app/ui/widgets/BackgroundContainer.dart';
 class SettingsScreen extends StatelessWidget {
   static const route = '/settings';
   static const privacyLevel = ADMIN_PRIVACY_LEVEL;
-  static const screenNumber = 6;
+  static const screenNumber = 7;
 
   SettingsScreen({Key? key});
 

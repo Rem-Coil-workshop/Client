@@ -7,23 +7,52 @@ import 'package:universal_html/html.dart';
 
 class LogsRepository extends BaseRepository {
   static const BASE_URL = '/v1/logs';
-  static const BASE_LOG_URL = '/logs';
-  List<String> _files = [];
+  static const BASE_JOB_LOGS_URL = BASE_URL + '/job';
+  static const BASE_SERVER_LOGS_URL = BASE_URL + '/main';
+  static const BASE_ONE_JOB_LOG_URL = '/logs';
+  static const BASE_ONE_SERVER_LOG_URL = '/server_log';
+  static const CURRENT_LOG_FILE = 'Текущее состояние';
 
-  Future<List<String>> get files async {
-    final jsons = await _fetchFiles();
-    _files = jsons.toList();
-    return _files;
+  List<String> _jobLogs = [];
+  List<String> _serverLogs = [];
+
+  Future<List<String>> get jobLogs async {
+    final jsons = await _fetchFiles(BASE_JOB_LOGS_URL);
+    _jobLogs = jsons.toList();
+    return _jobLogs;
+  }
+
+  Future<List<String>> get serverLogs async {
+    final jsons = await _fetchFiles(BASE_SERVER_LOGS_URL);
+    final logs = jsons.toList()..add(CURRENT_LOG_FILE);
+    _serverLogs = logs;
+    return _serverLogs;
+  }
+
+  void downloadServerLog(String log) {
+    late String name;
+    if (log == CURRENT_LOG_FILE) {
+      name = '';
+    } else {
+      name = '/$log';
+    }
+    _download(
+      'http://${client.config.host}:${client.config.port}$BASE_ONE_SERVER_LOG_URL$name',
+      name,
+    );
   }
 
   void downloadLog(String log) {
-    final url =
-        'http://${client.config.host}:${client.config.port}$BASE_LOG_URL/$log';
-    window.open(url, log);
+    _download(
+      'http://${client.config.host}:${client.config.port}$BASE_ONE_JOB_LOG_URL/$log',
+      log,
+    );
   }
 
-  Future<Iterable<String>> _fetchFiles() async {
-    final response = await client.get(BASE_URL);
+  void _download(String url, String name) => window.open(url, name);
+
+  Future<Iterable<String>> _fetchFiles(String url) async {
+    final response = await client.get(url);
     if (response.statusCode == HttpStatus.ok) {
       return _parseBody(response);
     } else {

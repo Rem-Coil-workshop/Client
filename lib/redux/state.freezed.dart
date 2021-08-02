@@ -20,6 +20,7 @@ class _$AppStateTearOff {
       {required BoxesState boxesState,
       required TasksState tasksState,
       required LogsState logsState,
+      required ServerLogsState serverLogsState,
       required AuthState authState,
       required StatusState statusState,
       required EmployeesState employeesState,
@@ -28,6 +29,7 @@ class _$AppStateTearOff {
       boxesState: boxesState,
       tasksState: tasksState,
       logsState: logsState,
+      serverLogsState: serverLogsState,
       authState: authState,
       statusState: statusState,
       employeesState: employeesState,
@@ -44,6 +46,7 @@ mixin _$AppState {
   BoxesState get boxesState => throw _privateConstructorUsedError;
   TasksState get tasksState => throw _privateConstructorUsedError;
   LogsState get logsState => throw _privateConstructorUsedError;
+  ServerLogsState get serverLogsState => throw _privateConstructorUsedError;
   AuthState get authState => throw _privateConstructorUsedError;
   StatusState get statusState => throw _privateConstructorUsedError;
   EmployeesState get employeesState => throw _privateConstructorUsedError;
@@ -62,6 +65,7 @@ abstract class $AppStateCopyWith<$Res> {
       {BoxesState boxesState,
       TasksState tasksState,
       LogsState logsState,
+      ServerLogsState serverLogsState,
       AuthState authState,
       StatusState statusState,
       EmployeesState employeesState,
@@ -70,6 +74,7 @@ abstract class $AppStateCopyWith<$Res> {
   $BoxesStateCopyWith<$Res> get boxesState;
   $TasksStateCopyWith<$Res> get tasksState;
   $LogsStateCopyWith<$Res> get logsState;
+  $ServerLogsStateCopyWith<$Res> get serverLogsState;
   $AuthStateCopyWith<$Res> get authState;
   $StatusStateCopyWith<$Res> get statusState;
   $EmployeesStateCopyWith<$Res> get employeesState;
@@ -89,6 +94,7 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
     Object? boxesState = freezed,
     Object? tasksState = freezed,
     Object? logsState = freezed,
+    Object? serverLogsState = freezed,
     Object? authState = freezed,
     Object? statusState = freezed,
     Object? employeesState = freezed,
@@ -107,6 +113,10 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
           ? _value.logsState
           : logsState // ignore: cast_nullable_to_non_nullable
               as LogsState,
+      serverLogsState: serverLogsState == freezed
+          ? _value.serverLogsState
+          : serverLogsState // ignore: cast_nullable_to_non_nullable
+              as ServerLogsState,
       authState: authState == freezed
           ? _value.authState
           : authState // ignore: cast_nullable_to_non_nullable
@@ -148,6 +158,13 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
   }
 
   @override
+  $ServerLogsStateCopyWith<$Res> get serverLogsState {
+    return $ServerLogsStateCopyWith<$Res>(_value.serverLogsState, (value) {
+      return _then(_value.copyWith(serverLogsState: value));
+    });
+  }
+
+  @override
   $AuthStateCopyWith<$Res> get authState {
     return $AuthStateCopyWith<$Res>(_value.authState, (value) {
       return _then(_value.copyWith(authState: value));
@@ -185,6 +202,7 @@ abstract class _$AppStateCopyWith<$Res> implements $AppStateCopyWith<$Res> {
       {BoxesState boxesState,
       TasksState tasksState,
       LogsState logsState,
+      ServerLogsState serverLogsState,
       AuthState authState,
       StatusState statusState,
       EmployeesState employeesState,
@@ -196,6 +214,8 @@ abstract class _$AppStateCopyWith<$Res> implements $AppStateCopyWith<$Res> {
   $TasksStateCopyWith<$Res> get tasksState;
   @override
   $LogsStateCopyWith<$Res> get logsState;
+  @override
+  $ServerLogsStateCopyWith<$Res> get serverLogsState;
   @override
   $AuthStateCopyWith<$Res> get authState;
   @override
@@ -220,6 +240,7 @@ class __$AppStateCopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
     Object? boxesState = freezed,
     Object? tasksState = freezed,
     Object? logsState = freezed,
+    Object? serverLogsState = freezed,
     Object? authState = freezed,
     Object? statusState = freezed,
     Object? employeesState = freezed,
@@ -238,6 +259,10 @@ class __$AppStateCopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
           ? _value.logsState
           : logsState // ignore: cast_nullable_to_non_nullable
               as LogsState,
+      serverLogsState: serverLogsState == freezed
+          ? _value.serverLogsState
+          : serverLogsState // ignore: cast_nullable_to_non_nullable
+              as ServerLogsState,
       authState: authState == freezed
           ? _value.authState
           : authState // ignore: cast_nullable_to_non_nullable
@@ -265,6 +290,7 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
       {required this.boxesState,
       required this.tasksState,
       required this.logsState,
+      required this.serverLogsState,
       required this.authState,
       required this.statusState,
       required this.employeesState,
@@ -277,6 +303,8 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
   @override
   final LogsState logsState;
   @override
+  final ServerLogsState serverLogsState;
+  @override
   final AuthState authState;
   @override
   final StatusState statusState;
@@ -287,7 +315,7 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState(boxesState: $boxesState, tasksState: $tasksState, logsState: $logsState, authState: $authState, statusState: $statusState, employeesState: $employeesState, settingsState: $settingsState)';
+    return 'AppState(boxesState: $boxesState, tasksState: $tasksState, logsState: $logsState, serverLogsState: $serverLogsState, authState: $authState, statusState: $statusState, employeesState: $employeesState, settingsState: $settingsState)';
   }
 
   @override
@@ -298,6 +326,7 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
       ..add(DiagnosticsProperty('boxesState', boxesState))
       ..add(DiagnosticsProperty('tasksState', tasksState))
       ..add(DiagnosticsProperty('logsState', logsState))
+      ..add(DiagnosticsProperty('serverLogsState', serverLogsState))
       ..add(DiagnosticsProperty('authState', authState))
       ..add(DiagnosticsProperty('statusState', statusState))
       ..add(DiagnosticsProperty('employeesState', employeesState))
@@ -317,6 +346,9 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
             (identical(other.logsState, logsState) ||
                 const DeepCollectionEquality()
                     .equals(other.logsState, logsState)) &&
+            (identical(other.serverLogsState, serverLogsState) ||
+                const DeepCollectionEquality()
+                    .equals(other.serverLogsState, serverLogsState)) &&
             (identical(other.authState, authState) ||
                 const DeepCollectionEquality()
                     .equals(other.authState, authState)) &&
@@ -337,6 +369,7 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
       const DeepCollectionEquality().hash(boxesState) ^
       const DeepCollectionEquality().hash(tasksState) ^
       const DeepCollectionEquality().hash(logsState) ^
+      const DeepCollectionEquality().hash(serverLogsState) ^
       const DeepCollectionEquality().hash(authState) ^
       const DeepCollectionEquality().hash(statusState) ^
       const DeepCollectionEquality().hash(employeesState) ^
@@ -353,6 +386,7 @@ abstract class _AppState implements AppState {
       {required BoxesState boxesState,
       required TasksState tasksState,
       required LogsState logsState,
+      required ServerLogsState serverLogsState,
       required AuthState authState,
       required StatusState statusState,
       required EmployeesState employeesState,
@@ -364,6 +398,8 @@ abstract class _AppState implements AppState {
   TasksState get tasksState => throw _privateConstructorUsedError;
   @override
   LogsState get logsState => throw _privateConstructorUsedError;
+  @override
+  ServerLogsState get serverLogsState => throw _privateConstructorUsedError;
   @override
   AuthState get authState => throw _privateConstructorUsedError;
   @override

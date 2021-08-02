@@ -7,6 +7,7 @@ import 'package:slot_service_app/ui/navigation/navigation_list.dart';
 import 'package:slot_service_app/ui/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/employees_screen.dart';
 import 'package:slot_service_app/ui/screens/logs_screen/logs_screen.dart';
+import 'package:slot_service_app/ui/screens/logs_server_screen/logs_server_screen.dart';
 import 'package:slot_service_app/ui/screens/settings_screen/settings_screen.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/tasks_screen.dart';
 import 'package:slot_service_app/ui/screens/users/users_screen.dart';
@@ -54,6 +55,13 @@ class NavigationController extends StatelessWidget {
       route: UsersScreen.route,
       privacyLevel: UsersScreen.privacyLevel,
       index: UsersScreen.screenNumber,
+    ),
+    NavigationItemInfo(
+      icon: Icons.ballot_outlined,
+      title: 'Логи системы',
+      route: ServerLogsScreen.route,
+      privacyLevel: ServerLogsScreen.privacyLevel,
+      index: ServerLogsScreen.screenNumber,
     ),
   ];
 
