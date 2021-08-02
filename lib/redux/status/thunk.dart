@@ -1,5 +1,4 @@
 import 'package:slot_service_app/redux/base_thunk.dart';
-import 'package:slot_service_app/redux/settings/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:redux/redux.dart';
 
@@ -12,9 +11,7 @@ class OnBeginLoad extends BaseThunk {
 
   @override
   Future<void> execute(Store<AppState> store) async {
-    await store.dispatch(OnLoadFromCacheSetting());
     store.dispatch(SetMessageAction(message));
-    store.dispatch(SetErrorStatusAction(false));
     store.dispatch(SetLoadStatusAction(true));
   }
 }

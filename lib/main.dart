@@ -30,8 +30,7 @@ void main() {
 }
 
 class RemCoilDashboardApp extends StatefulWidget {
-  // TODO - было бы немплохо вернуть нормальную главнуюстраницу
-  static const MAIN_ROUTE = LogsScreen.route;
+  static const MAIN_ROUTE = BoxesScreen.route;
 
   @override
   _RemCoilDashboardAppState createState() => _RemCoilDashboardAppState();
@@ -90,13 +89,10 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         ),
         navigatorKey: NavigatorHolder.navigatorKey,
         onGenerateRoute: _getRoute,
-        // initialRoute: RemCoilDashboardApp.MAIN_ROUTE,
         initialRoute: WelcomeScreen.route,
       ),
     );
   }
-
-  // TODO - было бы немплохо вернуть нормальную главнуюстраницу
 
   Route _getRoute(RouteSettings settings) {
     switch (settings.name) {

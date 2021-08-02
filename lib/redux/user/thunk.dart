@@ -28,7 +28,7 @@ class OnSingUp extends BaseThunkWithExtra<UserRepository> {
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));
     } catch (e) {
-      store.dispatch('Ошибка сети');
+      store.dispatch(OnError('Ошибка сети'));
     }
   }
 }
@@ -37,13 +37,13 @@ class OnGetUsers extends BaseThunkWithExtra<UserRepository> {
   @override
   Future<void> execute(Store<AppState> store, UserRepository repository) async {
     try {
-      store.dispatch(OnBeginLoad('Загружаем список пользователей'));
+      await store.dispatch(OnBeginLoad('Загружаем список пользователей'));
       final users = await repository.users;
       store.dispatch(OnUpdateUsers(users));
     } on NetworkException catch (e) {
       store.dispatch(OnError(e.message));
     } catch (e) {
-      store.dispatch('Ошибка подключения к сети');
+      store.dispatch(OnError('Ошибка подключения к сети'));
     }
   }
 }
@@ -201,7 +201,7 @@ class OnUpdateNetworkConfigInUserRepository
   @override
   Future<void> execute(
     Store<AppState> store,
-      UserRepository repository,
+    UserRepository repository,
   ) async {
     repository.changeNetworkClient(store.state.settingsState.network);
   }
