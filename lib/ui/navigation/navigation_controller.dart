@@ -77,10 +77,18 @@ class NavigationController extends StatelessWidget {
     final privacyLevel = user?.role.index ?? EMPLOYEE_PRIVACY_LEVEL;
 
     screenList..sort((a, b) => a.index.compareTo(b.index));
-    final items = screenList
-      ..where((screen) => screen.privacyLevel >= privacyLevel)
-      ..toList();
+    return NavigationList(navigationItems: _filterScreens(privacyLevel), selectedItem: currentScreen);
+  }
 
-    return NavigationList(navigationItems: items, selectedItem: currentScreen);
+  List<NavigationItemInfo> _filterScreens(int privacyLevel) {
+    final List<NavigationItemInfo> currentScreens = [];
+
+    for (var screen in screenList) {
+      if (screen.privacyLevel >= privacyLevel) {
+        currentScreens.add(screen);
+      }
+    }
+
+    return currentScreens;
   }
 }
