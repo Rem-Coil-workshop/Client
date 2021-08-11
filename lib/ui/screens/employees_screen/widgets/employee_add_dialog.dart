@@ -6,7 +6,7 @@ import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/bloc/card.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/widgets/simple_text_field.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/widgets/websocket_field.dart';
-import 'package:slot_service_app/ui/widgets/add_entity_dialog.dart';
+import 'package:slot_service_app/ui/widgets/dialog.dart';
 
 class EmployeeAddDialog extends StatefulWidget {
   EmployeeAddDialog({Key? key});
@@ -46,27 +46,25 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
     return AddEntityDialog(
       title: 'Введите данные сотрудника',
       onSuccessButtonPressed: () => _onPressed(context),
-      fields: Expanded(
-        child: Container(
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SimpleTextField(
-                hintText: 'Имя сотрудника',
-                errorText: 'Имя может состоять только из букв.',
-                controller: _firstnameController,
-                isValid: _state.isFirstnameCorrect,
-              ),
-              SimpleTextField(
-                hintText: 'Фамилия сотрудника',
-                errorText: 'Фамилия может состоять только из букв.',
-                controller: _lastnameController,
-                isValid: _state.isLastnameCorrect,
-              ),
-              WebSocketField(card: _state.cardValue),
-            ],
-          ),
+      fields: Container(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SimpleTextField(
+              hintText: 'Имя сотрудника',
+              errorText: 'Имя может состоять только из букв.',
+              controller: _firstnameController,
+              isValid: _state.isFirstnameCorrect,
+            ),
+            SimpleTextField(
+              hintText: 'Фамилия сотрудника',
+              errorText: 'Фамилия может состоять только из букв.',
+              controller: _lastnameController,
+              isValid: _state.isLastnameCorrect,
+            ),
+            WebSocketField(card: _state.cardValue),
+          ],
         ),
       ),
     );

@@ -6,7 +6,7 @@ import 'package:slot_service_app/redux/user/thunk.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/widgets/simple_text_field.dart';
 import 'package:slot_service_app/ui/screens/users/bloc/user.dart';
 import 'package:slot_service_app/ui/screens/users/widgets/user_select_field.dart';
-import 'package:slot_service_app/ui/widgets/add_entity_dialog.dart';
+import 'package:slot_service_app/ui/widgets/dialog.dart';
 
 class UserAddDialog extends StatefulWidget {
   UserAddDialog({Key? key});
@@ -42,37 +42,35 @@ class _UserAddDialogState extends State<UserAddDialog> {
     return AddEntityDialog(
       title: 'Введите данные пользователя',
       onSuccessButtonPressed: () => _onPressed(context),
-      fields: Expanded(
-        child: Container(
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SimpleTextField(
-                hintText: 'Имя сотрудника',
-                errorText: 'Имя сотрудника должно содержать только буквы',
-                controller: _firstnameController,
-                isValid: _state.isFirstnameCorrect,
-              ),
-              SimpleTextField(
-                hintText: 'Фамилия сотрудника',
-                errorText: 'Фамилия сотрудника должна содеражться только буквы',
-                controller: _lastnameController,
-                isValid: _state.isLastnameCorrect,
-              ),
-              UserSelectField(
-                role: _state.role,
-                onChanged: _bloc.onUserRoleChanged,
-              ),
-              SimpleTextField(
-                hintText: 'Пароль',
-                errorText: 'Неверный формат пароля',
-                controller: _passwordController,
-                isValid: true,
-                isObscureText: true,
-              ),
-            ],
-          ),
+      fields: Container(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SimpleTextField(
+              hintText: 'Имя сотрудника',
+              errorText: 'Имя сотрудника должно содержать только буквы',
+              controller: _firstnameController,
+              isValid: _state.isFirstnameCorrect,
+            ),
+            SimpleTextField(
+              hintText: 'Фамилия сотрудника',
+              errorText: 'Фамилия сотрудника должна содеражться только буквы',
+              controller: _lastnameController,
+              isValid: _state.isLastnameCorrect,
+            ),
+            UserSelectField(
+              role: _state.role,
+              onChanged: _bloc.onUserRoleChanged,
+            ),
+            SimpleTextField(
+              hintText: 'Пароль',
+              errorText: 'Неверный формат пароля',
+              controller: _passwordController,
+              isValid: true,
+              isObscureText: true,
+            ),
+          ],
         ),
       ),
     );

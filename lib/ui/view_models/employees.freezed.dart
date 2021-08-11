@@ -25,6 +25,10 @@ class _$EmployeesViewModelTearOff {
   Empty empty() {
     return const Empty();
   }
+
+  Load load() {
+    return const Load();
+  }
 }
 
 /// @nodoc
@@ -36,12 +40,14 @@ mixin _$EmployeesViewModel {
   TResult when<TResult extends Object?>({
     required TResult Function(List<Employee> employees) success,
     required TResult Function() empty,
+    required TResult Function() load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Employee> employees)? success,
     TResult Function()? empty,
+    TResult Function()? load,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,12 +55,14 @@ mixin _$EmployeesViewModel {
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
     required TResult Function(Empty value) empty,
+    required TResult Function(Load value) load,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
     TResult Function(Empty value)? empty,
+    TResult Function(Load value)? load,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -142,6 +150,7 @@ class _$Success implements Success {
   TResult when<TResult extends Object?>({
     required TResult Function(List<Employee> employees) success,
     required TResult Function() empty,
+    required TResult Function() load,
   }) {
     return success(employees);
   }
@@ -151,6 +160,7 @@ class _$Success implements Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Employee> employees)? success,
     TResult Function()? empty,
+    TResult Function()? load,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -164,6 +174,7 @@ class _$Success implements Success {
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
     required TResult Function(Empty value) empty,
+    required TResult Function(Load value) load,
   }) {
     return success(this);
   }
@@ -173,6 +184,7 @@ class _$Success implements Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
     TResult Function(Empty value)? empty,
+    TResult Function(Load value)? load,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -229,6 +241,7 @@ class _$Empty implements Empty {
   TResult when<TResult extends Object?>({
     required TResult Function(List<Employee> employees) success,
     required TResult Function() empty,
+    required TResult Function() load,
   }) {
     return empty();
   }
@@ -238,6 +251,7 @@ class _$Empty implements Empty {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(List<Employee> employees)? success,
     TResult Function()? empty,
+    TResult Function()? load,
     required TResult orElse(),
   }) {
     if (empty != null) {
@@ -251,6 +265,7 @@ class _$Empty implements Empty {
   TResult map<TResult extends Object?>({
     required TResult Function(Success value) success,
     required TResult Function(Empty value) empty,
+    required TResult Function(Load value) load,
   }) {
     return empty(this);
   }
@@ -260,6 +275,7 @@ class _$Empty implements Empty {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Success value)? success,
     TResult Function(Empty value)? empty,
+    TResult Function(Load value)? load,
     required TResult orElse(),
   }) {
     if (empty != null) {
@@ -271,4 +287,91 @@ class _$Empty implements Empty {
 
 abstract class Empty implements EmployeesViewModel {
   const factory Empty() = _$Empty;
+}
+
+/// @nodoc
+abstract class $LoadCopyWith<$Res> {
+  factory $LoadCopyWith(Load value, $Res Function(Load) then) =
+      _$LoadCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$LoadCopyWithImpl<$Res> extends _$EmployeesViewModelCopyWithImpl<$Res>
+    implements $LoadCopyWith<$Res> {
+  _$LoadCopyWithImpl(Load _value, $Res Function(Load) _then)
+      : super(_value, (v) => _then(v as Load));
+
+  @override
+  Load get _value => super._value as Load;
+}
+
+/// @nodoc
+
+class _$Load implements Load {
+  const _$Load();
+
+  @override
+  String toString() {
+    return 'EmployeesViewModel.load()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is Load);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<Employee> employees) success,
+    required TResult Function() empty,
+    required TResult Function() load,
+  }) {
+    return load();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<Employee> employees)? success,
+    TResult Function()? empty,
+    TResult Function()? load,
+    required TResult orElse(),
+  }) {
+    if (load != null) {
+      return load();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Success value) success,
+    required TResult Function(Empty value) empty,
+    required TResult Function(Load value) load,
+  }) {
+    return load(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Success value)? success,
+    TResult Function(Empty value)? empty,
+    TResult Function(Load value)? load,
+    required TResult orElse(),
+  }) {
+    if (load != null) {
+      return load(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Load implements EmployeesViewModel {
+  const factory Load() = _$Load;
 }

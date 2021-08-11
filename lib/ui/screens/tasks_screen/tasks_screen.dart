@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
-import 'package:slot_service_app/ui/screens/tasks_screen/widgets/tasks_add_widget.dart';
+import 'package:slot_service_app/ui/screens/tasks_screen/widgets/tasks_add_widgets.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/widgets/tasks_list.dart';
 
 class TasksScreen extends StatelessWidget {
@@ -20,7 +20,7 @@ class TasksScreen extends StatelessWidget {
       currentRoute: route,
       child: Column(
         children: [
-          AddTaskWidget(),
+          AddTaskRow(),
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(top: 10),

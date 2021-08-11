@@ -10,4 +10,6 @@ class EmployeesViewModel with _$EmployeesViewModel {
   }) = Success;
 
   const factory EmployeesViewModel.empty() = Empty;
+
+  const factory EmployeesViewModel.load() = Load;
 }
