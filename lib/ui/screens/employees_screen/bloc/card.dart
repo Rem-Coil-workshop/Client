@@ -1,58 +1,54 @@
-import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slot_service_app/core/network/network.dart';
 import 'package:slot_service_app/core/utils/validation.dart';
 import 'package:slot_service_app/core/websocket/websocket_channel.dart';
 
-class EmployeeBloc {
+class EmployeeBloc extends Cubit<EmployeeDialogState> {
   late CardChannel _channel;
-  EmployeeDialogState _state = EmployeeDialogState.init();
 
-  final _outputController = StreamController<EmployeeDialogState>();
-
-  Stream<EmployeeDialogState> get outputStateStream => _outputController.stream;
-
-  EmployeeBloc() {
+  EmployeeBloc() : super(EmployeeDialogState.init()) {
     _channel = CardChannel(onData: onCardValueEntered);
-    _outputController.sink.add(_state);
+    onOpenDialog();
   }
 
   onOpenDialog() => NetworkConfigRepository.loadConfig()
       .then((config) => _channel.open(config));
 
   onCardValueEntered(dynamic data) {
-    _state.cardValue = data;
-    _outputController.sink.add(_state);
+    emit(state.changeCard(data));
   }
 
   onFirstNameChanged(String firstname) {
-    _state.isFirstnameCorrect = _onNameChanged(firstname);
-    _outputController.sink.add(_state);
+    emit(state.setFirstname(_onNameChanged(firstname)));
   }
 
   onLastNameChanged(String lastname) {
-    _state.isLastnameCorrect = _onNameChanged(lastname);
-    _outputController.sink.add(_state);
+    emit(state.setLastname(_onNameChanged(lastname)));
   }
 
   _onNameChanged(String name) {
     return isValidInput(name, isWord);
   }
 
-  onCloseDialog() {
+  @override
+  Future<void> close() {
     _channel.close();
-  }
-
-  void dispose() {
-    onCloseDialog();
-    _outputController.close();
+    return super.close();
   }
 }
 
+@immutable
 class EmployeeDialogState {
-  bool isFirstnameCorrect;
-  bool isLastnameCorrect;
-  String? cardValue;
+  final bool isFirstnameCorrect;
+  final bool isLastnameCorrect;
+  final String? cardValue;
+
+  EmployeeDialogState({
+    required this.isFirstnameCorrect,
+    required this.isLastnameCorrect,
+    required this.cardValue,
+  });
 
   factory EmployeeDialogState.init() {
     return EmployeeDialogState(
@@ -62,9 +58,27 @@ class EmployeeDialogState {
     );
   }
 
-  EmployeeDialogState({
-    required this.isFirstnameCorrect,
-    required this.isLastnameCorrect,
-    required this.cardValue,
-  });
+  EmployeeDialogState setFirstname(bool isFirstnameCorrect) {
+    return EmployeeDialogState(
+      isFirstnameCorrect: isFirstnameCorrect,
+      isLastnameCorrect: this.isLastnameCorrect,
+      cardValue: this.cardValue,
+    );
+  }
+
+  EmployeeDialogState setLastname(bool isLastnameCorrect) {
+    return EmployeeDialogState(
+      isFirstnameCorrect: this.isFirstnameCorrect,
+      isLastnameCorrect: isLastnameCorrect,
+      cardValue: this.cardValue,
+    );
+  }
+
+  EmployeeDialogState changeCard(String? cardValue) {
+    return EmployeeDialogState(
+      isFirstnameCorrect: this.isFirstnameCorrect,
+      isLastnameCorrect: this.isLastnameCorrect,
+      cardValue: cardValue,
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:slot_service_app/core/models/employee.dart';
 import 'package:slot_service_app/redux/employees/thunk.dart';
@@ -20,13 +21,8 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
 
-  EmployeeDialogState _state = EmployeeDialogState.init();
-
   @override
   void initState() {
-    _bloc.onOpenDialog();
-    _bloc.outputStateStream.listen(_onStateChanged);
-
     _firstnameController
         .addListener(() => _bloc.onFirstNameChanged(_firstnameController.text));
 
@@ -36,32 +32,33 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
     super.initState();
   }
 
-  _onStateChanged(EmployeeDialogState state) => setState(() => _state = state);
-
   @override
   Widget build(BuildContext context) {
-    return AddEntityDialog(
-      title: 'Введите данные сотрудника',
-      onSuccessButtonPressed: () => _onPressed(context),
-      fields: Container(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SimpleTextField(
-              hintText: 'Имя сотрудника',
-              errorText: 'Имя может состоять только из букв.',
-              controller: _firstnameController,
-              isValid: _state.isFirstnameCorrect,
-            ),
-            SimpleTextField(
-              hintText: 'Фамилия сотрудника',
-              errorText: 'Фамилия может состоять только из букв.',
-              controller: _lastnameController,
-              isValid: _state.isLastnameCorrect,
-            ),
-            WebSocketField(card: _state.cardValue),
-          ],
+    return BlocBuilder<EmployeeBloc, EmployeeDialogState>(
+      bloc: _bloc,
+      builder: (context, state) => AddEntityDialog(
+        title: 'Введите данные сотрудника',
+        onSuccessButtonPressed: () => _onPressed(context),
+        fields: Container(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SimpleTextField(
+                hintText: 'Имя сотрудника',
+                errorText: 'Имя может состоять только из букв.',
+                controller: _firstnameController,
+                isValid: state.isFirstnameCorrect,
+              ),
+              SimpleTextField(
+                hintText: 'Фамилия сотрудника',
+                errorText: 'Фамилия может состоять только из букв.',
+                controller: _lastnameController,
+                isValid: state.isLastnameCorrect,
+              ),
+              WebSocketField(card: state.cardValue),
+            ],
+          ),
         ),
       ),
     );
@@ -74,8 +71,9 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
       final employee = Employee(
         firstname: _firstnameController.text,
         lastname: _lastnameController.text,
-        number: int.parse(_state.cardValue!),
+        number: int.parse(_bloc.state.cardValue!),
       );
+
       store.dispatch(OnCreateEmployee(employee));
       _clearControllers();
       return true;
@@ -85,10 +83,10 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
 
   bool get _isValidState {
     final isValidFirstname =
-        _firstnameController.text.isNotEmpty && _state.isFirstnameCorrect;
+        _firstnameController.text.isNotEmpty && _bloc.state.isFirstnameCorrect;
     final isValidLastname =
-        _lastnameController.text.isNotEmpty && _state.isLastnameCorrect;
-    final isCardExists = _state.cardValue?.isNotEmpty ?? false;
+        _lastnameController.text.isNotEmpty && _bloc.state.isLastnameCorrect;
+    final isCardExists = _bloc.state.cardValue?.isNotEmpty ?? false;
     return isValidFirstname && isValidLastname && isCardExists;
   }
 
@@ -99,7 +97,7 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
 
   @override
   void dispose() {
-    _bloc.dispose();
+    _bloc.close();
     _firstnameController.dispose();
     _lastnameController.dispose();
     super.dispose();
