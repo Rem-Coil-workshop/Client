@@ -8,6 +8,7 @@ import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/screens/boxes_screen/widgets/box_open_button.dart';
 import 'package:slot_service_app/ui/widgets/box_number.dart';
 import 'package:slot_service_app/ui/widgets/dropdown.dart';
+import 'package:slot_service_app/ui/widgets/end_line.dart';
 
 import '../../../constants.dart';
 
@@ -49,9 +50,11 @@ class BoxItem extends StatelessWidget {
               },
               currentElement: _getTask(tasks),
             ),
-            Spacer(),
-            BoxOpenButton(
-              onPressed: () => store.dispatch(OnOpenBox(_box)),
+            EndLineSingleWidget(
+              child: BoxOpenButton(
+                onPressed: () => store.dispatch(OnOpenBox(_box)),
+              ),
+              isInRow: true,
             ),
           ],
         ),

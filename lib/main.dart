@@ -31,7 +31,8 @@ void main() {
 }
 
 class RemCoilDashboardApp extends StatefulWidget {
-  static const MAIN_ROUTE = BoxesScreen.route;
+  // TODO - Вернуть главный экран
+  static const MAIN_ROUTE = TasksScreen.route;
 
   @override
   _RemCoilDashboardAppState createState() => _RemCoilDashboardAppState();

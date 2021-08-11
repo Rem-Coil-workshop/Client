@@ -4,6 +4,8 @@ import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/screens/base/widgets/profile_card.dart';
 import 'package:slot_service_app/ui/screens/base/widgets/status.dart';
 import 'package:slot_service_app/ui/view_models/status.dart';
+import 'package:slot_service_app/ui/widgets/end_line.dart';
+
 class Header extends StatelessWidget {
   final String title;
 
@@ -53,8 +55,10 @@ class Header extends StatelessWidget {
             disable: () => Container(),
           ),
         ),
-        Spacer(),
-        ProfileCard()
+        EndLineSingleWidget(
+          child: ProfileCard(),
+          isInRow: true,
+        ),
       ],
     );
   }

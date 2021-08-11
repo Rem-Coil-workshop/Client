@@ -50,7 +50,6 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
-          Spacer(flex: 2),
           AddTaskField(
             taskController: _controller,
             addTaskButton: AddTaskButton(onTap: _validateInput),
@@ -76,8 +75,8 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
     setState(() {
       final value = _controller.text;
       this._isInputValid = isValidInput(value, (chr) {
-            return AddTaskWidget.CORRECT_CODES.contains(chr);
-          });
+        return AddTaskWidget.CORRECT_CODES.contains(chr);
+      });
     });
   }
 

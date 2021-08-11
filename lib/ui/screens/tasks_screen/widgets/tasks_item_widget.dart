@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:slot_service_app/core/models/task.dart';
+import 'package:slot_service_app/ui/widgets/end_line.dart';
+import 'package:slot_service_app/ui/widgets/icon_buttons.dart';
 
 class TaskItemWidget extends StatelessWidget {
   final Task task;
-  final VoidCallback onPressed;
+  final dynamic action;
 
-  const TaskItemWidget({Key? key, required this.task, required this.onPressed}) : super(key: key);
+  const TaskItemWidget({Key? key, required this.task, required this.action})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +26,17 @@ class TaskItemWidget extends StatelessWidget {
         title: Row(
           children: [
             Text(task.name),
-            Spacer(),
-            IconButton(
-              onPressed: onPressed,
-              splashRadius: 8,
-              icon: Icon(
-                Icons.remove_circle,
-                color: Colors.red,
-              ),
-            )
+            EndLineRow(
+              isInRow: true,
+              widgets: [
+                ListIconButton(
+                  onPressed: () {},
+                  icon: Icons.settings,
+                  color: Colors.blue,
+                ),
+                RemoveIconButton(action: action),
+              ],
+            ),
           ],
         ),
       ),
