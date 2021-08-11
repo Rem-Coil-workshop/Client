@@ -75,7 +75,7 @@ class OnOpenBox extends BaseThunk {
       final url = '/v1/slots/open/' + box.id.toString();
       store.dispatch(OnBeginLoad('Пытаемся открыть ячейку'));
 
-      final client = HttpClient(store.state.settingsState.network);
+      final client = await HttpClient.instance();
       final response = await client.get(url);
 
       if (response.statusCode == 204) {
@@ -88,19 +88,5 @@ class OnOpenBox extends BaseThunk {
     } catch (e) {
       store.dispatch(OnError('Ошибка подключения к сети'));
     }
-  }
-}
-
-class OnUpdateNetworkConfigInBoxesRepository
-    extends BaseThunkWithExtra<BoxesRepository> {
-
-  OnUpdateNetworkConfigInBoxesRepository();
-
-  @override
-  Future<void> execute(
-    Store<AppState> store,
-    BoxesRepository repository,
-  ) async {
-    repository.changeNetworkClient(store.state.settingsState.network);
   }
 }

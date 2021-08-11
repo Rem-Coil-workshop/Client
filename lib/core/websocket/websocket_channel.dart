@@ -1,4 +1,4 @@
-import 'package:slot_service_app/redux/settings/state.dart';
+import 'package:slot_service_app/core/network/config.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class CardChannel {
@@ -8,7 +8,7 @@ class CardChannel {
 
   CardChannel({required this.onData});
 
-  open(Network config) {
+  open(NetworkConfig config) {
     if (!_isOpened) {
       _channel = WebSocketChannel.connect(
           Uri.parse('ws://${config.host}:${config.port}/card'));

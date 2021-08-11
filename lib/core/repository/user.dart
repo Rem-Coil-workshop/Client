@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:slot_service_app/core/json_models/user.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
@@ -18,7 +18,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<Iterable<JsonUser>> _fetchUsers() async {
-    final response = await client.get(BASE_URL);
+    final response = await get(BASE_URL);
 
     if (response.statusCode == HttpStatus.ok) {
       return _parseBody(response);
@@ -32,7 +32,7 @@ class UserRepository extends BaseRepository {
 
   Future<String?> signIn(User user, String password) async {
     final json = JsonUser.fromUser(user).toJsonWithPassword(password);
-    final response = await client.post('$BASE_URL/sign_in', json);
+    final response = await post('$BASE_URL/sign_in', json);
 
     if (response.statusCode == HttpStatus.ok) {
       return jsonDecode(response.body)['token'];
@@ -48,7 +48,7 @@ class UserRepository extends BaseRepository {
 
   Future<String> signUp(User user, String password) async {
     final json = JsonUser.fromUser(user).toJsonWithPassword(password);
-    final response = await client.post('$BASE_URL/sign_up', json);
+    final response = await post('$BASE_URL/sign_up', json);
 
     if (response.statusCode == HttpStatus.ok) {
       return jsonDecode(response.body)['token'];
@@ -65,7 +65,7 @@ class UserRepository extends BaseRepository {
     }
   }
 
-  Iterable<JsonUser> _parseBody(Response response) {
+  Iterable<JsonUser> _parseBody(http.Response response) {
     final body = jsonDecode(response.body) as Iterable;
     return body.map((json) {
       return JsonUser.fromJson(json);
@@ -73,7 +73,7 @@ class UserRepository extends BaseRepository {
   }
 
   Future<List<User>> deleteUser(User user) async {
-    final response = await client.deleteWithBody(
+    final response = await deleteWithBody(
       '$BASE_URL',
       JsonUser.fromUser(user).toJson(),
     );

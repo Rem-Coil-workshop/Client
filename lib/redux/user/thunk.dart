@@ -71,7 +71,7 @@ class OnChangeCurrentUser extends BaseThunk {
   }
 }
 
-class OnEnterInApp extends BaseThunkWithExtra<LocalRepository> {
+class OnEnterInApp extends BaseThunkWithExtra<TokenLocalRepository> {
   final String nextRoute;
 
   OnEnterInApp(this.nextRoute);
@@ -79,7 +79,7 @@ class OnEnterInApp extends BaseThunkWithExtra<LocalRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    LocalRepository repository,
+    TokenLocalRepository repository,
   ) async {
     final isEntered = await repository.isEntered;
     store.dispatch(SetEnterStatusAction(isEntered));
@@ -92,7 +92,7 @@ class OnEnterInApp extends BaseThunkWithExtra<LocalRepository> {
   }
 }
 
-class OnGetCachedUser extends BaseThunkWithExtra<LocalRepository> {
+class OnGetCachedUser extends BaseThunkWithExtra<TokenLocalRepository> {
   final String nextRoute;
 
   OnGetCachedUser(this.nextRoute);
@@ -100,7 +100,7 @@ class OnGetCachedUser extends BaseThunkWithExtra<LocalRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    LocalRepository repository,
+    TokenLocalRepository repository,
   ) async {
     final user = await repository.currentUser;
     if (user != null) {
@@ -112,11 +112,11 @@ class OnGetCachedUser extends BaseThunkWithExtra<LocalRepository> {
   }
 }
 
-class OnExitApp extends BaseThunkWithExtra<LocalRepository> {
+class OnExitApp extends BaseThunkWithExtra<TokenLocalRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    LocalRepository repository,
+    TokenLocalRepository repository,
   ) async {
     await repository.logout();
     store.dispatch(SetUserAction(null));
@@ -154,7 +154,7 @@ class OnUserCredentialsEnter extends BaseThunkWithExtra<UserRepository> {
   }
 }
 
-class OnSaveUserCredentials extends BaseThunkWithExtra<LocalRepository> {
+class OnSaveUserCredentials extends BaseThunkWithExtra<TokenLocalRepository> {
   final String token;
 
   OnSaveUserCredentials(this.token);
@@ -162,7 +162,7 @@ class OnSaveUserCredentials extends BaseThunkWithExtra<LocalRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    LocalRepository repository,
+    TokenLocalRepository repository,
   ) async {
     await repository.saveToken(token);
     store.dispatch(SetPasswordCorrectStatusAction(true));
@@ -193,16 +193,5 @@ class OnDeleteUser extends BaseThunkWithExtra<UserRepository> {
     } catch (e) {
       store.dispatch(OnError('Ошибка подключения к сети'));
     }
-  }
-}
-
-class OnUpdateNetworkConfigInUserRepository
-    extends BaseThunkWithExtra<UserRepository> {
-  @override
-  Future<void> execute(
-    Store<AppState> store,
-    UserRepository repository,
-  ) async {
-    repository.changeNetworkClient(store.state.settingsState.network);
   }
 }

@@ -46,16 +46,3 @@ class OnDownloadFileButtonPressed extends BaseThunkWithExtra<LogsRepository> {
     repository.downloadLog(log);
   }
 }
-
-class OnUpdateNetworkConfigInLogsRepository
-    extends BaseThunkWithExtra<LogsRepository> {
-  OnUpdateNetworkConfigInLogsRepository();
-
-  @override
-  Future<void> execute(
-    Store<AppState> store,
-    LogsRepository repository,
-  ) async {
-    repository.changeNetworkClient(store.state.settingsState.network);
-  }
-}

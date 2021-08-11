@@ -24,6 +24,7 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
 
   @override
   void initState() {
+    _bloc.onOpenDialog();
     _bloc.outputStateStream.listen(_onStateChanged);
 
     _firstnameController
@@ -39,10 +40,6 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final config = store.state.settingsState.network;
-    _bloc.onOpenDialog(config);
-
     return AddEntityDialog(
       title: 'Введите данные сотрудника',
       onSuccessButtonPressed: () => _onPressed(context),

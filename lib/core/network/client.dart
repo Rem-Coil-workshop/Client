@@ -2,19 +2,41 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:slot_service_app/core/network/config.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/network/uri_builder.dart';
-import 'package:slot_service_app/redux/settings/state.dart';
+import 'package:slot_service_app/core/network/network.dart';
 
 class HttpClient {
-  final UriBuilder _builder;
-  final Network config;
 
   static const headers = <String, String>{
     HttpHeaders.contentTypeHeader: "application/json",
   };
 
-  HttpClient(this.config) : _builder = UriBuilder(config);
+  static HttpClient? _instance;
+  late UriBuilder _builder;
+
+  late NetworkConfig _config;
+  NetworkConfig get config => _config;
+
+  set config(NetworkConfig config) {
+    _builder = UriBuilder(config);
+    _config = config;
+  }
+
+  HttpClient._();
+
+  static Future<HttpClient> instance() async {
+    if (_instance == null) {
+      _instance = HttpClient._();
+    }
+
+    final config = await NetworkConfigRepository.loadConfig();
+    _instance!.config = config;
+    return _instance!;
+  }
+
+
 
   Future<http.Response> get(String path) async {
     try {
@@ -24,10 +46,7 @@ class HttpClient {
     }
   }
 
-  Future<http.Response> post(
-    String path,
-    Map<String, dynamic> json,
-  ) async {
+  Future<http.Response> post(String path, Map<String, dynamic> json) async {
     try {
       return http.post(
         _builder.withoutParams(path),
@@ -39,10 +58,7 @@ class HttpClient {
     }
   }
 
-  Future<http.Response> put(
-    String path,
-    Map<String, dynamic> json,
-  ) async {
+  Future<http.Response> put(String path, Map<String, dynamic> json) async {
     try {
       return http.put(
         _builder.withoutParams(path),
@@ -54,9 +70,7 @@ class HttpClient {
     }
   }
 
-  Future<http.Response> delete(
-    String path,
-  ) async {
+  Future<http.Response> delete(String path) async {
     try {
       return http.delete(
         _builder.withoutParams(path),
@@ -69,13 +83,13 @@ class HttpClient {
 
   Future<http.Response> deleteWithBody(
     String path,
-    Map<String, dynamic> body,
+    Map<String, dynamic> json,
   ) async {
     try {
       return http.delete(
         _builder.withoutParams(path),
         headers: headers,
-        body: jsonEncode(body),
+        body: jsonEncode(json),
       );
     } catch (e) {
       throw NetworkException.socketException();

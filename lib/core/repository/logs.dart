@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/base.dart';
 import 'package:universal_html/html.dart';
@@ -29,22 +29,22 @@ class LogsRepository extends BaseRepository {
     return _serverLogs;
   }
 
-  void downloadServerLog(String log) {
+  Future<void> downloadServerLog(String log) async {
     late String name;
-    if (log == CURRENT_LOG_FILE) {
-      name = '';
-    } else {
-      name = '/$log';
-    }
+    if (log == CURRENT_LOG_FILE) name = '';
+    else name = '/$log';
+
+    final config = await networkConfig;
     _download(
-      'http://${client.config.host}:${client.config.port}$BASE_ONE_SERVER_LOG_URL$name',
+      'http://${config.host}:${config.port}$BASE_ONE_SERVER_LOG_URL$name',
       name,
     );
   }
 
-  void downloadLog(String log) {
+  Future<void> downloadLog(String log) async {
+    final config = await networkConfig;
     _download(
-      'http://${client.config.host}:${client.config.port}$BASE_ONE_JOB_LOG_URL/$log',
+      'http://${config.host}:${config.port}$BASE_ONE_JOB_LOG_URL/$log',
       log,
     );
   }
@@ -52,7 +52,7 @@ class LogsRepository extends BaseRepository {
   void _download(String url, String name) => window.open(url, name);
 
   Future<Iterable<String>> _fetchFiles(String url) async {
-    final response = await client.get(url);
+    final response = await get(url);
     if (response.statusCode == HttpStatus.ok) {
       return _parseBody(response);
     } else {
@@ -64,7 +64,7 @@ class LogsRepository extends BaseRepository {
     }
   }
 
-  Iterable<String> _parseBody(Response response) {
+  Iterable<String> _parseBody(http.Response response) {
     final body = jsonDecode(response.body) as Iterable;
     return body.map((json) => json.toString());
   }

@@ -17,7 +17,7 @@ class TasksRepository extends BaseRepository {
   }
 
   Future<List<Task>> addTask(String taskName) async {
-    final response = await client.post(
+    final response = await post(
       BASE_URL,
       {'qrCode': taskName},
     );
@@ -35,7 +35,7 @@ class TasksRepository extends BaseRepository {
   }
 
   Future<List<Task>> removeTask(Task task) async {
-    final response = await client.delete('$BASE_URL/${task.id}');
+    final response = await delete('$BASE_URL/${task.id}');
 
     if (response.statusCode == HttpStatus.ok) {
       _tasks.remove(task);
@@ -49,7 +49,7 @@ class TasksRepository extends BaseRepository {
   }
 
   Future<List<JsonTask>> _fetchTasks() async {
-    final response = await client.get(BASE_URL);
+    final response = await get(BASE_URL);
 
     if (response.statusCode == HttpStatus.ok) {
       final responseBody = jsonDecode(response.body) as List;

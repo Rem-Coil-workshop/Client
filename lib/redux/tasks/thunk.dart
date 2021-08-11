@@ -85,14 +85,3 @@ class OnTasksNetworkError extends BaseThunk {
     store.dispatch(OnError(message));
   }
 }
-
-class OnUpdateNetworkConfigInTasksRepository
-    extends BaseThunkWithExtra<TasksRepository> {
-  @override
-  Future<void> execute(
-    Store<AppState> store,
-    TasksRepository repository,
-  ) async {
-    repository.changeNetworkClient(store.state.settingsState.network);
-  }
-}

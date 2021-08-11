@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:slot_service_app/core/network/network.dart';
 import 'package:slot_service_app/core/utils/validation.dart';
 import 'package:slot_service_app/core/websocket/websocket_channel.dart';
-import 'package:slot_service_app/redux/settings/state.dart';
 
 class EmployeeBloc {
   late CardChannel _channel;
@@ -17,9 +17,8 @@ class EmployeeBloc {
     _outputController.sink.add(_state);
   }
 
-  onOpenDialog(Network config) {
-    _channel.open(config);
-  }
+  onOpenDialog() => NetworkConfigRepository.loadConfig()
+      .then((config) => _channel.open(config));
 
   onCardValueEntered(dynamic data) {
     _state.cardValue = data;

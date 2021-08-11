@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:slot_service_app/core/json_models/box.dart';
 import 'package:slot_service_app/core/models/box.dart';
 import 'package:slot_service_app/core/models/task.dart';
@@ -19,7 +19,7 @@ class BoxesRepository extends BaseRepository {
   }
 
   Future<Iterable<JsonBox>> _fetchBoxes() async {
-    final response = await client.get(BASE_URL);
+    final response = await get(BASE_URL);
 
     if (response.statusCode == HttpStatus.ok) {
       return _parseBody(response);
@@ -36,7 +36,7 @@ class BoxesRepository extends BaseRepository {
     if (box.taskId == task.id) return _boxes;
 
     final jsonBox = JsonBox.fromBox(box.copyWith(taskId: task.id));
-    final response = await client.put(BASE_URL, jsonBox.toJson());
+    final response = await put(BASE_URL, jsonBox.toJson());
 
     if (response.statusCode == HttpStatus.ok) {
       final newBox = JsonBox.fromJson(jsonDecode(response.body)).toBox();
@@ -51,7 +51,7 @@ class BoxesRepository extends BaseRepository {
     }
   }
 
-  Iterable<JsonBox> _parseBody(Response response) {
+  Iterable<JsonBox> _parseBody(http.Response response) {
     final body = jsonDecode(response.body) as Iterable;
     return body.map((json) {
       return JsonBox.fromJson(json);

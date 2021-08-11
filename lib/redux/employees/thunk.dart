@@ -77,14 +77,3 @@ class OnUpdateEmployees extends BaseThunk {
     store.dispatch(OnSuccess('Список сотрудников обновлён'));
   }
 }
-
-class OnUpdateNetworkConfigInEmployeesRepository
-    extends BaseThunkWithExtra<EmployeesRepository> {
-  @override
-  Future<void> execute(
-    Store<AppState> store,
-    EmployeesRepository repository,
-  ) async {
-    repository.changeNetworkClient(store.state.settingsState.network);
-  }
-}

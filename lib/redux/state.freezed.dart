@@ -23,8 +23,7 @@ class _$AppStateTearOff {
       required ServerLogsState serverLogsState,
       required AuthState authState,
       required StatusState statusState,
-      required EmployeesState employeesState,
-      required SettingsState settingsState}) {
+      required EmployeesState employeesState}) {
     return _AppState(
       boxesState: boxesState,
       tasksState: tasksState,
@@ -33,7 +32,6 @@ class _$AppStateTearOff {
       authState: authState,
       statusState: statusState,
       employeesState: employeesState,
-      settingsState: settingsState,
     );
   }
 }
@@ -50,7 +48,6 @@ mixin _$AppState {
   AuthState get authState => throw _privateConstructorUsedError;
   StatusState get statusState => throw _privateConstructorUsedError;
   EmployeesState get employeesState => throw _privateConstructorUsedError;
-  SettingsState get settingsState => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AppStateCopyWith<AppState> get copyWith =>
@@ -68,8 +65,7 @@ abstract class $AppStateCopyWith<$Res> {
       ServerLogsState serverLogsState,
       AuthState authState,
       StatusState statusState,
-      EmployeesState employeesState,
-      SettingsState settingsState});
+      EmployeesState employeesState});
 
   $BoxesStateCopyWith<$Res> get boxesState;
   $TasksStateCopyWith<$Res> get tasksState;
@@ -78,7 +74,6 @@ abstract class $AppStateCopyWith<$Res> {
   $AuthStateCopyWith<$Res> get authState;
   $StatusStateCopyWith<$Res> get statusState;
   $EmployeesStateCopyWith<$Res> get employeesState;
-  $SettingsStateCopyWith<$Res> get settingsState;
 }
 
 /// @nodoc
@@ -98,7 +93,6 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
     Object? authState = freezed,
     Object? statusState = freezed,
     Object? employeesState = freezed,
-    Object? settingsState = freezed,
   }) {
     return _then(_value.copyWith(
       boxesState: boxesState == freezed
@@ -129,10 +123,6 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
           ? _value.employeesState
           : employeesState // ignore: cast_nullable_to_non_nullable
               as EmployeesState,
-      settingsState: settingsState == freezed
-          ? _value.settingsState
-          : settingsState // ignore: cast_nullable_to_non_nullable
-              as SettingsState,
     ));
   }
 
@@ -184,13 +174,6 @@ class _$AppStateCopyWithImpl<$Res> implements $AppStateCopyWith<$Res> {
       return _then(_value.copyWith(employeesState: value));
     });
   }
-
-  @override
-  $SettingsStateCopyWith<$Res> get settingsState {
-    return $SettingsStateCopyWith<$Res>(_value.settingsState, (value) {
-      return _then(_value.copyWith(settingsState: value));
-    });
-  }
 }
 
 /// @nodoc
@@ -205,8 +188,7 @@ abstract class _$AppStateCopyWith<$Res> implements $AppStateCopyWith<$Res> {
       ServerLogsState serverLogsState,
       AuthState authState,
       StatusState statusState,
-      EmployeesState employeesState,
-      SettingsState settingsState});
+      EmployeesState employeesState});
 
   @override
   $BoxesStateCopyWith<$Res> get boxesState;
@@ -222,8 +204,6 @@ abstract class _$AppStateCopyWith<$Res> implements $AppStateCopyWith<$Res> {
   $StatusStateCopyWith<$Res> get statusState;
   @override
   $EmployeesStateCopyWith<$Res> get employeesState;
-  @override
-  $SettingsStateCopyWith<$Res> get settingsState;
 }
 
 /// @nodoc
@@ -244,7 +224,6 @@ class __$AppStateCopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
     Object? authState = freezed,
     Object? statusState = freezed,
     Object? employeesState = freezed,
-    Object? settingsState = freezed,
   }) {
     return _then(_AppState(
       boxesState: boxesState == freezed
@@ -275,10 +254,6 @@ class __$AppStateCopyWithImpl<$Res> extends _$AppStateCopyWithImpl<$Res>
           ? _value.employeesState
           : employeesState // ignore: cast_nullable_to_non_nullable
               as EmployeesState,
-      settingsState: settingsState == freezed
-          ? _value.settingsState
-          : settingsState // ignore: cast_nullable_to_non_nullable
-              as SettingsState,
     ));
   }
 }
@@ -293,8 +268,7 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
       required this.serverLogsState,
       required this.authState,
       required this.statusState,
-      required this.employeesState,
-      required this.settingsState});
+      required this.employeesState});
 
   @override
   final BoxesState boxesState;
@@ -310,12 +284,10 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
   final StatusState statusState;
   @override
   final EmployeesState employeesState;
-  @override
-  final SettingsState settingsState;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState(boxesState: $boxesState, tasksState: $tasksState, logsState: $logsState, serverLogsState: $serverLogsState, authState: $authState, statusState: $statusState, employeesState: $employeesState, settingsState: $settingsState)';
+    return 'AppState(boxesState: $boxesState, tasksState: $tasksState, logsState: $logsState, serverLogsState: $serverLogsState, authState: $authState, statusState: $statusState, employeesState: $employeesState)';
   }
 
   @override
@@ -329,8 +301,7 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
       ..add(DiagnosticsProperty('serverLogsState', serverLogsState))
       ..add(DiagnosticsProperty('authState', authState))
       ..add(DiagnosticsProperty('statusState', statusState))
-      ..add(DiagnosticsProperty('employeesState', employeesState))
-      ..add(DiagnosticsProperty('settingsState', settingsState));
+      ..add(DiagnosticsProperty('employeesState', employeesState));
   }
 
   @override
@@ -357,10 +328,7 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
                     .equals(other.statusState, statusState)) &&
             (identical(other.employeesState, employeesState) ||
                 const DeepCollectionEquality()
-                    .equals(other.employeesState, employeesState)) &&
-            (identical(other.settingsState, settingsState) ||
-                const DeepCollectionEquality()
-                    .equals(other.settingsState, settingsState)));
+                    .equals(other.employeesState, employeesState)));
   }
 
   @override
@@ -372,8 +340,7 @@ class _$_AppState with DiagnosticableTreeMixin implements _AppState {
       const DeepCollectionEquality().hash(serverLogsState) ^
       const DeepCollectionEquality().hash(authState) ^
       const DeepCollectionEquality().hash(statusState) ^
-      const DeepCollectionEquality().hash(employeesState) ^
-      const DeepCollectionEquality().hash(settingsState);
+      const DeepCollectionEquality().hash(employeesState);
 
   @JsonKey(ignore: true)
   @override
@@ -389,8 +356,7 @@ abstract class _AppState implements AppState {
       required ServerLogsState serverLogsState,
       required AuthState authState,
       required StatusState statusState,
-      required EmployeesState employeesState,
-      required SettingsState settingsState}) = _$_AppState;
+      required EmployeesState employeesState}) = _$_AppState;
 
   @override
   BoxesState get boxesState => throw _privateConstructorUsedError;
@@ -406,8 +372,6 @@ abstract class _AppState implements AppState {
   StatusState get statusState => throw _privateConstructorUsedError;
   @override
   EmployeesState get employeesState => throw _privateConstructorUsedError;
-  @override
-  SettingsState get settingsState => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AppStateCopyWith<_AppState> get copyWith =>

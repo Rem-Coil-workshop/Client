@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:slot_service_app/core/json_models/employee.dart';
 import 'package:slot_service_app/core/models/employee.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
@@ -18,7 +18,7 @@ class EmployeesRepository extends BaseRepository {
   }
 
   Future<Iterable<JsonEmployee>> _fetchEmployees() async {
-    final response = await client.get(BASE_URL);
+    final response = await get(BASE_URL);
 
     if (response.statusCode == HttpStatus.ok) {
       return _parseBody(response);
@@ -30,7 +30,7 @@ class EmployeesRepository extends BaseRepository {
     }
   }
 
-  Iterable<JsonEmployee> _parseBody(Response response) {
+  Iterable<JsonEmployee> _parseBody(http.Response response) {
     final body = jsonDecode(response.body) as Iterable;
     return body.map((json) {
       return JsonEmployee.fromJson(json);
@@ -38,7 +38,7 @@ class EmployeesRepository extends BaseRepository {
   }
 
   Future<List<Employee>> addEmployee(Employee employee) async {
-    final response = await client.post(
+    final response = await this.post(
       BASE_URL,
       JsonEmployee.fromEmployee(employee).toJson(),
     );
@@ -56,7 +56,7 @@ class EmployeesRepository extends BaseRepository {
   }
 
   Future<List<Employee>> deleteEmployee(Employee employee) async {
-    final response = await client.delete('$BASE_URL/${employee.id}');
+    final response = await delete('$BASE_URL/${employee.id}');
 
     if (response.statusCode == HttpStatus.noContent) {
       _employees.removeWhere((e) => e.id == employee.id);

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:slot_service_app/redux/settings/thunk.dart';
-import 'package:slot_service_app/redux/state.dart';
-import 'package:slot_service_app/ui/view_models/network.dart';
+import 'package:slot_service_app/core/network/config.dart';
+import 'package:slot_service_app/core/network/network.dart';
 
 import '../../../constants.dart';
 
@@ -19,42 +17,51 @@ class _NetworkSettingsState extends State<NetworkSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    return StoreConnector<AppState, NetworkViewModel>(
-      converter: (store) {
-        final network = store.state.settingsState.network;
-        return NetworkViewModel.newConfig(host: network.host, port: network.port);
+    return FutureBuilder(
+      future: NetworkConfigRepository.loadConfig(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final config = snapshot.data as NetworkConfig;
+          return _network(config.host, config.port);
+        }
+        return CircularProgressIndicator();
       },
-      builder: (context, vm) => vm.when(
-        newConfig: (String host, int port) {
-          _hostController.text = host;
-          _portController.text = port.toString();
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Настройки подключения',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(height: defaultPadding),
-              SettingField(controller: _hostController, title: 'Host:'),
-              SizedBox(height: defaultPadding),
-              SettingField(controller: _portController, title: 'Port:'),
-              SizedBox(height: defaultPadding),
-              ElevatedButton(
-                onPressed: () {
-                  final host = _hostController.text;
-                  final port = int.parse(_portController.text);
-                  store.dispatch(OnChangeNetworkConfig(host, port));
-                },
-                child: Text('Применить'),
-              ),
-            ],
-          );
-        },
-      ),
     );
+  }
+
+  _network(String host, int port) {
+    _hostController.text = host;
+    _portController.text = port.toString();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Настройки подключения',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        SizedBox(height: defaultPadding),
+        SettingField(controller: _hostController, title: 'Host:'),
+        SizedBox(height: defaultPadding),
+        SettingField(controller: _portController, title: 'Port:'),
+        SizedBox(height: defaultPadding),
+        ElevatedButton(
+          onPressed: () {
+            final host = _hostController.text;
+            final port = int.parse(_portController.text);
+            NetworkConfigRepository.updateConfig(host, port);
+          },
+          child: Text('Применить'),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _hostController.dispose();
+    _portController.dispose();
+    super.dispose();
   }
 }
 

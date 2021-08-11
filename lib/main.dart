@@ -4,7 +4,6 @@ import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:slot_service_app/core/repository/logs.dart';
-import 'package:slot_service_app/redux/settings/thunk.dart';
 import 'package:slot_service_app/ui/constants.dart';
 import 'package:slot_service_app/core/repository/user.dart';
 import 'package:slot_service_app/core/repository/base.dart';
@@ -43,7 +42,7 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
 
   Store<AppState> get _appState {
     if (_appStateHolder == null) {
-      final localThunkMiddleware = _getThunkMiddleware(LocalRepository());
+      final localThunkMiddleware = _getThunkMiddleware(TokenLocalRepository());
       final taskThunkMiddleware = _getThunkMiddleware(TasksRepository());
       final boxThunkMiddleware = _getThunkMiddleware(BoxesRepository());
       final employeeThunkMiddleware =
@@ -78,7 +77,6 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
 
   @override
   Widget build(BuildContext context) {
-    _appState.dispatch(OnLoadFromCacheSetting());
     return StoreProvider<AppState>(
       store: _appState,
       child: MaterialApp(
