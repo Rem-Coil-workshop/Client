@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
+import '../constants.dart';
 
 class SimpleTextField extends StatelessWidget {
   final String _hintText;
-  final String _errorText;
-  final bool _isValid;
+  final String? _errorText;
   final TextEditingController _controller;
   final bool isObscureText;
 
   SimpleTextField({
     Key? key,
     required TextEditingController controller,
-    required bool isValid,
     required String hintText,
-    required String errorText,
+    required String? errorText,
     this.isObscureText = false,
   })  : _controller = controller,
-        _isValid = isValid,
         _hintText = hintText,
         _errorText = errorText,
         super(key: key);
@@ -30,9 +27,7 @@ class SimpleTextField extends StatelessWidget {
         controller: _controller,
         obscureText: isObscureText,
         decoration: InputDecoration(
-          errorText: _isValid
-              ? null
-              : 'Неверный формат введенныйх данных. $_errorText',
+          errorText: _errorText,
           hintText: _hintText,
         ),
       ),

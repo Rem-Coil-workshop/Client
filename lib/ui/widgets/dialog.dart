@@ -55,7 +55,7 @@ class FullScreenDialog extends StatelessWidget {
 class AddEntityDialog extends StatelessWidget {
   final String _title;
   final Widget fields;
-  final bool Function() onSuccessButtonPressed;
+  final VoidCallback onSuccessButtonPressed;
 
   const AddEntityDialog({
     Key? key,
@@ -72,9 +72,7 @@ class AddEntityDialog extends StatelessWidget {
       body: fields,
       actions: [
         TextButton(
-          onPressed: () {
-            if (onSuccessButtonPressed()) Navigator.pop(context);
-          },
+          onPressed: onSuccessButtonPressed,
           child: Text('Добавить'),
         ),
         SizedBox(width: defaultPadding),

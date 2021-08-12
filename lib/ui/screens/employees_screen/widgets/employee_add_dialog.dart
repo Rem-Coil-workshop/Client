@@ -4,9 +4,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:slot_service_app/core/models/employee.dart';
 import 'package:slot_service_app/redux/employees/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
-import 'package:slot_service_app/ui/screens/employees_screen/bloc/card.dart';
-import 'package:slot_service_app/ui/screens/employees_screen/widgets/simple_text_field.dart';
-import 'package:slot_service_app/ui/screens/employees_screen/widgets/websocket_field.dart';
+import 'package:slot_service_app/ui/screens/employees_screen/bloc/cubit.dart';
+import 'package:slot_service_app/ui/screens/employees_screen/bloc/state.dart';
+import 'package:slot_service_app/ui/widgets/simple_text_field.dart';
+import 'package:slot_service_app/ui/widgets/websocket_field.dart';
 import 'package:slot_service_app/ui/widgets/dialog.dart';
 
 class EmployeeAddDialog extends StatefulWidget {
@@ -17,27 +18,27 @@ class EmployeeAddDialog extends StatefulWidget {
 }
 
 class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
-  final _bloc = EmployeeBloc();
+  final _cubit = EmployeeCubit();
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
 
   @override
   void initState() {
+    super.initState();
     _firstnameController
-        .addListener(() => _bloc.onFirstNameChanged(_firstnameController.text));
+        .addListener(() => _cubit.onFirstNameChanged(_firstnameController.text));
 
     _lastnameController
-        .addListener(() => _bloc.onLastNameChanged(_lastnameController.text));
-
-    super.initState();
+        .addListener(() => _cubit.onLastNameChanged(_lastnameController.text));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EmployeeBloc, EmployeeDialogState>(
-      bloc: _bloc,
+    return BlocBuilder<EmployeeCubit, EmployeeDialogState>(
+      bloc: _cubit,
       builder: (context, state) => AddEntityDialog(
         title: 'Введите данные сотрудника',
+        // todo
         onSuccessButtonPressed: () => _onPressed(context),
         fields: Container(
           width: double.infinity,
@@ -46,15 +47,15 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
             children: [
               SimpleTextField(
                 hintText: 'Имя сотрудника',
+                // todo
                 errorText: 'Имя может состоять только из букв.',
                 controller: _firstnameController,
-                isValid: state.isFirstnameCorrect,
               ),
               SimpleTextField(
                 hintText: 'Фамилия сотрудника',
+                // todo
                 errorText: 'Фамилия может состоять только из букв.',
                 controller: _lastnameController,
-                isValid: state.isLastnameCorrect,
               ),
               WebSocketField(card: state.cardValue),
             ],
@@ -71,7 +72,7 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
       final employee = Employee(
         firstname: _firstnameController.text,
         lastname: _lastnameController.text,
-        number: int.parse(_bloc.state.cardValue!),
+        number: int.parse(_cubit.state.cardValue!),
       );
 
       store.dispatch(OnCreateEmployee(employee));
@@ -83,10 +84,10 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
 
   bool get _isValidState {
     final isValidFirstname =
-        _firstnameController.text.isNotEmpty && _bloc.state.isFirstnameCorrect;
+        _firstnameController.text.isNotEmpty && _cubit.state.isFirstnameCorrect;
     final isValidLastname =
-        _lastnameController.text.isNotEmpty && _bloc.state.isLastnameCorrect;
-    final isCardExists = _bloc.state.cardValue?.isNotEmpty ?? false;
+        _lastnameController.text.isNotEmpty && _cubit.state.isLastnameCorrect;
+    final isCardExists = _cubit.state.cardValue?.isNotEmpty ?? false;
     return isValidFirstname && isValidLastname && isCardExists;
   }
 
@@ -97,7 +98,7 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
 
   @override
   void dispose() {
-    _bloc.close();
+    _cubit.close();
     _firstnameController.dispose();
     _lastnameController.dispose();
     super.dispose();
