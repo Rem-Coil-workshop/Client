@@ -1,113 +1,70 @@
 import 'package:flutter/foundation.dart';
+import 'package:slot_service_app/bloc/dialog_state.dart';
 import 'package:slot_service_app/core/models/user.dart';
 
+const FIRSTNAME_KEY = 'firstname';
+const LASTNAME_KEY = 'lastname';
+const PASSWORD_KEY = 'password';
+const COUNT_FIELDS = 3;
+
 @immutable
-class UserDialogState {
-  final String firstname;
-  final String lastname;
-  final String password;
+class UserDialogState extends FormDialogState {
   final RoleHolder? role;
-  final Map<String, String?> errorMessages;
-  final bool isReady;
 
   static const UserDialogState init = UserDialogState(
-    firstname: '',
-    lastname: '',
-    password: '',
+    fields: {},
     errorMessages: {},
+    isButtonPressed: false,
     role: null,
-    isReady: false,
   );
 
   const UserDialogState({
-    required this.firstname,
-    required this.lastname,
-    required this.password,
-    required this.errorMessages,
+    required Map<String, String> fields,
+    required Map<String, String?> errorMessages,
+    required bool isButtonPressed,
     required this.role,
-    required this.isReady,
-  });
+  }) : super(
+          fields: fields,
+          errorMessages: errorMessages,
+          isButtonPressed: isButtonPressed,
+          countFields: COUNT_FIELDS,
+        );
 
-  bool get isValid =>
-      isNotEmpty &&
-      errorMessages.values.every((message) => message == null) &&
-      role != null;
+  @override
+  bool get isValid => super.isValid && role != null;
 
-  bool get isNotEmpty =>
-      firstname.isNotEmpty && lastname.isNotEmpty && password.isNotEmpty;
+  String? get firstname => fields[FIRSTNAME_KEY];
+
+  String? get lastname => fields[LASTNAME_KEY];
+
+  String? get password => fields[PASSWORD_KEY];
 
   User get user => User(
-        firstname: firstname,
-        lastname: lastname,
+        firstname: fields[FIRSTNAME_KEY]!,
+        lastname: fields[LASTNAME_KEY]!,
         role: role!.role,
       );
 
-  UserDialogState setFirstname(String firstname) {
+  @override
+  FormDialogState updateState({
+    required Map<String, String> fields,
+    required Map<String, String?> errorMessages,
+    required bool isButtonPressed,
+  }) {
     return UserDialogState(
-      firstname: firstname,
-      lastname: this.lastname,
-      password: this.password,
-      errorMessages: this.errorMessages,
-      role: this.role,
-      isReady: this.isReady,
-    );
-  }
-
-  UserDialogState setLastname(String lastname) {
-    return UserDialogState(
-      firstname: this.firstname,
-      lastname: lastname,
-      password: this.password,
-      errorMessages: this.errorMessages,
-      role: this.role,
-      isReady: this.isReady,
-    );
-  }
-
-  UserDialogState setPassword(String password) {
-    return UserDialogState(
-      firstname: this.firstname,
-      lastname: this.lastname,
-      password: password,
-      errorMessages: this.errorMessages,
-      role: this.role,
-      isReady: this.isReady,
-    );
-  }
-
-  UserDialogState addErrorMessage(String key, String? value) {
-    var errorMessages = Map<String, String?>.from(this.errorMessages);
-    errorMessages[key] = value;
-
-    return UserDialogState(
-      firstname: this.firstname,
-      lastname: this.lastname,
-      password: password,
+      fields: fields,
       errorMessages: errorMessages,
-      role: this.role,
-      isReady: this.isReady,
+      isButtonPressed: isButtonPressed,
+      role: role,
     );
   }
 
   UserDialogState changeRole(RoleHolder? role) {
     return UserDialogState(
-      firstname: this.firstname,
-      lastname: this.lastname,
-      password: this.password,
+      fields: this.fields,
       errorMessages: this.errorMessages,
       role: role,
-      isReady: this.isReady,
-    );
-  }
-
-  UserDialogState changeReady(bool isReady) {
-    return UserDialogState(
-      firstname: this.firstname,
-      lastname: this.lastname,
-      password: this.password,
-      errorMessages: this.errorMessages,
-      role: this.role,
-      isReady: isReady,
+      isButtonPressed: this.isButtonPressed,
     );
   }
 }

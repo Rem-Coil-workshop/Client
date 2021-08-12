@@ -40,9 +40,10 @@ class _UserAddDialogState extends State<UserAddDialog> {
   Widget build(BuildContext context) {
     return BlocConsumer<UserCubit, UserDialogState>(
       bloc: _bloc,
-      listenWhen: (previous, current) => current.isValid && current.isReady,
+      listenWhen: (previous, current) =>
+          current.isValid && current.isButtonPressed,
       listener: (context, state) =>
-          _onValidInput(context, state.user, state.password),
+          _onValidInput(context, state.user, state.password!),
       buildWhen: (previous, current) => true,
       builder: (context, state) => _dialog(context, state),
     );
@@ -59,12 +60,12 @@ class _UserAddDialogState extends State<UserAddDialog> {
           children: [
             SimpleTextField(
               hintText: 'Имя сотрудника',
-              errorText: state.errorMessages[UserCubit.FIRSTNAME_KEY],
+              errorText: state.errorMessages[FIRSTNAME_KEY],
               controller: _firstnameController,
             ),
             SimpleTextField(
               hintText: 'Фамилия сотрудника',
-              errorText: state.errorMessages[UserCubit.LASTNAME_KEY],
+              errorText: state.errorMessages[LASTNAME_KEY],
               controller: _lastnameController,
             ),
             UserSelectField(
@@ -73,7 +74,7 @@ class _UserAddDialogState extends State<UserAddDialog> {
             ),
             SimpleTextField(
               hintText: 'Пароль',
-              errorText: state.errorMessages[UserCubit.PASSWORD_KEY],
+              errorText: state.errorMessages[PASSWORD_KEY],
               controller: _passwordController,
               isObscureText: true,
             ),
