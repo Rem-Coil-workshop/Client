@@ -1,10 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:slot_service_app/bloc/dialog_cubit.dart';
+import 'package:slot_service_app/bloc/dialog_state.dart';
 import 'package:slot_service_app/core/network/network.dart';
-import 'package:slot_service_app/core/utils/validation.dart';
 import 'package:slot_service_app/core/websocket/websocket_channel.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/bloc/state.dart';
 
-class EmployeeCubit extends Cubit<EmployeeDialogState> {
+class EmployeeCubit extends DialogCubit<EmployeeDialogState> {
   late CardChannel _channel;
 
   EmployeeCubit() : super(EmployeeDialogState.init) {
@@ -20,16 +20,18 @@ class EmployeeCubit extends Cubit<EmployeeDialogState> {
   }
 
   onFirstNameChanged(String firstname) {
-    emit(state.setFirstname(_onNameChanged(firstname)));
+    emit(onFieldChanged(FIRSTNAME_KEY, firstname, isValidName));
   }
 
   onLastNameChanged(String lastname) {
-    emit(state.setLastname(_onNameChanged(lastname)));
+    emit(onFieldChanged(LASTNAME_KEY, lastname, isValidName));
   }
 
-  _onNameChanged(String name) {
-    return isValidInput(name, isWord);
-  }
+  @override
+  List<ValidationRule> get validationRules => [
+    ValidationRule(FIRSTNAME_KEY, isValidName),
+    ValidationRule(LASTNAME_KEY, isValidName),
+  ];
 
   @override
   Future<void> close() {

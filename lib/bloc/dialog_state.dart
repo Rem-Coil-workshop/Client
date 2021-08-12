@@ -1,5 +1,9 @@
 import 'package:flutter/foundation.dart';
 
+const FIRSTNAME_KEY = 'firstname';
+const LASTNAME_KEY = 'lastname';
+const PASSWORD_KEY = 'password';
+
 @immutable
 abstract class FormDialogState {
   final Map<String, String> fields;

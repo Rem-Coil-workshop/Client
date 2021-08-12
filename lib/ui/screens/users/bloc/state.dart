@@ -2,9 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:slot_service_app/bloc/dialog_state.dart';
 import 'package:slot_service_app/core/models/user.dart';
 
-const FIRSTNAME_KEY = 'firstname';
-const LASTNAME_KEY = 'lastname';
-const PASSWORD_KEY = 'password';
 const COUNT_FIELDS = 3;
 
 @immutable
@@ -39,11 +36,13 @@ class UserDialogState extends FormDialogState {
 
   String? get password => fields[PASSWORD_KEY];
 
-  User get user => User(
-        firstname: fields[FIRSTNAME_KEY]!,
-        lastname: fields[LASTNAME_KEY]!,
-        role: role!.role,
-      );
+  User get user {
+    return User(
+      firstname: firstname!,
+      lastname: lastname!,
+      role: role!.role,
+    );
+  }
 
   @override
   FormDialogState updateState({
@@ -55,7 +54,7 @@ class UserDialogState extends FormDialogState {
       fields: fields,
       errorMessages: errorMessages,
       isButtonPressed: isButtonPressed,
-      role: role,
+      role: this.role,
     );
   }
 

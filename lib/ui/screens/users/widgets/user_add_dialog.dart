@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:slot_service_app/bloc/dialog_state.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/user/thunk.dart';
@@ -18,7 +19,7 @@ class UserAddDialog extends StatefulWidget {
 }
 
 class _UserAddDialogState extends State<UserAddDialog> {
-  final _bloc = UserCubit();
+  final _cubit = UserCubit();
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -27,32 +28,31 @@ class _UserAddDialogState extends State<UserAddDialog> {
   void initState() {
     super.initState();
     _firstnameController
-        .addListener(() => _bloc.onFirstNameChanged(_firstnameController.text));
+        .addListener(() => _cubit.onFirstNameChanged(_firstnameController.text));
 
     _lastnameController
-        .addListener(() => _bloc.onLastNameChanged(_lastnameController.text));
+        .addListener(() => _cubit.onLastNameChanged(_lastnameController.text));
 
     _passwordController
-        .addListener(() => _bloc.onPasswordChanged(_passwordController.text));
+        .addListener(() => _cubit.onPasswordChanged(_passwordController.text));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UserCubit, UserDialogState>(
-      bloc: _bloc,
+      bloc: _cubit,
       listenWhen: (previous, current) =>
           current.isValid && current.isButtonPressed,
       listener: (context, state) =>
           _onValidInput(context, state.user, state.password!),
-      buildWhen: (previous, current) => true,
-      builder: (context, state) => _dialog(context, state),
+      builder: _dialog,
     );
   }
 
   Widget _dialog(BuildContext context, UserDialogState state) {
     return AddEntityDialog(
       title: 'Введите данные пользователя',
-      onSuccessButtonPressed: _bloc.onButtonPressed,
+      onSuccessButtonPressed: _cubit.onButtonPressed,
       fields: Container(
         width: double.infinity,
         child: Column(
@@ -70,7 +70,7 @@ class _UserAddDialogState extends State<UserAddDialog> {
             ),
             UserSelectField(
               role: state.role,
-              onChanged: _bloc.onUserRoleChanged,
+              onChanged: _cubit.onUserRoleChanged,
             ),
             SimpleTextField(
               hintText: 'Пароль',
@@ -98,7 +98,7 @@ class _UserAddDialogState extends State<UserAddDialog> {
 
   @override
   void dispose() {
-    _bloc.close();
+    _cubit.close();
     super.dispose();
   }
 }
