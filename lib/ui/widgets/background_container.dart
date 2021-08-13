@@ -13,7 +13,7 @@ class BackgroundContainer extends StatelessWidget {
         border: Border.all(color: Colors.white10),
       ),
       padding: EdgeInsets.all(20),
-      child: child,
+      child: SizedBox.expand(child: child),
     );
   }
 }

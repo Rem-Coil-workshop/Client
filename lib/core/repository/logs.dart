@@ -19,6 +19,7 @@ class LogsRepository extends BaseRepository {
   Future<List<String>> get jobLogs async {
     final jsons = await _fetchFiles(BASE_JOB_LOGS_URL);
     _jobLogs = jsons.toList();
+    _jobLogs.sort();
     return _jobLogs;
   }
 
@@ -26,6 +27,7 @@ class LogsRepository extends BaseRepository {
     final jsons = await _fetchFiles(BASE_SERVER_LOGS_URL);
     final logs = jsons.toList()..add(CURRENT_LOG_FILE);
     _serverLogs = logs;
+    _serverLogs.sort();
     return _serverLogs;
   }
 

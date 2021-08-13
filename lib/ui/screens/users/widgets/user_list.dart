@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/ui/constants.dart';
 import 'package:slot_service_app/ui/screens/users/widgets/user_data_row.dart';
-import 'package:slot_service_app/ui/widgets/BackgroundContainer.dart';
+import 'package:slot_service_app/ui/widgets/background_container.dart';
 
 class UserList extends StatelessWidget {
   final _controller = ScrollController();

@@ -4,7 +4,7 @@ import 'package:slot_service_app/redux/employees/thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/widgets/employees_table.dart';
 import 'package:slot_service_app/ui/view_models/employees.dart';
-import 'package:slot_service_app/ui/widgets/BackgroundContainer.dart';
+import 'package:slot_service_app/ui/widgets/background_container.dart';
 
 class EmployeesData extends StatelessWidget {
   const EmployeesData({

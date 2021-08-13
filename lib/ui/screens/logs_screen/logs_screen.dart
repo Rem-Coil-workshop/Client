@@ -6,7 +6,7 @@ import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/ui/screens/base/base_main_screen.dart';
 import 'package:slot_service_app/ui/screens/logs_screen/widgets/log_item.dart';
 import 'package:slot_service_app/ui/view_models/logs.dart';
-import 'package:slot_service_app/ui/widgets/BackgroundContainer.dart';
+import 'package:slot_service_app/ui/widgets/background_container.dart';
 
 class LogsScreen extends StatefulWidget {
   static const route = '/logs';

@@ -4,7 +4,7 @@ import 'package:slot_service_app/redux/state.dart';
 import 'package:slot_service_app/redux/tasks/thunk.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/widgets/tasks_items_list.dart';
 import 'package:slot_service_app/ui/view_models/tasks.dart';
-import 'package:slot_service_app/ui/widgets/BackgroundContainer.dart';
+import 'package:slot_service_app/ui/widgets/background_container.dart';
 
 class TasksList extends StatelessWidget {
   @override
