@@ -4,45 +4,49 @@ import 'package:slot_service_app/core/models/employee.dart';
 
 @immutable
 class TaskPermissionsState {
-  final AsyncSnapshot<List<Employee>> _data;
+  final Status _status;
+  final Iterable<Employee>? _data;
+  final String? _errorMessage;
 
-  TaskPermissionsState._(this._data);
+  TaskPermissionsState._(this._status, this._data, this._errorMessage);
 
   factory TaskPermissionsState.init() =>
-      TaskPermissionsState._(AsyncSnapshot.nothing());
+      TaskPermissionsState._(Status.init, null, null);
 
   factory TaskPermissionsState.load() =>
-      TaskPermissionsState._(AsyncSnapshot.waiting());
+      TaskPermissionsState._(Status.load, null, null);
 
-  factory TaskPermissionsState.withData(List<Employee> employees) {
-    return TaskPermissionsState._(
-      AsyncSnapshot.withData(ConnectionState.done, employees),
-    );
+  factory TaskPermissionsState.withData(Iterable<Employee> employees) {
+    return TaskPermissionsState._(Status.data, employees, null);
   }
 
   factory TaskPermissionsState.error({
     String message = 'Ошибка загрузки данных',
   }) {
-    return TaskPermissionsState._(
-      AsyncSnapshot.withError(ConnectionState.done, message),
-    );
+    return TaskPermissionsState._(Status.error, null, message);
   }
 
-  List<Employee>? get data => _data.data;
+  bool get isLoad => _status == Status.load;
 
-  bool get isLoad => _data.connectionState == ConnectionState.waiting;
+  bool get hasData => _data != null;
 
-  bool get hasData => _data.hasData;
+  Iterable<Employee> get data => _data!;
 
-  String get errorMessage => _data.error as String;
+  String? get errorMessage => _errorMessage;
+
+  bool get hasError => _errorMessage != null;
 
   TaskPermissionsState addEmployee(Employee employee) {
-    List<Employee> employees = List.from(_data.data!)..add(employee);
-    return TaskPermissionsState.withData(employees);
+    return TaskPermissionsState.withData(List.from(data)..add(employee));
   }
 
   TaskPermissionsState removeEmployee(Employee employee) {
-    List<Employee> employees = List.from(_data.data!)..remove(employee);
-    return TaskPermissionsState.withData(employees);
+    return TaskPermissionsState.withData(List.from(data)..remove(employee));
+  }
+
+  TaskPermissionsState addError(String errorMessage) {
+    return TaskPermissionsState._(Status.error, _data, errorMessage);
   }
 }
+
+enum Status { init, load, data, error }

@@ -14,10 +14,17 @@ class TaskPermissionsCubit extends Cubit<TaskPermissionsState> {
   }
 
   onUpdateEmployees() async {
-    _sendNetworkRequest(
-      onError: 'Ошибка загрузки данных',
-      body: () async => await repository.fetchEmployees(),
-    );
+    try {
+      emit(TaskPermissionsState.load());
+      final isCorrect = await repository.fetchEmployees();
+      if (isCorrect) {
+        emit(TaskPermissionsState.withData(repository.employees));
+      } else {
+        emit(TaskPermissionsState.error(message: 'Ошибка загрзуки данных'));
+      }
+    } catch (e) {
+      emit(TaskPermissionsState.error(message: 'Ошибка подключения к сети'));
+    }
   }
 
   onAddPermission(Employee employee) async {
@@ -39,15 +46,14 @@ class TaskPermissionsCubit extends Cubit<TaskPermissionsState> {
     required Future<bool> Function() body,
   }) async {
     try {
-      emit(TaskPermissionsState.load());
       final isCorrect = await body();
       if (isCorrect) {
         emit(TaskPermissionsState.withData(repository.employees));
       } else {
-        emit(TaskPermissionsState.error(message: onError));
+        emit(state.addError(onError));
       }
     } catch (e) {
-      emit(TaskPermissionsState.error(message: 'Ошибка подключения к сети'));
+      emit(state.addError('Ошибка подключения к сети'));
     }
   }
 }

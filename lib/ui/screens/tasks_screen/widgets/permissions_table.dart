@@ -19,8 +19,6 @@ class PermissionEmployeeTable extends StatefulWidget {
 }
 
 class _PermissionEmployeeTableState extends State<PermissionEmployeeTable> {
-  final List<int> selectedIndexes = [];
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -29,7 +27,7 @@ class _PermissionEmployeeTableState extends State<PermissionEmployeeTable> {
         child: BlocBuilder<TaskPermissionsCubit, TaskPermissionsState>(
           builder: (context, state) {
             if (state.hasData) {
-              return _table(state.data!);
+              return _table(state.data, state.errorMessage);
             }
             return Text('Ошибка загрузки');
           },
@@ -38,30 +36,36 @@ class _PermissionEmployeeTableState extends State<PermissionEmployeeTable> {
     );
   }
 
-  _table(List<Employee> permittedEmployees) {
-    return DataTable(
-      showCheckboxColumn: true,
-      columns: [
-        DataColumn(
-          label: Container(
-            width: PermissionEmployeeTable.table_width * .45,
-            child: Text('Имя'),
+  _table(Iterable<Employee> permittedEmployees, String? error) {
+    return Column(
+      children: [
+        DataTable(
+          showCheckboxColumn: true,
+          columns: [
+            DataColumn(
+              label: Container(
+                width: PermissionEmployeeTable.table_width * .45,
+                child: Text('Имя'),
+              ),
+            ),
+            DataColumn(
+              label: Container(
+                width: PermissionEmployeeTable.table_width * .45,
+                child: Text('Фамилия'),
+              ),
+            ),
+          ],
+          rows: List.generate(
+            widget.employees.length,
+            (index) {
+              final employee = widget.employees[index];
+              return _rowGenerator(
+                  employee, permittedEmployees.contains(employee));
+            },
           ),
         ),
-        DataColumn(
-          label: Container(
-            width: PermissionEmployeeTable.table_width * .45,
-            child: Text('Фамилия'),
-          ),
-        ),
+        if (error != null) Text(error),
       ],
-      rows: List.generate(
-        widget.employees.length,
-        (index) {
-          final employee = widget.employees[index];
-          return _rowGenerator(employee, permittedEmployees.contains(employee));
-        },
-      ),
     );
   }
 
