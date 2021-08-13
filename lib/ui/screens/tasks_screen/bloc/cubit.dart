@@ -9,7 +9,7 @@ class TaskPermissionsCubit extends Cubit<TaskPermissionsState> {
 
   TaskPermissionsCubit(Task task)
       : repository = TaskPermissionsRepository(task),
-        super(TaskPermissionsState.init()) {
+        super(TaskPermissionsState.load()) {
     onUpdateEmployees();
   }
 
@@ -24,6 +24,14 @@ class TaskPermissionsCubit extends Cubit<TaskPermissionsState> {
       }
     } catch (e) {
       emit(TaskPermissionsState.error(message: 'Ошибка подключения к сети'));
+    }
+  }
+
+  onPermissionChanged(Employee employee, bool isAdd) {
+    if (isAdd) {
+      onAddPermission(employee);
+    } else {
+      onRemovePermission(employee);
     }
   }
 
@@ -46,6 +54,7 @@ class TaskPermissionsCubit extends Cubit<TaskPermissionsState> {
     required Future<bool> Function() body,
   }) async {
     try {
+      emit(state.addLoad());
       final isCorrect = await body();
       if (isCorrect) {
         emit(TaskPermissionsState.withData(repository.employees));

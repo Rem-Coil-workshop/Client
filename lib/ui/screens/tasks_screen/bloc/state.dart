@@ -10,9 +10,6 @@ class TaskPermissionsState {
 
   TaskPermissionsState._(this._status, this._data, this._errorMessage);
 
-  factory TaskPermissionsState.init() =>
-      TaskPermissionsState._(Status.init, null, null);
-
   factory TaskPermissionsState.load() =>
       TaskPermissionsState._(Status.load, null, null);
 
@@ -32,20 +29,16 @@ class TaskPermissionsState {
 
   Iterable<Employee> get data => _data!;
 
-  String? get errorMessage => _errorMessage;
+  String get error => _errorMessage!;
 
   bool get hasError => _errorMessage != null;
 
-  TaskPermissionsState addEmployee(Employee employee) {
-    return TaskPermissionsState.withData(List.from(data)..add(employee));
-  }
-
-  TaskPermissionsState removeEmployee(Employee employee) {
-    return TaskPermissionsState.withData(List.from(data)..remove(employee));
-  }
-
   TaskPermissionsState addError(String errorMessage) {
     return TaskPermissionsState._(Status.error, _data, errorMessage);
+  }
+
+  TaskPermissionsState addLoad() {
+    return TaskPermissionsState._(Status.load, _data, _errorMessage);
   }
 }
 
