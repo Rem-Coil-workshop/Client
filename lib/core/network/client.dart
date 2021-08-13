@@ -36,9 +36,9 @@ class HttpClient {
     return _instance!;
   }
 
-  Future<http.Response> get(String path) async {
+  Future<http.Response> get(String path, Map<String, dynamic>? queryParameters) async {
     try {
-      return http.get(_builder.withoutParams(path));
+      return http.get(_builder.build(path, queryParameters));
     } catch (e) {
       throw NetworkException.socketException();
     }

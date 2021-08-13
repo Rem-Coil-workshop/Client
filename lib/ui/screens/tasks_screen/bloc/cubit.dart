@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slot_service_app/core/models/employee.dart';
 import 'package:slot_service_app/core/models/task.dart';
-import 'package:slot_service_app/core/repository/base.dart';
+import 'package:slot_service_app/core/repository/permission.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/bloc/state.dart';
 
 class TaskPermissionsCubit extends Cubit<TaskPermissionsState> {
@@ -52,28 +52,5 @@ class TaskPermissionsCubit extends Cubit<TaskPermissionsState> {
     } catch (e) {
       emit(TaskPermissionsState.error(message: 'Ошибка подключения к сети'));
     }
-  }
-}
-
-class TaskPermissionsRepository extends BaseRepository {
-  final Task _task;
-  final List<Employee> _employees;
-
-  TaskPermissionsRepository(this._task) : _employees = [];
-
-  List<Employee> get employees => _employees;
-
-  Future<void> fetchEmployees() async {
-    // todo - fetch employees
-  }
-
-  Future<bool> addPermissionForEmployee(Employee employee) async {
-    // todo - add employee
-    return true;
-  }
-
-  Future<bool> removePermissionForEmployee(Employee employee) async {
-    // todo - remove employee
-    return true;
   }
 }

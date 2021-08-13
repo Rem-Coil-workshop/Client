@@ -2,7 +2,6 @@ import 'package:slot_service_app/core/network/client.dart';
 import 'package:http/http.dart';
 import 'package:slot_service_app/core/network/config.dart';
 
-
 abstract class BaseRepository {
   Future<HttpClient> get _client async => HttpClient.instance();
 
@@ -13,7 +12,15 @@ abstract class BaseRepository {
 
   Future<Response> get(String path) async {
     final client = await _client;
-    return await client.get(path);
+    return await client.get(path, null);
+  }
+
+  Future<Response> getWithParams(
+    String path,
+    Map<String, dynamic>? queryParameters,
+  ) async {
+    final client = await _client;
+    return await client.get(path, queryParameters);
   }
 
   Future<Response> post(String path, Map<String, dynamic> json) async {

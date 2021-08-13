@@ -76,7 +76,7 @@ class OnOpenBox extends BaseThunk {
       store.dispatch(OnBeginLoad('Пытаемся открыть ячейку'));
 
       final client = await HttpClient.instance();
-      final response = await client.get(url);
+      final response = await client.get(url, null);
 
       if (response.statusCode == 204) {
         store.dispatch(OnSuccess('Ячейка открыта'));
