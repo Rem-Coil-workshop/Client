@@ -13,22 +13,22 @@ part 'state.freezed.dart';
 @freezed
 class AppState with _$AppState {
   static const initState = AppState(
-    authState: AuthState.initState,
     statusState: StatusState.initState,
+    authState: AuthState.initState,
     boxesState: BoxesState.initState,
     tasksState: TasksState.initState,
+    employeesState: EmployeesState.initState,
     logsState: LogsState.initState,
     serverLogsState: ServerLogsState.initState,
-    employeesState: EmployeesState.initState,
   );
 
   const factory AppState({
+    required StatusState statusState,
+    required AuthState authState,
     required BoxesState boxesState,
     required TasksState tasksState,
+    required EmployeesState employeesState,
     required LogsState logsState,
     required ServerLogsState serverLogsState,
-    required AuthState authState,
-    required StatusState statusState,
-    required EmployeesState employeesState,
   }) = _AppState;
 }

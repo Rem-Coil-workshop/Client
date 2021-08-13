@@ -8,15 +8,15 @@ import 'package:slot_service_app/core/network/uri_builder.dart';
 import 'package:slot_service_app/core/network/network.dart';
 
 class HttpClient {
-
+  static HttpClient? _instance;
   static const headers = <String, String>{
     HttpHeaders.contentTypeHeader: "application/json",
   };
 
-  static HttpClient? _instance;
   late UriBuilder _builder;
 
   late NetworkConfig _config;
+
   NetworkConfig get config => _config;
 
   set config(NetworkConfig config) {
@@ -35,8 +35,6 @@ class HttpClient {
     _instance!.config = config;
     return _instance!;
   }
-
-
 
   Future<http.Response> get(String path) async {
     try {
