@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:slot_service_app/core/json_models/employee.dart';
+import 'package:slot_service_app/core/json_models/task.dart';
 import 'package:slot_service_app/core/models/employee.dart';
 import 'package:slot_service_app/core/models/task.dart';
-import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/base.dart';
 
 import 'package:http/http.dart' as http;
@@ -19,7 +19,7 @@ class TaskPermissionsRepository extends BaseRepository {
 
   List<Employee> get employees => _employees;
 
-  Future<void> fetchEmployees() async {
+  Future<bool> fetchEmployees() async {
     final response = await getWithParams(
       '$BASE_URL/employees',
       {'task': _task.id.toString()},
@@ -29,12 +29,16 @@ class TaskPermissionsRepository extends BaseRepository {
       final permittedEmployees =
           _parseEmployeesList(response).map((json) => json.toEmployee());
       _updateEmployees(permittedEmployees);
-    } else {
-      throw NetworkException.fromResponse(
-        response: response,
-        message: 'Ошибка обновления данных',
-      );
+      return true;
     }
+    return false;
+  }
+
+  Iterable<JsonEmployee> _parseEmployeesList(http.Response response) {
+    final body = jsonDecode(response.body) as Iterable;
+    return body.map((json) {
+      return JsonEmployee.fromJson(json);
+    });
   }
 
   _updateEmployees(Iterable<Employee> employees) {
@@ -43,19 +47,33 @@ class TaskPermissionsRepository extends BaseRepository {
   }
 
   Future<bool> addPermissionForEmployee(Employee employee) async {
-    // todo - add employee
-    return true;
+    final response = await post(BASE_URL, _generatePermissionJson(employee));
+    if (response.statusCode == HttpStatus.ok) {
+      _employees.add(employee);
+      return true;
+    }
+    return false;
   }
 
   Future<bool> removePermissionForEmployee(Employee employee) async {
-    // todo - remove employee
-    return true;
+    final response = await deleteWithBody(
+      BASE_URL,
+      _generatePermissionJson(employee),
+    );
+    if (response.statusCode == HttpStatus.noContent) {
+      _employees.remove(employee);
+      return true;
+    }
+    return false;
   }
 
-  Iterable<JsonEmployee> _parseEmployeesList(http.Response response) {
-    final body = jsonDecode(response.body) as Iterable;
-    return body.map((json) {
-      return JsonEmployee.fromJson(json);
-    });
+  Map<String, Map<String, dynamic>> _generatePermissionJson(Employee employee) {
+    final jsonEmployee = JsonEmployee.fromEmployee(employee);
+    final jsonTask = JsonTask.fromTask(_task);
+
+    return {
+      'employee': jsonEmployee.toJson(),
+      'task': jsonTask.toJson(),
+    };
   }
 }

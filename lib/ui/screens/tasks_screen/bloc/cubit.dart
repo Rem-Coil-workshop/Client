@@ -15,11 +15,8 @@ class TaskPermissionsCubit extends Cubit<TaskPermissionsState> {
 
   onUpdateEmployees() async {
     _sendNetworkRequest(
-      onError: '',
-      body: () async {
-        await repository.fetchEmployees();
-        return true;
-      },
+      onError: 'Ошибка загрузки данных',
+      body: () async => await repository.fetchEmployees(),
     );
   }
 
