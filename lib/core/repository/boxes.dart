@@ -9,7 +9,7 @@ import 'package:slot_service_app/core/repository/base.dart';
 import 'package:universal_html/html.dart';
 
 class BoxesRepository extends BaseRepository {
-  static const BASE_URL = '/v1/boxes';
+  static const BASE_URL = '/v1/slots';
   List<Box> _boxes = [];
 
   Future<List<Box>> get boxes async {

@@ -9,7 +9,7 @@ import 'package:slot_service_app/core/repository/user.dart';
 import 'package:slot_service_app/core/repository/base.dart';
 import 'package:slot_service_app/core/repository/boxes.dart';
 import 'package:slot_service_app/core/repository/employees.dart';
-import 'package:slot_service_app/core/repository/local.dart';
+import 'package:slot_service_app/core/repository/token.dart';
 import 'package:slot_service_app/core/repository/tasks.dart';
 import 'package:slot_service_app/redux/reducer.dart';
 import 'package:slot_service_app/redux/state.dart';
@@ -42,11 +42,14 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
 
   Store<AppState> get _appState {
     if (_appStateHolder == null) {
-      final localThunkMiddleware = _getThunkMiddleware(TokenLocalRepository());
+      final localThunkMiddleware =
+          _getThunkMiddleware(TokenRepository.instance());
+
       final taskThunkMiddleware = _getThunkMiddleware(TasksRepository());
       final boxThunkMiddleware = _getThunkMiddleware(BoxesRepository());
       final employeeThunkMiddleware =
           _getThunkMiddleware(EmployeesRepository());
+
       final authThunkMiddleware = _getThunkMiddleware(UserRepository());
       final logsThunkMiddleware = _getThunkMiddleware(LogsRepository());
 

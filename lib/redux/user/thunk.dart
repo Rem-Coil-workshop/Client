@@ -3,7 +3,7 @@ import 'package:redux/redux.dart';
 import 'package:slot_service_app/core/models/user.dart';
 import 'package:slot_service_app/core/network/network_exception.dart';
 import 'package:slot_service_app/core/repository/user.dart';
-import 'package:slot_service_app/core/repository/local.dart';
+import 'package:slot_service_app/core/repository/token.dart';
 import 'package:slot_service_app/main.dart';
 import 'package:slot_service_app/redux/base_thunk.dart';
 import 'package:slot_service_app/redux/state.dart';
@@ -71,7 +71,7 @@ class OnChangeCurrentUser extends BaseThunk {
   }
 }
 
-class OnEnterInApp extends BaseThunkWithExtra<TokenLocalRepository> {
+class OnEnterInApp extends BaseThunkWithExtra<TokenRepository> {
   final String nextRoute;
 
   OnEnterInApp(this.nextRoute);
@@ -79,7 +79,7 @@ class OnEnterInApp extends BaseThunkWithExtra<TokenLocalRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    TokenLocalRepository repository,
+    TokenRepository repository,
   ) async {
     final isEntered = await repository.isEntered;
     store.dispatch(SetEnterStatusAction(isEntered));
@@ -92,7 +92,7 @@ class OnEnterInApp extends BaseThunkWithExtra<TokenLocalRepository> {
   }
 }
 
-class OnGetCachedUser extends BaseThunkWithExtra<TokenLocalRepository> {
+class OnGetCachedUser extends BaseThunkWithExtra<TokenRepository> {
   final String nextRoute;
 
   OnGetCachedUser(this.nextRoute);
@@ -100,7 +100,7 @@ class OnGetCachedUser extends BaseThunkWithExtra<TokenLocalRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    TokenLocalRepository repository,
+    TokenRepository repository,
   ) async {
     final user = await repository.currentUser;
     if (user != null) {
@@ -112,11 +112,11 @@ class OnGetCachedUser extends BaseThunkWithExtra<TokenLocalRepository> {
   }
 }
 
-class OnExitApp extends BaseThunkWithExtra<TokenLocalRepository> {
+class OnExitApp extends BaseThunkWithExtra<TokenRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    TokenLocalRepository repository,
+    TokenRepository repository,
   ) async {
     await repository.logout();
     store.dispatch(SetUserAction(null));
@@ -154,7 +154,7 @@ class OnUserCredentialsEnter extends BaseThunkWithExtra<UserRepository> {
   }
 }
 
-class OnSaveUserCredentials extends BaseThunkWithExtra<TokenLocalRepository> {
+class OnSaveUserCredentials extends BaseThunkWithExtra<TokenRepository> {
   final String token;
 
   OnSaveUserCredentials(this.token);
@@ -162,7 +162,7 @@ class OnSaveUserCredentials extends BaseThunkWithExtra<TokenLocalRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    TokenLocalRepository repository,
+    TokenRepository repository,
   ) async {
     await repository.saveToken(token);
     store.dispatch(SetPasswordCorrectStatusAction(true));
