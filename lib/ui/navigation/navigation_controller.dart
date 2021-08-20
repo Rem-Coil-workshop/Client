@@ -8,6 +8,7 @@ import 'package:slot_service_app/ui/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/employees_screen.dart';
 import 'package:slot_service_app/ui/screens/logs_screen/logs_screen.dart';
 import 'package:slot_service_app/ui/screens/logs_server_screen/logs_server_screen.dart';
+import 'package:slot_service_app/ui/screens/manual_screen/manual_screen.dart';
 import 'package:slot_service_app/ui/screens/settings_screen/settings_screen.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/tasks_screen.dart';
 import 'package:slot_service_app/ui/screens/users/users_screen.dart';
@@ -63,6 +64,13 @@ class NavigationController extends StatelessWidget {
       privacyLevel: ServerLogsScreen.privacyLevel,
       index: ServerLogsScreen.screenNumber,
     ),
+    NavigationItemInfo(
+      icon: Icons.info,
+      title: 'Руководство по использованию',
+      route: ManualScreen.route,
+      privacyLevel: ManualScreen.privacyLevel,
+      index: ManualScreen.screenNumber,
+    ),
   ];
 
   final int currentScreen;
@@ -83,16 +91,4 @@ class NavigationController extends StatelessWidget {
 
     return NavigationList(navigationItems: items, selectedItem: currentScreen);
   }
-
-  // List<NavigationItemInfo> _filterScreens(int privacyLevel) {
-  //   final List<NavigationItemInfo> currentScreens = [];
-  //
-  //   for (var screen in screenList) {
-  //     if (screen.privacyLevel >= privacyLevel) {
-  //       currentScreens.add(screen);
-  //     }
-  //   }
-  //
-  //   return currentScreens;
-  // }
 }
