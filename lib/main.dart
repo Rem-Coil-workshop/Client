@@ -9,7 +9,6 @@ import 'package:slot_service_app/core/repository/user.dart';
 import 'package:slot_service_app/core/repository/base.dart';
 import 'package:slot_service_app/core/repository/boxes.dart';
 import 'package:slot_service_app/core/repository/employees.dart';
-import 'package:slot_service_app/core/repository/token.dart';
 import 'package:slot_service_app/core/repository/tasks.dart';
 import 'package:slot_service_app/redux/reducer.dart';
 import 'package:slot_service_app/redux/state.dart';
@@ -30,8 +29,7 @@ void main() {
 }
 
 class RemCoilDashboardApp extends StatefulWidget {
-  // TODO - Вернуть главный экран
-  static const MAIN_ROUTE = TasksScreen.route;
+  static const MAIN_ROUTE = BoxesScreen.route;
 
   @override
   _RemCoilDashboardAppState createState() => _RemCoilDashboardAppState();
@@ -42,9 +40,6 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
 
   Store<AppState> get _appState {
     if (_appStateHolder == null) {
-      final localThunkMiddleware =
-          _getThunkMiddleware(TokenRepository.instance());
-
       final taskThunkMiddleware = _getThunkMiddleware(TasksRepository());
       final boxThunkMiddleware = _getThunkMiddleware(BoxesRepository());
       final employeeThunkMiddleware =
@@ -59,7 +54,6 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         middleware: [
           thunkMiddleware,
           NavigationMiddleware(),
-          localThunkMiddleware,
           taskThunkMiddleware,
           boxThunkMiddleware,
           employeeThunkMiddleware,

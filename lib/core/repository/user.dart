@@ -46,7 +46,7 @@ class UserRepository extends BaseRepository {
     }
   }
 
-  Future<String> signUp(User user, String password) async {
+  Future<String> saveUser(User user, String password) async {
     final json = JsonUser.fromUser(user).toJsonWithPassword(password);
     final response = await post('$BASE_URL/sign_up', json);
 

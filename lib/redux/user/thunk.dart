@@ -12,17 +12,17 @@ import 'package:slot_service_app/ui/screens/login_screen/login_screen.dart';
 
 import 'action.dart';
 
-class OnSingUp extends BaseThunkWithExtra<UserRepository> {
+class OnUserCreated extends BaseThunkWithExtra<UserRepository> {
   final User user;
   final String password;
 
-  OnSingUp(this.user, this.password);
+  OnUserCreated(this.user, this.password);
 
   @override
   Future<void> execute(Store<AppState> store, UserRepository repository) async {
     try {
       store.dispatch(OnBeginLoad('Сохраняем пользователя'));
-      await repository.signUp(user, password);
+      await repository.saveUser(user, password);
       store.dispatch(OnSuccess('Пользователь добавлен'));
       store.dispatch(OnGetUsers());
     } on NetworkException catch (e) {
@@ -71,7 +71,7 @@ class OnChangeCurrentUser extends BaseThunk {
   }
 }
 
-class OnEnterInApp extends BaseThunkWithExtra<TokenRepository> {
+class OnEnterInApp extends BaseThunk {
   final String nextRoute;
 
   OnEnterInApp(this.nextRoute);
@@ -79,8 +79,8 @@ class OnEnterInApp extends BaseThunkWithExtra<TokenRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    TokenRepository repository,
   ) async {
+    final repository = TokenRepository.instance();
     final isEntered = await repository.isEntered;
     store.dispatch(SetEnterStatusAction(isEntered));
     if (isEntered) {
@@ -92,7 +92,7 @@ class OnEnterInApp extends BaseThunkWithExtra<TokenRepository> {
   }
 }
 
-class OnGetCachedUser extends BaseThunkWithExtra<TokenRepository> {
+class OnGetCachedUser extends BaseThunk {
   final String nextRoute;
 
   OnGetCachedUser(this.nextRoute);
@@ -100,9 +100,8 @@ class OnGetCachedUser extends BaseThunkWithExtra<TokenRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    TokenRepository repository,
   ) async {
-    final user = await repository.currentUser;
+    final user = await TokenRepository.instance().currentUser;
     if (user != null) {
       store.dispatch(SetUserAction(user));
       store.dispatch(NavigateToAction.replace(nextRoute));
@@ -112,13 +111,12 @@ class OnGetCachedUser extends BaseThunkWithExtra<TokenRepository> {
   }
 }
 
-class OnExitApp extends BaseThunkWithExtra<TokenRepository> {
+class OnExitApp extends BaseThunk {
   @override
   Future<void> execute(
     Store<AppState> store,
-    TokenRepository repository,
   ) async {
-    await repository.logout();
+    await TokenRepository.instance().logout();
     store.dispatch(SetUserAction(null));
     store.dispatch(SetEnterStatusAction(false));
     store.dispatch(NavigateToAction.replace(LoginScreen.route));
@@ -154,7 +152,7 @@ class OnUserCredentialsEnter extends BaseThunkWithExtra<UserRepository> {
   }
 }
 
-class OnSaveUserCredentials extends BaseThunkWithExtra<TokenRepository> {
+class OnSaveUserCredentials extends BaseThunk {
   final String token;
 
   OnSaveUserCredentials(this.token);
@@ -162,9 +160,8 @@ class OnSaveUserCredentials extends BaseThunkWithExtra<TokenRepository> {
   @override
   Future<void> execute(
     Store<AppState> store,
-    TokenRepository repository,
   ) async {
-    await repository.saveToken(token);
+    await TokenRepository.instance().saveToken(token);
     store.dispatch(SetPasswordCorrectStatusAction(true));
     store.dispatch(NavigateToAction.replace(RemCoilDashboardApp.MAIN_ROUTE));
   }

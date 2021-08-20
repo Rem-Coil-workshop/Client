@@ -85,7 +85,7 @@ class _UserAddDialogState extends State<UserAddDialog> {
   }
 
   _onValidInput(BuildContext context, User user, String password) {
-    StoreProvider.of<AppState>(context).dispatch(OnSingUp(user, password));
+    StoreProvider.of<AppState>(context).dispatch(OnUserCreated(user, password));
     Navigator.pop(context);
     _clearControllers();
   }
