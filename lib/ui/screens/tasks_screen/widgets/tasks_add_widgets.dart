@@ -7,21 +7,6 @@ import 'package:slot_service_app/redux/tasks/thunk.dart';
 import 'package:slot_service_app/ui/constants.dart';
 
 class AddTaskRow extends StatefulWidget {
-  static const CORRECT_CODES = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '0',
-    '-',
-    '/'
-  ];
-
   @override
   _AddTaskRowState createState() => _AddTaskRowState();
 }
@@ -74,9 +59,7 @@ class _AddTaskRowState extends State<AddTaskRow> {
   void _onInput() {
     setState(() {
       final value = _controller.text;
-      this._isInputValid = isValidInput(value, (chr) {
-        return AddTaskRow.CORRECT_CODES.contains(chr);
-      });
+      this._isInputValid = isValidQrCode(value);
     });
   }
 
