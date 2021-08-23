@@ -27,17 +27,12 @@ class ProfileCard extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                left: defaultPadding / 2,
-              ),
+              padding: const EdgeInsets.only(left: defaultPadding / 2),
               child: StoreConnector<AppState, AuthViewModel>(
                 converter: (store) {
                   final user = store.state.authState.currentUser;
-                  if (user == null) {
-                    return AuthViewModel.noUser();
-                  } else {
-                    return AuthViewModel.success(user: user);
-                  }
+                  if (user == null) return AuthViewModel.noUser();
+                  return AuthViewModel.success(user: user);
                 },
                 builder: (context, vm) => vm.when(
                   success: (employee) =>
@@ -50,9 +45,8 @@ class ProfileCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: defaultPadding / 4,
-              ),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: defaultPadding / 4),
               child: Icon(
                 Icons.exit_to_app_rounded,
                 color: Colors.white,

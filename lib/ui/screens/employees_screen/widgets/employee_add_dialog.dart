@@ -40,33 +40,31 @@ class _EmployeeAddDialogState extends State<EmployeeAddDialog> {
       listenWhen: (previous, current) =>
           current.isValid && current.isButtonPressed,
       listener: (context, state) => _onValidInput(context, state.employee),
-      builder: _dialog,
-    );
-  }
-
-  Widget _dialog(BuildContext context, EmployeeDialogState state) {
-    return AddEntityDialog(
-      title: 'Введите данные сотрудника',
-      onSuccessButtonPressed: _cubit.onButtonPressed,
-      fields: Container(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SimpleTextField(
-              hintText: 'Имя сотрудника',
-              errorText: state.errorMessages[FIRSTNAME_KEY],
-              controller: _firstnameController,
+      builder: (context, state) {
+        return AddEntityDialog(
+          title: 'Введите данные сотрудника',
+          onSuccessButtonPressed: _cubit.onButtonPressed,
+          fields: Container(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SimpleTextField(
+                  hintText: 'Имя сотрудника',
+                  errorText: state.errorMessages[FIRSTNAME_KEY],
+                  controller: _firstnameController,
+                ),
+                SimpleTextField(
+                  hintText: 'Фамилия сотрудника',
+                  errorText: state.errorMessages[LASTNAME_KEY],
+                  controller: _lastnameController,
+                ),
+                WebSocketField(card: state.cardValue),
+              ],
             ),
-            SimpleTextField(
-              hintText: 'Фамилия сотрудника',
-              errorText: state.errorMessages[LASTNAME_KEY],
-              controller: _lastnameController,
-            ),
-            WebSocketField(card: state.cardValue),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

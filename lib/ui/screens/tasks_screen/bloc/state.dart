@@ -29,7 +29,7 @@ class TaskPermissionsState {
 
   Iterable<Employee> get data => _data!;
 
-  String get error => _errorMessage!;
+  String? get error => _errorMessage;
 
   bool get hasError => _errorMessage != null;
 

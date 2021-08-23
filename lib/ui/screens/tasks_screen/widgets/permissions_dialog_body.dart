@@ -25,10 +25,13 @@ class PermissionEmployeeBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 13,
-                  child: _status(state),
+                  height: 16,
+                  child: _StatusText(
+                    hasError: employees != null && state.hasError,
+                    hasEmployees: employees != null && employees!.isEmpty,
+                    error: state.error,
+                  ),
                 ),
-                SizedBox(height: 3),
                 SizedBox(
                   height: 4,
                   child: employees == null || state.isLoad
@@ -44,11 +47,27 @@ class PermissionEmployeeBody extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget? _status(TaskPermissionsState state) {
-    if (employees != null && state.hasError) return Text(state.error);
-    if (employees != null && employees!.isEmpty)
-      return Text(
-          'Список рабочих пуст или произошла ошибка загрузки данных, попробуйте позже');
+class _StatusText extends StatelessWidget {
+  final onEmptyEmployeesText =
+      'Список рабочих пуст или произошла ошибка загрузки данных, попробуйте позже';
+  final bool hasError;
+  final String? error;
+  final bool hasEmployees;
+
+  const _StatusText({
+    Key? key,
+    required this.error,
+    required this.hasEmployees,
+    required this.hasError,
+  })  : assert(!hasError || error != null),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (hasError) return Text(error!);
+    if (hasEmployees) return Text(onEmptyEmployeesText);
+    return Container();
   }
 }

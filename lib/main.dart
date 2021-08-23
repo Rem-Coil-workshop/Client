@@ -3,15 +3,15 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
-import 'package:slot_service_app/core/repository/logs.dart';
-import 'package:slot_service_app/ui/constants.dart';
-import 'package:slot_service_app/core/repository/user.dart';
 import 'package:slot_service_app/core/repository/base.dart';
 import 'package:slot_service_app/core/repository/boxes.dart';
 import 'package:slot_service_app/core/repository/employees.dart';
+import 'package:slot_service_app/core/repository/logs.dart';
 import 'package:slot_service_app/core/repository/tasks.dart';
+import 'package:slot_service_app/core/repository/user.dart';
 import 'package:slot_service_app/redux/reducer.dart';
 import 'package:slot_service_app/redux/state.dart';
+import 'package:slot_service_app/ui/constants.dart';
 import 'package:slot_service_app/ui/navigation/route_builder.dart';
 import 'package:slot_service_app/ui/screens/boxes_screen/boxes_screen.dart';
 import 'package:slot_service_app/ui/screens/employees_screen/employees_screen.dart';
@@ -19,7 +19,6 @@ import 'package:slot_service_app/ui/screens/login_screen/login_network_screen.da
 import 'package:slot_service_app/ui/screens/login_screen/login_screen.dart';
 import 'package:slot_service_app/ui/screens/logs_screen/logs_screen.dart';
 import 'package:slot_service_app/ui/screens/logs_server_screen/logs_server_screen.dart';
-import 'package:slot_service_app/ui/screens/manual_screen/manual_screen.dart';
 import 'package:slot_service_app/ui/screens/settings_screen/settings_screen.dart';
 import 'package:slot_service_app/ui/screens/tasks_screen/tasks_screen.dart';
 import 'package:slot_service_app/ui/screens/users/users_screen.dart';
@@ -112,8 +111,6 @@ class _RemCoilDashboardAppState extends State<RemCoilDashboardApp> {
         return RouteBuilder(widget: LoginNetworkScreen(), name: settings.name!);
       case ServerLogsScreen.route:
         return RouteBuilder(widget: ServerLogsScreen(), name: settings.name!);
-      case ManualScreen.route:
-        return RouteBuilder(widget: ManualScreen(), name: settings.name!);
       default:
         return RouteBuilder(widget: WelcomeScreen(), name: WelcomeScreen.route);
     }
